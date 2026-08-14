@@ -5,19 +5,8 @@ import { CSSProperties, FormEvent, PointerEvent as ReactPointerEvent, useEffect,
 
 type Stage = "idle" | "checking" | "ready";
 
-const concepts = [
-  { id: "passage", no: "01", name: "Calm Passage", headline: <>Cross borders,<br /><em>not paperwork.</em></>, sub: "Visa Master researches the official rules, builds your application pack, and guides every step—without the agency price tag.", prompt: "I’m traveling from Taipei to Paris for 12 days", note: "Recommended · warm editorial utility" },
-  { id: "passport", no: "02", name: "Passport OS", headline: <>Your trip has<br /><em>a system now.</em></>, sub: "One verified operating system for requirements, forms, evidence and submission—built around your exact route.", prompt: "Taiwan passport · 3 weeks in the UK", note: "Technical · precise · high-trust" },
-  { id: "openworld", no: "03", name: "Open World", headline: <>Tell us where.<br /><em>We’ll clear the way.</em></>, sub: "From official requirements to ready-to-use files, Visa Master makes the path to your next country feel obvious.", prompt: "I want to see the cherry blossoms in Japan", note: "Bold · human · memorable" },
-  { id: "orbit", no: "04", name: "Document Orbit", headline: <>One trip in.<br /><em>A complete pack out.</em></>, sub: "Visa Master turns your itinerary into a living application folder: sourced, structured, and ready to submit.", prompt: "Business trip from Manila to Berlin in October", note: "Minimal · artifact-first · product-led" },
-  { id: "nightflight", no: "05", name: "Night Flight", headline: <>Go further.<br /><em>With certainty.</em></>, sub: "An AI visa co-pilot that checks the rules, maps the process and assembles the evidence for your journey.", prompt: "Digital nomad visa options for Spain", note: "Cinematic · premium · aspirational" },
-];
-
 const globeThemes = {
   passage: { dark: 0, base: [0.91, 0.89, 0.82], marker: [0.16, 0.28, 0.95], glow: [0.78, 0.84, 1] },
-  passport: { dark: 1, base: [0.06, 0.12, 0.12], marker: [0.5, 1, 0.64], glow: [0.03, 0.2, 0.14] },
-  openworld: { dark: 0, base: [0.98, 0.43, 0.19], marker: [0.27, 0.08, 0.7], glow: [1, 0.78, 0.2] },
-  orbit: { dark: 0, base: [0.86, 0.89, 0.92], marker: [1, 0.3, 0.13], glow: [0.9, 0.92, 0.96] },
   nightflight: { dark: 1, base: [0.05, 0.08, 0.24], marker: [0.98, 0.55, 0.22], glow: [0.08, 0.15, 0.5] },
 } as const;
 
@@ -37,7 +26,7 @@ const landmarks = [
   { id: "capetown", city: "Cape Town", place: "Table Mountain", location: [-33.92, 18.42] as [number, number], photo: "https://images.unsplash.com/photo-1744604030401-b24c5975a574?auto=format&fit=crop&w=280&h=280&q=76" },
 ] as const;
 
-function Globe({ concept, docked }: { concept: keyof typeof globeThemes; docked: boolean }) {
+function Globe({ themeName, docked }: { themeName: keyof typeof globeThemes; docked: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const globeRef = useRef<ReturnType<typeof createGlobe> | null>(null);
   const dockedRef = useRef(docked);
@@ -49,15 +38,15 @@ function Globe({ concept, docked }: { concept: keyof typeof globeThemes; docked:
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
     const host = canvas.parentElement;
-    let phi = concept === "openworld" ? 1.8 : 0.4;
+    let phi = 0.4;
     let theta = 0.18;
     let frame = 0;
-    const theme = globeThemes[concept];
+    const theme = globeThemes[themeName];
     const globe = createGlobe(canvas, {
       devicePixelRatio: 2, width: 760, height: 760, phi, theta,
-      dark: theme.dark, diffuse: concept === "passport" ? 0.5 : 1.4,
+      dark: theme.dark, diffuse: 1.4,
       mapSamples: 18000,
-      mapBrightness: concept === "nightflight" ? 5 : 2.8,
+      mapBrightness: themeName === "nightflight" ? 5 : 2.8,
       baseColor: [...theme.base], markerColor: [...theme.marker], glowColor: [...theme.glow],
       markers: landmarks.map(({ id, location }) => ({ id, location: [...location] as [number, number], size: 0.024 })),
       markerElevation: 0,
@@ -90,13 +79,13 @@ function Globe({ concept, docked }: { concept: keyof typeof globeThemes; docked:
         wrapper.remove();
       }
     };
-  }, [concept]);
+  }, [themeName]);
 
   useEffect(() => {
     dockedRef.current = docked;
     const globe = globeRef.current;
     if (!globe) return;
-    const theme = globeThemes[concept];
+    const theme = globeThemes[themeName];
     const fullMarkers = landmarks.map(({ id, location }) => ({ id, location: [...location] as [number, number], size: 0.024 }));
 
     if (!docked) {
@@ -104,9 +93,9 @@ function Globe({ concept, docked }: { concept: keyof typeof globeThemes; docked:
         width: 760,
         height: 760,
         dark: theme.dark,
-        diffuse: concept === "passport" ? 0.5 : 1.4,
+        diffuse: 1.4,
         mapSamples: 18000,
-        mapBrightness: concept === "nightflight" ? 5 : 2.8,
+        mapBrightness: themeName === "nightflight" ? 5 : 2.8,
         baseColor: [...theme.base],
         markerColor: [...theme.marker],
         glowColor: [...theme.glow],
@@ -120,12 +109,8 @@ function Globe({ concept, docked }: { concept: keyof typeof globeThemes; docked:
     // Let the full globe complete its flight before simplifying it into a crisp brand mark.
     globe.update({ markers: [] });
     const settle = window.setTimeout(() => {
-      const darkBase: [number, number, number] = concept === "passport"
-        ? [0.12, 0.36, 0.22]
-        : [0.12, 0.18, 0.42];
-      const darkGlow: [number, number, number] = concept === "passport"
-        ? [0.5, 1, 0.64]
-        : [1, 0.55, 0.22];
+      const darkBase: [number, number, number] = [0.12, 0.18, 0.42];
+      const darkGlow: [number, number, number] = [1, 0.55, 0.22];
       globe.update({
         width: 96,
         height: 96,
@@ -143,7 +128,7 @@ function Globe({ concept, docked }: { concept: keyof typeof globeThemes; docked:
     }, 780);
 
     return () => window.clearTimeout(settle);
-  }, [concept, docked]);
+  }, [themeName, docked]);
 
   function beginDrag(e: ReactPointerEvent<HTMLCanvasElement>) {
     if (docked) return;
@@ -213,7 +198,7 @@ function Globe({ concept, docked }: { concept: keyof typeof globeThemes; docked:
           }
         }}
       >
-        {/* The concept prototype intentionally uses hotlinked thumbnail URLs. */}
+        {/* The current prototype intentionally uses hotlinked thumbnail URLs. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={landmark.photo} alt={`${landmark.place} in ${landmark.city}`} />
         <figcaption><strong>{landmark.city}</strong><span>{landmark.place}</span></figcaption>
@@ -222,7 +207,7 @@ function Globe({ concept, docked }: { concept: keyof typeof globeThemes; docked:
   </>;
 }
 
-function Icon({ name }: { name: "spark" | "arrow" | "file" | "folder" | "check" | "lock" | "source" }) {
+function Icon({ name }: { name: "spark" | "arrow" | "file" | "folder" | "check" | "lock" | "source" | "sun" | "moon" }) {
   const paths = {
     spark: <><path d="M12 2l1.45 5.1L18 9l-4.55 1.9L12 16l-1.45-5.1L6 9l4.55-1.9L12 2Z"/><path d="m5 15 .8 2.2L8 18l-2.2.8L5 21l-.8-2.2L2 18l2.2-.8L5 15Z"/></>,
     arrow: <><path d="M5 12h13"/><path d="m14 7 5 5-5 5"/></>,
@@ -230,6 +215,8 @@ function Icon({ name }: { name: "spark" | "arrow" | "file" | "folder" | "check" 
     folder: <path d="M3 6h7l2 2h9v11H3z"/>, check: <path d="m5 12 4 4L19 6"/>,
     lock: <><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></>,
     source: <><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></>,
+    sun: <><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></>,
+    moon: <path d="M20 15.2A8.5 8.5 0 0 1 8.8 4a8.5 8.5 0 1 0 11.2 11.2Z"/>,
   };
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>;
 }
@@ -242,13 +229,13 @@ export default function Home() {
   const returnFrameRef = useRef<number | null>(null);
   const returnFrameTwoRef = useRef<number | null>(null);
   const returnRevealTimerRef = useRef<number | null>(null);
-  const [active, setActive] = useState(0);
+  const [darkTheme, setDarkTheme] = useState(false);
   const [stage, setStage] = useState<Stage>("idle");
   const [globeDocked, setGlobeDocked] = useState(false);
   const [globeReturning, setGlobeReturning] = useState(false);
-  const [query, setQuery] = useState(concepts[0].prompt);
+  const [query, setQuery] = useState("");
   const [gate, setGate] = useState(false);
-  const concept = concepts[active];
+  const globeTheme = darkTheme ? "nightflight" : "passage";
 
   useLayoutEffect(() => {
     const composer = journeyRef.current;
@@ -281,7 +268,7 @@ export default function Home() {
             ? Math.min(viewportWidth * 0.68, 850, composerTop + 32)
             : Math.min(viewportWidth * 0.67, 1080, composerTop + 40);
         const stageTop = viewportWidth <= 980 ? 96 : 88;
-        const globeTop = viewportWidth <= 700 ? 210 : Math.max(18, (stageTop + composerTop - globeSize) / 2);
+        const globeTop = viewportWidth <= 700 ? 320 : Math.max(18, (stageTop + composerTop - globeSize) / 2);
         site.style.setProperty("--globe-size", `${Math.round(globeSize)}px`);
         site.style.setProperty("--globe-top", `${Math.round(globeTop)}px`);
       }
@@ -331,16 +318,19 @@ export default function Home() {
     });
   }
 
-  function chooseConcept(index: number) {
-    setActive(index); setQuery(concepts[index].prompt); setGate(false);
+  function returnToLanding() {
+    setGate(false);
+    setQuery("");
     if (stage === "idle") {
       setGlobeDocked(false);
       setGlobeReturning(false);
     } else {
       returnToRouteEditor();
     }
+    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+
   function submit(e: FormEvent) {
     e.preventDefault();
     if (!query.trim() || stage === "checking") return;
@@ -349,29 +339,24 @@ export default function Home() {
     setStage("checking");
     readyTimerRef.current = window.setTimeout(() => setStage("ready"), 1350);
   }
-  const isDocked = globeDocked;
-
   return (
-    <main ref={siteRef} className={`site concept-${concept.id} stage-${stage}${globeReturning ? " globe-returning" : ""}`} data-concept={concept.id} style={{ "--composer-top": "calc(100dvh - 148px)" } as CSSProperties}>
+    <main ref={siteRef} className={`site${darkTheme ? " theme-dark" : ""} stage-${stage}${globeReturning ? " globe-returning" : ""}`} data-theme={darkTheme ? "dark" : "light"} style={{ "--composer-top": "calc(100dvh - 148px)" } as CSSProperties}>
       <header className="topbar">
-        <a className="brand" href="#top" aria-label="Visa Master home"><span className="brand-mark-slot" ref={brandMarkRef}><span className="brand-orbit" /></span><span>visa<span>master</span></span></a>
-        <div className="top-actions"><span className="concept-counter">CONCEPT {concept.no} / 05</span><button className="quiet-button" onClick={() => setGate(true)}>Get started</button></div>
+        <button className="brand" type="button" aria-label="Visa Master home" onClick={returnToLanding}><span className="brand-mark-slot" ref={brandMarkRef}><span className="brand-orbit" /></span><span>visa<span>master</span></span></button>
+        <div className="top-actions"><button className="theme-toggle" type="button" aria-label={darkTheme ? "Use light theme" : "Use dark theme"} title={darkTheme ? "Use light theme" : "Use dark theme"} onClick={() => setDarkTheme((current) => !current)}><Icon name={darkTheme ? "sun" : "moon"} /></button><button className="quiet-button" onClick={() => setGate(true)}>Get started</button></div>
       </header>
-      <nav className="concept-switcher" aria-label="Landing page concepts">
-        {concepts.map((item, index) => <button key={item.id} className={index === active ? "active" : ""} onClick={() => chooseConcept(index)}><span>{item.no}</span>{item.name}</button>)}
-      </nav>
 
-      <section id="top" className="hero">
+      <section className="hero">
         <div className="ambient ambient-one" /><div className="ambient ambient-two" />
-        <div className={`globe-home ${isDocked ? "docked" : ""}`}>
-          <Globe concept={concept.id as keyof typeof globeThemes} docked={isDocked} />
+        <div className={`globe-home ${globeDocked ? "docked" : ""}`}>
+          <Globe themeName={globeTheme} docked={globeDocked} />
         </div>
-        <div className="hero-copy"><h1>{concept.headline}</h1><p className="subhead">{concept.sub}</p></div>
+        <div className="hero-copy"><h1><span className="hero-lead-line">DIY visa applications.</span><br /><em>The easy way.</em></h1><p className="subhead">Get step-by-step guidance based on current official requirements. Visa Master helps organize your evidence, prepare consistent documents, and deliver a ready-to-go application pack while you stay in control.</p></div>
 
         <div className="journey-card" ref={journeyRef}>
           {stage === "idle" && <>
             <form className="prompt" onSubmit={submit}>
-              <div className="prompt-field"><label htmlFor="route-input">Where are you going?</label><input id="route-input" value={query} onChange={(e) => setQuery(e.target.value)} autoComplete="off" /></div>
+              <div className="prompt-field"><input aria-label="Travel destination" placeholder="Travel to somewhere" value={query} onChange={(e) => setQuery(e.target.value)} autoComplete="off" /></div>
               <button type="submit" aria-label="Build my visa plan"><Icon name="arrow" /></button>
             </form>
             <div className="suggestions"><span>Try</span>{["Taipei → Paris", "UK visitor visa", "Spain nomad visa"].map((item) => <button key={item} onClick={() => setQuery(item)}>{item}</button>)}</div>
