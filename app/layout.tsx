@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   description:
     "Visa Master researches official requirements, builds your application pack, and guides you through each step.",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/luya-circle.svg",
+    shortcut: "/luya-circle.svg",
   },
 };
 
