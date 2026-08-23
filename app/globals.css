@@ -795,11 +795,18 @@ svg {
 }
 
 .suggestions button {
-  padding: 7px 11px;
+  min-height: 36px;
+  padding: 0 14px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--paper) 45%, transparent);
+  background: color-mix(in srgb, var(--paper) 36%, transparent);
+  color: var(--ink);
+  font-size: 12px;
   cursor: pointer;
+}
+
+.suggestions button:hover {
+  border-color: color-mix(in srgb, var(--ink) 25%, var(--line));
 }
 
 .stage-checking .hero-copy,
