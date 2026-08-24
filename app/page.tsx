@@ -13,6 +13,8 @@ const dict = {
     home: "Visa Master home",
     getStarted: "Get started",
     finishSetup: "Finish setup",
+    workspaceAction: "Workspace",
+    greeting: "Hi,",
     useLight: "Use light theme",
     useDark: "Use dark theme",
     localeName: "Switch language",
@@ -45,6 +47,8 @@ const dict = {
     home: "Visa Master 首页",
     getStarted: "立即体验",
     finishSetup: "完成设置",
+    workspaceAction: "工作台",
+    greeting: "你好，",
     useLight: "切换到浅色主题",
     useDark: "切换到深色主题",
     localeName: "切换语言",
@@ -77,6 +81,8 @@ const dict = {
     home: "Inicio de Visa Master",
     getStarted: "Empezar",
     finishSetup: "Completar perfil",
+    workspaceAction: "Espacio de trabajo",
+    greeting: "Hola,",
     useLight: "Usar tema claro",
     useDark: "Usar tema oscuro",
     localeName: "Cambiar idioma",
@@ -342,6 +348,7 @@ export default function Home() {
   const [globeDocked, setGlobeDocked] = useState(false);
   const [globeReturning, setGlobeReturning] = useState(false);
   const [query, setQuery] = useState("");
+  const [viewerDisplayName, setViewerDisplayName] = useState<string | null>(null);
   const [gate, setGate] = useState(false);
   const [locale, setLocale] = useState<Locale>("en");
   const t = dict[locale];
@@ -506,7 +513,7 @@ export default function Home() {
     <main ref={siteRef} className={`site${darkTheme ? " theme-dark" : ""} stage-${stage}${globeReturning ? " globe-returning" : ""}`} data-theme={darkTheme ? "dark" : "light"} style={{ "--composer-top": "calc(100dvh - 148px)" } as CSSProperties}>
       <header className="topbar">
         <button className="brand" type="button" aria-label={t.home} onClick={returnToLanding}><span className="brand-mark-slot" ref={brandMarkRef}><span className="brand-orbit" /></span><span>visa<span>master</span></span></button>
-        <div className="top-actions"><span className="theme-toggle locale-toggle"><Icon name="lang" /><select aria-label={t.localeName} title={t.localeName} value={locale} onChange={(e) => setLocale(e.target.value as Locale)}><option value="en">English</option><option value="cn">中文</option><option value="es">Español</option></select></span><button className="theme-toggle" type="button" aria-label={darkTheme ? t.useLight : t.useDark} title={darkTheme ? t.useLight : t.useDark} onClick={() => setDarkTheme((current) => !current)}><Icon name={darkTheme ? "sun" : "moon"} /></button><AccountButton getStarted={t.getStarted} finishSetup={t.finishSetup} onGetStarted={() => setGate(true)} /></div>
+        <div className="top-actions"><span className="theme-toggle locale-toggle"><Icon name="lang" /><select aria-label={t.localeName} title={t.localeName} value={locale} onChange={(e) => setLocale(e.target.value as Locale)}><option value="en">English</option><option value="cn">中文</option><option value="es">Español</option></select></span><button className="theme-toggle" type="button" aria-label={darkTheme ? t.useLight : t.useDark} title={darkTheme ? t.useLight : t.useDark} onClick={() => setDarkTheme((current) => !current)}><Icon name={darkTheme ? "sun" : "moon"} /></button><AccountButton getStarted={t.getStarted} finishSetup={t.finishSetup} workspace={t.workspaceAction} onGetStarted={() => setGate(true)} onViewerChange={setViewerDisplayName} /></div>
       </header>
 
       <section className="hero">
@@ -514,7 +521,7 @@ export default function Home() {
         <div className={`globe-home ${globeDocked ? "docked" : ""}`}>
           <Globe themeName={globeTheme} docked={globeDocked} locale={locale} />
         </div>
-        <div className="hero-copy"><h1><span className="hero-lead-line">{t.lead}</span><br /><em>{t.easy}</em></h1><p className="subhead">{t.subhead}</p></div>
+        <div className="hero-copy"><h1>{viewerDisplayName && <span className="hero-greeting"><span>{t.greeting}</span> <em>{viewerDisplayName}</em></span>}<span className="hero-lead-line">{t.lead}</span><br /><em>{t.easy}</em></h1><p className="subhead">{t.subhead}</p></div>
 
         <div className="journey-card" ref={journeyRef}>
           {stage === "idle" && <>

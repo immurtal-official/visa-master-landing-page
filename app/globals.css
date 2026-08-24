@@ -283,6 +283,25 @@ svg {
     filter 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+.hero-greeting {
+  display: block;
+  margin-bottom: 0.36em;
+  font-size: clamp(30px, 3vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+
+.hero h1 .hero-greeting em {
+  display: inline-block;
+  max-width: min(14ch, 40vw);
+  overflow: hidden;
+  font-size: clamp(43.5px, 4.725vw, 75px);
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
 .hero h1 {
   margin: 0;
   font-family: var(--display);
@@ -1856,6 +1875,16 @@ svg {
 
   .hero h1 {
     font-size: 48px;
+  }
+
+  .hero-greeting {
+    margin-bottom: 0.4em;
+    font-size: 28px;
+  }
+
+  .hero h1 .hero-greeting em {
+    max-width: 52vw;
+    font-size: 36px;
   }
 
   .subhead {

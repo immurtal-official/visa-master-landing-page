@@ -13,11 +13,15 @@ type Viewer = {
 export function AccountButton({
   getStarted,
   finishSetup,
+  workspace,
   onGetStarted,
+  onViewerChange,
 }: {
   getStarted: string;
   finishSetup: string;
+  workspace: string;
   onGetStarted: () => void;
+  onViewerChange: (displayName: string | null) => void;
 }) {
   const router = useRouter();
   const [viewer, setViewer] = useState<Viewer | null>(null);
@@ -32,14 +36,23 @@ export function AccountButton({
         const { data, error } = await supabase.auth.getUser();
 
         if (error || !data.user) {
-          if (active) setViewer(null);
+          if (active) {
+            setViewer(null);
+            onViewerChange(null);
+          }
           return;
         }
 
         const displayName = displayNameFromMetadata(data.user.user_metadata);
-        if (active) setViewer({ displayName });
+        if (active) {
+          setViewer({ displayName });
+          onViewerChange(displayName);
+        }
       } catch {
-        if (active) setViewer(null);
+        if (active) {
+          setViewer(null);
+          onViewerChange(null);
+        }
       }
     }
 
@@ -62,7 +75,7 @@ export function AccountButton({
       window.clearTimeout(deferredLoad);
       unsubscribe?.();
     };
-  }, []);
+  }, [onViewerChange]);
 
   if (!viewer) {
     return <button className="quiet-button" type="button" onClick={onGetStarted}>{getStarted}</button>;
@@ -74,7 +87,7 @@ export function AccountButton({
       type="button"
       onClick={() => router.push(viewer.displayName ? "/workspace" : "/onboarding/profile?next=/workspace")}
     >
-      {viewer.displayName ?? finishSetup}
+      {viewer.displayName ? workspace : finishSetup}
     </button>
   );
 }
