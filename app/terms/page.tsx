@@ -29,8 +29,8 @@ export default function TermsPage() {
   return (
     <LegalPage
       eyebrow="TERMS OF USE"
-      title="The rules of the journey."
-      summary="These Terms govern your access to Visa Master’s website, private beta, accounts, and workspace. They are written to keep the service useful, honest, and under your control."
+      title="Terms of Use"
+      summary="These Terms govern access to and use of the Visa Master website, private beta, accounts, and workspace. By using Visa Master, you agree to these Terms."
       sections={sections}
     >
       <section id="agreement">

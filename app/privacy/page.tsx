@@ -24,9 +24,9 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <LegalPage
-      eyebrow="PRIVACY AT VISA MASTER"
-      title="Privacy, in plain language."
-      summary="This policy explains what Visa Master knows about you, why we need it, and the choices you have. It covers our public website, private-beta access, accounts, and the Visa Master workspace as its features become available."
+      eyebrow="PRIVACY POLICY"
+      title="Privacy Policy"
+      summary="This policy describes how Visa Master collects, uses, stores, and shares personal information. It applies to our public website, private-beta access, accounts, and the Visa Master workspace as its features become available."
       sections={sections}
     >
       <section id="scope">
