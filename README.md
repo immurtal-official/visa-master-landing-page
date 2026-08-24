@@ -107,7 +107,13 @@ Generate a strong, non-expiring phrase and its keyed digest with:
 npm run invite:create -- "Private beta"
 ```
 
-The script prints the phrase once and an `insert` statement to run in the Supabase SQL Editor. An unused phrase remains valid until it is redeemed once or its `active` column is set to `false`; the database never stores the plaintext phrase.
+The quoted value is an internal database label. To choose the phrase users enter, pass an explicit label and a custom phrase:
+
+```bash
+npm run invite:create -- --label "Private beta" --phrase "LUYA-EARLY-2026"
+```
+
+Custom phrases must be 6-160 characters after whitespace normalization. Phrase matching is case-insensitive, so the generator displays and stores phrases in uppercase to match the input UI. By default, the script uses `NEXT_PUBLIC_SUPABASE_URL` and the server-only `SUPABASE_SECRET_KEY` to insert both the administrative plaintext copy and its authentication digest directly into Supabase. To print an `insert` statement for manual use instead, add `--sql-only`. An unused phrase remains valid until it is redeemed once or its `active` column is set to `false`. The plaintext column is protected from client roles but remains visible to trusted database administrators.
 
 ## Validate changes
 

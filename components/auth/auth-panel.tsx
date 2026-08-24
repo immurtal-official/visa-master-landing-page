@@ -516,12 +516,14 @@ function EarlyAccessPanel({
               type="text"
               value={phrase}
               onChange={(event) => {
-                setPhrase(event.target.value);
+                setPhrase(event.target.value.toUpperCase());
                 if (feedback) setFeedback(null);
               }}
               placeholder={t.invitePhrase}
               aria-label={t.invitePhrase}
               autoComplete="off"
+              autoCapitalize="characters"
+              spellCheck={false}
               maxLength={160}
               required
               autoFocus
