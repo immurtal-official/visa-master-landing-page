@@ -8,6 +8,7 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
+    "/",
     "/workspace/:path*",
     "/onboarding/:path*",
     "/account/update-password/:path*",

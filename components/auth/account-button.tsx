@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { displayNameFromMetadata } from "@/lib/auth/display-name";
 import { createClient } from "@/lib/supabase/client";
 
-type Viewer = {
+export type AccountViewer = {
   displayName: string | null;
 };
 
@@ -14,17 +14,19 @@ export function AccountButton({
   getStarted,
   finishSetup,
   workspace,
+  initialViewer,
   onGetStarted,
   onViewerChange,
 }: {
   getStarted: string;
   finishSetup: string;
   workspace: string;
+  initialViewer: AccountViewer | null;
   onGetStarted: () => void;
   onViewerChange: (displayName: string | null) => void;
 }) {
   const router = useRouter();
-  const [viewer, setViewer] = useState<Viewer | null>(null);
+  const [viewer, setViewer] = useState<AccountViewer | null>(initialViewer);
 
   useEffect(() => {
     let active = true;
