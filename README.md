@@ -62,6 +62,8 @@ app/
 ├── globals.css      Design tokens, layout, component styles, and motion
 ├── layout.tsx       Root layout, fonts, favicon, and metadata
 ├── login/            Direct sign-in page
+├── privacy/          Public privacy notice
+├── terms/            Public terms of use
 ├── workspace/        Protected post-authentication holding page
 └── page.tsx          Landing-page UI, globe behavior, and demo state flow
 components/auth/      Shared sign-in dialog and account controls
@@ -135,6 +137,6 @@ In Supabase Auth, set the Site URL to the canonical production domain and allow 
 
 ## Before production launch
 
-The remaining product work includes configuring production SMTP and Google OAuth, connecting the Agent API, replacing simulated results with secure job state, hosting landmark images under project control, adding privacy and legal pages, implementing consent-aware analytics, and covering signup and job submission with end-to-end tests. Apple sign-in is intentionally deferred.
+The remaining product work includes configuring production SMTP and Google OAuth, connecting the Agent API, replacing simulated results with secure job state, hosting landmark images under project control, confirming the legal operator and jurisdiction in the public policies, implementing consent-aware analytics, and covering signup and job submission with end-to-end tests. Apple sign-in is intentionally deferred.
 
 Until those integrations exist, this repository should be described as an interactive frontend prototype rather than a working visa-application service.

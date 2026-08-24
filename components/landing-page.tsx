@@ -1,6 +1,8 @@
 "use client";
 
 import createGlobe from "cobe";
+import Image from "next/image";
+import Link from "next/link";
 import { CSSProperties, FormEvent, PointerEvent as ReactPointerEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { AuthDialog } from "@/components/auth/auth-panel";
@@ -42,6 +44,8 @@ const dict = {
     open: "Open my workspace",
     showPhoto: "Show photo for",
     hidePhoto: "Hide photo for",
+    privacy: "Privacy",
+    terms: "Terms",
   },
   cn: {
     home: "Visa Master 首页",
@@ -76,6 +80,8 @@ const dict = {
     open: "打开我的工作台",
     showPhoto: "显示照片：",
     hidePhoto: "隐藏照片：",
+    privacy: "隐私",
+    terms: "条款",
   },
   es: {
     home: "Inicio de Visa Master",
@@ -110,6 +116,8 @@ const dict = {
     open: "Abrir mi espacio de trabajo",
     showPhoto: "Mostrar foto de",
     hidePhoto: "Ocultar foto de",
+    privacy: "Privacidad",
+    terms: "Términos",
   },
 } as const;
 
@@ -553,7 +561,10 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
         </div>
       </section>
 
-      <div className="product-foot">A <img src="luya-circle.svg" alt="Lüya" width="24" height="24" /> <span className="product-foot-brand">Lüya</span> product</div>
+      <footer className="product-foot">
+        <span className="product-signature">A <Image src="/luya-circle.svg" alt="" width="24" height="24" /> <span className="product-foot-brand">Lüya</span> product</span>
+        <nav aria-label="Legal"><Link href="/privacy">{t.privacy}</Link><Link href="/terms">{t.terms}</Link></nav>
+      </footer>
 
       <AuthDialog open={gate} onOpenChange={setGate} locale={locale} />
     </main>
