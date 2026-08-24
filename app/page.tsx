@@ -367,8 +367,46 @@ export default function Home() {
     const composer = journeyRef.current;
     const site = siteRef.current;
     if (!composer || !site) return;
+    let stableViewportWidth = window.innerWidth;
+    let stableVisualViewportHeight = window.visualViewport?.height ?? window.innerHeight;
+    let stableMobileComposerTop: number | null = null;
+
     const syncComposerEdge = () => {
-      const composerTop = composer.getBoundingClientRect().top;
+      const measuredComposerTop = composer.getBoundingClientRect().top;
+      const viewportWidth = window.innerWidth;
+      const visualViewportHeight = window.visualViewport?.height ?? window.innerHeight;
+      const activeElement = document.activeElement;
+      const textEntryFocused =
+        activeElement instanceof HTMLInputElement ||
+        activeElement instanceof HTMLTextAreaElement ||
+        (activeElement instanceof HTMLElement && activeElement.isContentEditable);
+      const viewportWidthChanged = Math.abs(viewportWidth - stableViewportWidth) > 1;
+
+      // iOS moves fixed elements into the shorter visual viewport when its
+      // software keyboard opens. Keep the composer visible, but do not treat
+      // that temporary position as a real layout resize for the globe.
+      if (viewportWidthChanged && !textEntryFocused) {
+        stableViewportWidth = viewportWidth;
+        stableVisualViewportHeight = visualViewportHeight;
+        stableMobileComposerTop = null;
+      }
+
+      const keyboardSizedViewport =
+        viewportWidth <= 700 &&
+        stableVisualViewportHeight - visualViewportHeight > 120;
+      const keyboardAffectsLayout =
+        viewportWidth <= 700 && (textEntryFocused || keyboardSizedViewport);
+
+      if (!keyboardAffectsLayout) {
+        stableViewportWidth = viewportWidth;
+        stableVisualViewportHeight = visualViewportHeight;
+        stableMobileComposerTop = measuredComposerTop;
+      }
+
+      const composerTop =
+        keyboardAffectsLayout && stableMobileComposerTop !== null
+          ? stableMobileComposerTop
+          : measuredComposerTop;
       site.style.setProperty("--composer-top", `${Math.round(composerTop)}px`);
 
       // The docked globe targets the actual brand slot instead of a second set
@@ -387,7 +425,6 @@ export default function Home() {
       // the navigation and above the composer. This keeps it visually balanced
       // across browser heights while still allowing the composer to graze its edge.
       if (stage === "idle") {
-        const viewportWidth = window.innerWidth;
         const globeSize = viewportWidth <= 700
           ? Math.min(viewportWidth * 1.12, 450, Math.max(0, composerTop - 230))
           : viewportWidth <= 980
