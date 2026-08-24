@@ -3,12 +3,18 @@
 import createGlobe from "cobe";
 import { CSSProperties, FormEvent, PointerEvent as ReactPointerEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { AuthDialog } from "@/components/auth/auth-panel";
+import { AccountButton } from "@/components/auth/account-button";
+
 type Stage = "idle" | "checking" | "ready";
 
 const dict = {
   en: {
     home: "Visa Master home",
     getStarted: "Get started",
+    finishSetup: "Finish setup",
+    workspaceAction: "Workspace",
+    greeting: "Hi,",
     useLight: "Use light theme",
     useDark: "Use dark theme",
     localeName: "Switch language",
@@ -34,19 +40,15 @@ const dict = {
     rows: [["01", "Application roadmap", "Interactive checklist"], ["02", "Requirements matrix", "Evidence matched"], ["03", "Cover letter", "Ready to personalize"], ["04", "Travel itinerary", "12 days · generated"]],
     download: "Download pack",
     open: "Open my workspace",
-    readyTitle: "YOUR VISA PACK IS READY",
-    saveTitle: ["Save your progress.", "Finish with confidence."],
-    modalBody: "Create a free workspace to download the files, track requirements, and keep official sources up to date.",
-    google: "Continue with Google",
-    email: "Continue with email",
-    fineprint: "No credit card · Your documents stay private",
-    close: "Close",
     showPhoto: "Show photo for",
     hidePhoto: "Hide photo for",
   },
   cn: {
     home: "Visa Master 首页",
     getStarted: "立即体验",
+    finishSetup: "完成设置",
+    workspaceAction: "工作台",
+    greeting: "你好，",
     useLight: "切换到浅色主题",
     useDark: "切换到深色主题",
     localeName: "切换语言",
@@ -72,19 +74,15 @@ const dict = {
     rows: [["01", "申请路线图", "交互式清单"], ["02", "需求矩阵", "证据已匹配"], ["03", "求职信", "可个性化"], ["04", "旅行行程", "12 天 · 已生成"]],
     download: "下载材料包",
     open: "打开我的工作台",
-    readyTitle: "你的签证材料包已就绪",
-    saveTitle: ["保存进度。", "放心完成。"],
-    modalBody: "创建免费工作区，下载文件、跟踪要求，并让官方来源保持最新。",
-    google: "使用 Google 继续",
-    email: "使用邮箱继续",
-    fineprint: "无需信用卡 · 你的文件保持私密",
-    close: "关闭",
     showPhoto: "显示照片：",
     hidePhoto: "隐藏照片：",
   },
   es: {
     home: "Inicio de Visa Master",
     getStarted: "Empezar",
+    finishSetup: "Completar perfil",
+    workspaceAction: "Espacio de trabajo",
+    greeting: "Hola,",
     useLight: "Usar tema claro",
     useDark: "Usar tema oscuro",
     localeName: "Cambiar idioma",
@@ -110,13 +108,6 @@ const dict = {
     rows: [["01", "Hoja de ruta", "Lista interactiva"], ["02", "Matriz de requisitos", "Evidencia emparejada"], ["03", "Carta de presentación", "Lista para personalizar"], ["04", "Itinerario de viaje", "12 días · generado"]],
     download: "Descargar paquete",
     open: "Abrir mi espacio de trabajo",
-    readyTitle: "TU PAQUETE DE VISA ESTÁ LISTO",
-    saveTitle: ["Guarda tu progreso.", "Termina con confianza."],
-    modalBody: "Crea un espacio de trabajo gratuito para descargar los archivos, seguir los requisitos y mantener las fuentes oficiales actualizadas.",
-    google: "Continuar con Google",
-    email: "Continuar con correo",
-    fineprint: "Sin tarjeta de crédito · Tus documentos permanecen privados",
-    close: "Cerrar",
     showPhoto: "Mostrar foto de",
     hidePhoto: "Ocultar foto de",
   },
@@ -357,6 +348,7 @@ export default function Home() {
   const [globeDocked, setGlobeDocked] = useState(false);
   const [globeReturning, setGlobeReturning] = useState(false);
   const [query, setQuery] = useState("");
+  const [viewerDisplayName, setViewerDisplayName] = useState<string | null>(null);
   const [gate, setGate] = useState(false);
   const [locale, setLocale] = useState<Locale>("en");
   const t = dict[locale];
@@ -372,15 +364,56 @@ export default function Home() {
   useEffect(() => {
     const saved = localStorage.getItem("locale") as Locale | null;
     const lang = navigator.language.toLowerCase();
-    setLocale(saved === "en" || saved === "cn" || saved === "es" ? saved : lang.startsWith("zh") ? "cn" : lang.startsWith("es") ? "es" : "en");
+    const frame = requestAnimationFrame(() => {
+      setLocale(saved === "en" || saved === "cn" || saved === "es" ? saved : lang.startsWith("zh") ? "cn" : lang.startsWith("es") ? "es" : "en");
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   useLayoutEffect(() => {
     const composer = journeyRef.current;
     const site = siteRef.current;
     if (!composer || !site) return;
+    let stableViewportWidth = window.innerWidth;
+    let stableVisualViewportHeight = window.visualViewport?.height ?? window.innerHeight;
+    let stableMobileComposerTop: number | null = null;
+
     const syncComposerEdge = () => {
-      const composerTop = composer.getBoundingClientRect().top;
+      const measuredComposerTop = composer.getBoundingClientRect().top;
+      const viewportWidth = window.innerWidth;
+      const visualViewportHeight = window.visualViewport?.height ?? window.innerHeight;
+      const activeElement = document.activeElement;
+      const textEntryFocused =
+        activeElement instanceof HTMLInputElement ||
+        activeElement instanceof HTMLTextAreaElement ||
+        (activeElement instanceof HTMLElement && activeElement.isContentEditable);
+      const viewportWidthChanged = Math.abs(viewportWidth - stableViewportWidth) > 1;
+
+      // iOS moves fixed elements into the shorter visual viewport when its
+      // software keyboard opens. Keep the composer visible, but do not treat
+      // that temporary position as a real layout resize for the globe.
+      if (viewportWidthChanged && !textEntryFocused) {
+        stableViewportWidth = viewportWidth;
+        stableVisualViewportHeight = visualViewportHeight;
+        stableMobileComposerTop = null;
+      }
+
+      const keyboardSizedViewport =
+        viewportWidth <= 700 &&
+        stableVisualViewportHeight - visualViewportHeight > 120;
+      const keyboardAffectsLayout =
+        viewportWidth <= 700 && (textEntryFocused || keyboardSizedViewport);
+
+      if (!keyboardAffectsLayout) {
+        stableViewportWidth = viewportWidth;
+        stableVisualViewportHeight = visualViewportHeight;
+        stableMobileComposerTop = measuredComposerTop;
+      }
+
+      const composerTop =
+        keyboardAffectsLayout && stableMobileComposerTop !== null
+          ? stableMobileComposerTop
+          : measuredComposerTop;
       site.style.setProperty("--composer-top", `${Math.round(composerTop)}px`);
 
       // The docked globe targets the actual brand slot instead of a second set
@@ -399,7 +432,6 @@ export default function Home() {
       // the navigation and above the composer. This keeps it visually balanced
       // across browser heights while still allowing the composer to graze its edge.
       if (stage === "idle") {
-        const viewportWidth = window.innerWidth;
         const globeSize = viewportWidth <= 700
           ? Math.min(viewportWidth * 1.12, 450, Math.max(0, composerTop - 230))
           : viewportWidth <= 980
@@ -481,7 +513,7 @@ export default function Home() {
     <main ref={siteRef} className={`site${darkTheme ? " theme-dark" : ""} stage-${stage}${globeReturning ? " globe-returning" : ""}`} data-theme={darkTheme ? "dark" : "light"} style={{ "--composer-top": "calc(100dvh - 148px)" } as CSSProperties}>
       <header className="topbar">
         <button className="brand" type="button" aria-label={t.home} onClick={returnToLanding}><span className="brand-mark-slot" ref={brandMarkRef}><span className="brand-orbit" /></span><span>visa<span>master</span></span></button>
-        <div className="top-actions"><span className="theme-toggle locale-toggle"><Icon name="lang" /><select aria-label={t.localeName} title={t.localeName} value={locale} onChange={(e) => setLocale(e.target.value as Locale)}><option value="en">English</option><option value="cn">中文</option><option value="es">Español</option></select></span><button className="theme-toggle" type="button" aria-label={darkTheme ? t.useLight : t.useDark} title={darkTheme ? t.useLight : t.useDark} onClick={() => setDarkTheme((current) => !current)}><Icon name={darkTheme ? "sun" : "moon"} /></button><button className="quiet-button" onClick={() => setGate(true)}>{t.getStarted}</button></div>
+        <div className="top-actions"><span className="theme-toggle locale-toggle"><Icon name="lang" /><select aria-label={t.localeName} title={t.localeName} value={locale} onChange={(e) => setLocale(e.target.value as Locale)}><option value="en">English</option><option value="cn">中文</option><option value="es">Español</option></select></span><button className="theme-toggle" type="button" aria-label={darkTheme ? t.useLight : t.useDark} title={darkTheme ? t.useLight : t.useDark} onClick={() => setDarkTheme((current) => !current)}><Icon name={darkTheme ? "sun" : "moon"} /></button><AccountButton getStarted={t.getStarted} finishSetup={t.finishSetup} workspace={t.workspaceAction} onGetStarted={() => setGate(true)} onViewerChange={setViewerDisplayName} /></div>
       </header>
 
       <section className="hero">
@@ -489,7 +521,7 @@ export default function Home() {
         <div className={`globe-home ${globeDocked ? "docked" : ""}`}>
           <Globe themeName={globeTheme} docked={globeDocked} locale={locale} />
         </div>
-        <div className="hero-copy"><h1><span className="hero-lead-line">{t.lead}</span><br /><em>{t.easy}</em></h1><p className="subhead">{t.subhead}</p></div>
+        <div className="hero-copy"><h1>{viewerDisplayName && <span className="hero-greeting"><span>{t.greeting}</span> <em>{viewerDisplayName}</em></span>}<span className="hero-lead-line">{t.lead}</span><br /><em>{t.easy}</em></h1><p className="subhead">{t.subhead}</p></div>
 
         <div className="journey-card" ref={journeyRef}>
           {stage === "idle" && <>
@@ -523,7 +555,7 @@ export default function Home() {
 
       <div className="product-foot">A <img src="luya-circle.svg" alt="Lüya" width="24" height="24" /> <span className="product-foot-brand">Lüya</span> product</div>
 
-      {gate && <div className="modal-backdrop" onMouseDown={() => setGate(false)}><div className="signup-modal" role="dialog" aria-modal="true" aria-labelledby="signup-title" onMouseDown={(e) => e.stopPropagation()}><button className="modal-close" onClick={() => setGate(false)} aria-label={t.close}>×</button><span className="modal-mark"><Icon name="spark" /></span><small>{t.readyTitle}</small><h2 id="signup-title">{t.saveTitle[0]}<br />{t.saveTitle[1]}</h2><p>{t.modalBody}</p><button className="google-button"><b>G</b> {t.google}</button><button className="email-button">{t.email} <Icon name="arrow" /></button><span className="fineprint">{t.fineprint}</span></div></div>}
+      <AuthDialog open={gate} onOpenChange={setGate} locale={locale} />
     </main>
   );
 }
