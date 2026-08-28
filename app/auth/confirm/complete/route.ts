@@ -42,6 +42,8 @@ export async function POST(request: NextRequest) {
         return NextResponse.redirect(onboardingUrl, 303);
       }
 
+      await supabase.auth.refreshSession();
+
       return NextResponse.redirect(new URL(next, request.url), 303);
     }
   }
