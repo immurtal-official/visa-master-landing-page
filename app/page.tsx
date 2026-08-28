@@ -4,9 +4,9 @@ import { createClient } from "@/lib/supabase/server";
 
 export default async function Home() {
   const supabase = await createClient();
-  const { data, error } = await supabase.auth.getClaims();
-  const initialViewer = !error && data?.claims.sub
-    ? { displayName: displayNameFromMetadata(data.claims.user_metadata ?? {}) }
+  const { data, error } = await supabase.auth.getUser();
+  const initialViewer = !error && data.user
+    ? { displayName: displayNameFromMetadata(data.user.user_metadata) }
     : null;
 
   return <LandingPage initialViewer={initialViewer} />;
