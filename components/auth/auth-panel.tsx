@@ -147,6 +147,10 @@ function authRedirect(next: string) {
   return `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
 }
 
+function emailConfirmationRedirect(next: string) {
+  return `${window.location.origin}/auth/confirm?next=${encodeURIComponent(next)}`;
+}
+
 export function AuthPanel({
   locale = "en",
   next = "/workspace",
@@ -255,7 +259,7 @@ export function AuthPanel({
         const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: authRedirect(next) },
+          options: { emailRedirectTo: emailConfirmationRedirect(next) },
         });
         if (signUpError) {
           const accountMayExist =
