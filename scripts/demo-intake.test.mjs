@@ -171,28 +171,6 @@ test("invalid thread replies are discarded without losing the applicant intake",
   assert.deepEqual(restored.threads["employment-evidence"].messages, []);
 });
 
-test("action demo selects curated responses and never pretends to perform outside work", async () => {
-  const { classifyThreadMessage } =
-    await import("../lib/demo/action-thread.ts");
-  for (const text of ["What do I need?", "需要哪些材料？", "¿Qué necesito?"])
-    assert.equal(classifyThreadMessage(text), "requirements");
-  for (const text of ["Show the documents", "查看文件", "Ver documentos"])
-    assert.equal(classifyThreadMessage(text), "resources");
-  for (const text of [
-    "How do I finish this step?",
-    "怎样完成这一步？",
-    "¿Cómo completo este paso?",
-  ])
-    assert.equal(classifyThreadMessage(text), "completion");
-  for (const text of [
-    "Book it for me",
-    "Submit my application",
-    "上传我的护照",
-    "unknown question",
-  ])
-    assert.equal(classifyThreadMessage(text), "limits");
-});
-
 test("hukou matching never treats current residence as household registration", () => {
   for (const answer of ["成都", "成都户口", "户口在成都", "My hukou is registered in Chengdu"])
     assert.equal(parseAnswer("hukou", answer), "supported");

@@ -35,6 +35,7 @@ The page presents one responsive visual direction with a warm light theme and a 
 - The hero message “DIY visa applications. The easy way.”
 - A destination prompt with example searches.
 - A deterministic Chengdu → Spain intake conversation, editable route review, and a Workspace with 14 Case actions.
+- Landing and intake live at `/`; the authenticated demo Workspace lives at `/workspace`. Login returns there directly, restoring the same tab's sessionStorage state. Missing or incomplete intake returns to `/`.
 - Contextual guide/template previews, official source links, and an application-form field reference from the existing curated route.
 - A private-beta waitlist with revocable, single-use invite phrases and a five-failures-per-IP, 24-hour limit.
 - Supabase Auth for invited email/password and Google accounts, plus a separate path for existing users.

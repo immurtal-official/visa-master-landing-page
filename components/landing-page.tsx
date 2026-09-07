@@ -3,16 +3,17 @@
 import createGlobe from "cobe";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { CSSProperties, FormEvent, PointerEvent as ReactPointerEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { Icon } from "@/components/site-icon";
 import { AuthDialog } from "@/components/auth/auth-panel";
 import { AccountButton, type AccountViewer } from "@/components/auth/account-button";
 
 import { IntakeThread } from "@/components/demo/intake-thread";
-import { CaseWorkspace } from "@/components/demo/case-workspace";
-import { local, matchesRoute, restoreDemo, startDemo, storageKey, type DemoState } from "@/lib/demo/intake";
+import { restoreDemo, startDemo, storageKey, type DemoState } from "@/lib/demo/intake";
 
-type Stage = "idle" | "thread" | "workspace";
+type Stage = "idle" | "thread";
 
 const dict = {
   en: {
@@ -291,22 +292,9 @@ function Globe({ themeName, docked, locale }: { themeName: keyof typeof globeThe
   </>;
 }
 
-function Icon({ name }: { name: "spark" | "arrow" | "file" | "folder" | "check" | "lock" | "source" | "sun" | "moon" | "lang" }) {
-  const paths = {
-    spark: <><path d="M12 2l1.45 5.1L18 9l-4.55 1.9L12 16l-1.45-5.1L6 9l4.55-1.9L12 2Z"/><path d="m5 15 .8 2.2L8 18l-2.2.8L5 21l-.8-2.2L2 18l2.2-.8L5 15Z"/></>,
-    arrow: <><path d="M5 12h13"/><path d="m14 7 5 5-5 5"/></>,
-    file: <><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></>,
-    folder: <path d="M3 6h7l2 2h9v11H3z"/>, check: <path d="m5 12 4 4L19 6"/>,
-    lock: <><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></>,
-    source: <><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></>,
-    sun: <><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></>,
-    moon: <path d="M20 15.2A8.5 8.5 0 0 1 8.8 4a8.5 8.5 0 1 0 11.2 11.2Z"/>,
-    lang: <><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></>,
-  };
-  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>;
-}
 
 export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | null }) {
+  const router = useRouter();
   const siteRef = useRef<HTMLElement>(null);
   const journeyRef = useRef<HTMLDivElement>(null);
   const brandMarkRef = useRef<HTMLSpanElement>(null);
@@ -333,6 +321,10 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
     if (localeReady) { try { localStorage.setItem("locale", locale); } catch { /* Storage is optional. */ } }
   }, [locale, localeReady]);
 
+  useEffect(() => {
+    if (localeReady) { try { localStorage.setItem("theme", darkTheme ? "dark" : "light"); } catch { /* Storage is optional. */ } }
+  }, [darkTheme, localeReady]);
+
   // Detect the saved/browser locale only after hydration so the server-rendered
   // HTML always matches the client's first render (no hydration mismatch).
   useEffect(() => {
@@ -344,11 +336,10 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
     } catch { /* Continue without browser storage. */ }
     const lang = navigator.language.toLowerCase();
     const frame = requestAnimationFrame(() => {
+      try { setDarkTheme(localStorage.getItem("theme") === "dark"); } catch { /* Storage is optional. */ }
       setLocaleReady(true);
       if (restored) {
-        const requested = new URLSearchParams(window.location.search).get("openWorkspace") === "1";
-        const view = initialViewer && (restored.view === "workspace" || requested) && matchesRoute(restored.answers) ? "workspace" : "thread";
-        setDemo({ ...restored, view }); setQuery(restored.query); setStage(view); setGlobeDocked(true);
+        setDemo({ ...restored, view: "thread" }); setQuery(restored.query); setStage("thread"); setGlobeDocked(true);
       }
       setLocale(saved === "en" || saved === "cn" || saved === "es" ? saved : lang.startsWith("zh") ? "cn" : lang.startsWith("es") ? "es" : "en");
     });
@@ -360,35 +351,21 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
   }, [demo]);
 
   function updateDemo(next: DemoState) {
-    if (next.view === "workspace" && !viewer) {
-      setDemo({ ...next, view: "thread" });
-      setStage("thread");
-      setGateForWorkspace(true);
-      setGate(true);
+    if (next.view === "workspace") {
+      // Persist before navigation: effects may not run before this page unmounts.
+      try { sessionStorage.setItem(storageKey, JSON.stringify(next)); } catch { /* Workspace will return to intake if storage is unavailable. */ }
+      if (viewer) {
+        router.push("/workspace");
+      } else {
+        setDemo({ ...next, view: "thread" });
+        setStage("thread");
+        setGateForWorkspace(true);
+        setGate(true);
+      }
       return;
     }
-    setDemo(next); setStage(next.view);
+    setDemo(next); setStage("thread");
   }
-
-  useEffect(() => {
-    if (!viewer || !demo || !gateForWorkspace || !matchesRoute(demo.answers)) return;
-    const frame = requestAnimationFrame(() => {
-      setDemo({ ...demo, view: "workspace" });
-      setStage("workspace");
-      setGate(false);
-      setGateForWorkspace(false);
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [viewer, demo, gateForWorkspace]);
-
-  useEffect(() => {
-    if (viewer || !demo || demo.view !== "workspace") return;
-    const frame = requestAnimationFrame(() => {
-      setDemo({ ...demo, view: "thread" });
-      setStage("thread");
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [viewer, demo]);
 
   function changeGate(open: boolean) {
     setGate(open);
@@ -542,18 +519,7 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
     <main ref={siteRef} className={`site${darkTheme ? " theme-dark" : ""} stage-${stage}${globeReturning ? " globe-returning" : ""}`} data-theme={darkTheme ? "dark" : "light"} style={{ "--composer-top": "calc(100dvh - 148px)" } as CSSProperties}>
       <header className="topbar">
         <button className="brand" type="button" aria-label={t.home} onClick={returnToLanding}>{stage !== "idle" && <svg className="demo-back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 12H5m6-6-6 6 6 6" /></svg>}<span className="brand-mark-slot" ref={brandMarkRef}><span className="brand-orbit" /></span><span>visa<span>master</span></span></button>
-        {stage === "workspace" && (
-          <div className="workspace-route-heading">
-            <div className="workspace-journey-line">
-              <span className="workspace-route-name">{local(locale, "Chengdu → Spain", "成都 → 西班牙", "Chengdú → España")}</span>
-            </div>
-            <div className="workspace-journey-meta" title={local(locale, "Tourism · Schengen short-stay · Employed adult · 1 applicant", "旅游 · 申根短期签证 · 在职成年人 · 1 位申请人", "Turismo · Estancia corta Schengen · Adulto empleado · 1 solicitante")}>
-              <span>{local(locale, "Tourism · Schengen short-stay", "旅游 · 申根短期签证", "Turismo · Estancia corta Schengen")}</span>
-              <span className="workspace-route-profile">{local(locale, "Employed adult · 1 applicant", "在职成年人 · 1 位申请人", "Adulto empleado · 1 solicitante")}</span>
-            </div>
-          </div>
-        )}
-        <div className="top-actions"><span className="theme-toggle locale-toggle"><Icon name="lang" /><select aria-label={t.localeName} title={t.localeName} value={locale} onChange={(e) => setLocale(e.target.value as Locale)}><option value="en">English</option><option value="cn">中文</option><option value="es">Español</option></select></span><button className="theme-toggle" type="button" aria-label={darkTheme ? t.useLight : t.useDark} title={darkTheme ? t.useLight : t.useDark} onClick={() => setDarkTheme((current) => !current)}><Icon name={darkTheme ? "sun" : "moon"} /></button><AccountButton getStarted={t.getStarted} finishSetup={t.finishSetup} workspace={t.workspaceAction} initialViewer={initialViewer} onGetStarted={() => { setGateForWorkspace(false); setGate(true); }} onViewerChange={setViewer} onWorkspace={demo ? () => updateDemo({ ...demo, view: matchesRoute(demo.answers) ? "workspace" : "thread" }) : undefined} /></div>
+        <div className="top-actions"><span className="theme-toggle locale-toggle"><Icon name="lang" /><select aria-label={t.localeName} title={t.localeName} value={locale} onChange={(e) => setLocale(e.target.value as Locale)}><option value="en">English</option><option value="cn">中文</option><option value="es">Español</option></select></span><button className="theme-toggle" type="button" aria-label={darkTheme ? t.useLight : t.useDark} title={darkTheme ? t.useLight : t.useDark} onClick={() => setDarkTheme((current) => !current)}><Icon name={darkTheme ? "sun" : "moon"} /></button><AccountButton getStarted={t.getStarted} finishSetup={t.finishSetup} workspace={t.workspaceAction} initialViewer={initialViewer} onGetStarted={() => { setGateForWorkspace(false); setGate(true); }} onViewerChange={setViewer} /></div>
       </header>
 
       <section className="hero">
@@ -575,7 +541,7 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
 
         </div>
         {stage !== "idle" && demo && <div className="demo-surface">
-          {stage === "thread" || !viewer ? <IntakeThread state={demo} locale={locale} onChange={updateDemo} /> : <CaseWorkspace state={demo} locale={locale} onChange={updateDemo} viewer={viewer} onSignedOut={() => { setViewer(null); updateDemo({ ...demo, view: "thread" }); }} />}
+          <IntakeThread state={demo} locale={locale} onChange={updateDemo} />
         </div>}
       </section>
 
@@ -584,7 +550,7 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
         <nav aria-label="Legal"><Link href="/privacy">{t.privacy}</Link><Link href="/terms">{t.terms}</Link></nav>
       </footer>
 
-      <AuthDialog open={gate} onOpenChange={changeGate} locale={locale} forWorkspace={gateForWorkspace} next={gateForWorkspace ? "/?openWorkspace=1" : "/workspace"} />
+      <AuthDialog open={gate} onOpenChange={changeGate} locale={locale} forWorkspace={gateForWorkspace} next="/workspace" />
     </main>
   );
 }

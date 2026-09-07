@@ -17,7 +17,6 @@ export function AccountButton({
   initialViewer,
   onGetStarted,
   onViewerChange,
-  onWorkspace,
 }: {
   getStarted: string;
   finishSetup: string;
@@ -25,7 +24,6 @@ export function AccountButton({
   initialViewer: AccountViewer | null;
   onGetStarted: () => void;
   onViewerChange: (viewer: AccountViewer | null) => void;
-  onWorkspace?: () => void;
 }) {
   const router = useRouter();
   const [viewer, setViewer] = useState<AccountViewer | null>(initialViewer);
@@ -89,7 +87,7 @@ export function AccountButton({
     <button
       className="quiet-button account-button"
       type="button"
-      onClick={onWorkspace ?? (() => router.push(viewer.displayName ? "/workspace" : "/onboarding/profile?next=/workspace"))}
+      onClick={() => router.push(viewer.displayName ? "/workspace" : "/onboarding/profile?next=/workspace")}
     >
       {viewer.displayName ? workspace : finishSetup}
     </button>
