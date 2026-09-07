@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "visa-master.route-artifacts.v1",
+  "requirements": [
+    { "id": "application-form", "claims": ["passport-insurance-biometrics"], "disposition": "official", "artifact": "schengen-application-form", "userAction": "Complete and sign the current official form." },
+    { "id": "local-checklist", "claims": ["employment", "financial", "travel-evidence", "insurance", "passport-hukou", "photos"], "disposition": "official", "artifact": "chengdu-tourism-checklist", "userAction": "Use the current local checklist to assemble the application." },
+    { "id": "acknowledgment", "claims": ["questionnaire"], "disposition": "official", "artifact": "acknowledgment-questionnaire", "userAction": "Read, date, and sign the acknowledgment." },
+    { "id": "start-guide", "claims": ["jurisdiction", "provider", "center", "fees", "submission", "filing-window", "processing", "biometric-reuse"], "disposition": "generated-pdf", "artifact": "start-here-master-checklist", "userAction": "Read first and recheck volatile details before submission." },
+    { "id": "submission-index", "claims": ["employment", "financial", "travel-evidence", "insurance", "passport-hukou", "photos"], "disposition": "generated-pdf", "artifact": "submission-index", "userAction": "Track collection and submission order." },
+    { "id": "form-guide", "claims": ["passport-insurance-biometrics", "biometric-reuse", "travel-evidence"], "disposition": "generated-pdf", "artifact": "application-form-field-guide", "userAction": "Use locally while completing the official form." },
+    { "id": "employer-letter", "claims": ["employment"], "disposition": "generated-docx", "artifact": "employer-letter-template", "userAction": "Have the employer verify, issue, stamp, sign, and date it." },
+    { "id": "itinerary", "claims": ["travel-evidence"], "disposition": "generated-docx", "artifact": "itinerary-template", "userAction": "Replace placeholders with genuine consistent trip facts." },
+    { "id": "cover-letter", "claims": ["travel-evidence", "employment", "financial"], "disposition": "optional-generated-docx", "artifact": "cover-letter-template", "userAction": "Use only when a concise supported explanation helps." },
+    { "id": "financial-summary", "claims": ["financial"], "disposition": "optional-generated-docx", "artifact": "financial-summary-template", "userAction": "Use locally only if genuine transactions need organization or explanation." },
+    { "id": "sources-and-warnings", "claims": ["jurisdiction", "provider", "fees", "submission", "filing-window", "processing", "biometric-reuse", "questionnaire"], "disposition": "generated-pdf", "artifact": "sources-warnings", "userAction": "Use the source register to recheck volatile details." },
+    { "id": "passport-and-hukou", "claims": ["passport-hukou"], "disposition": "applicant-supplied", "userAction": "Add genuine originals and copies; never fabricate." },
+    { "id": "photos", "claims": ["photos"], "disposition": "applicant-supplied", "userAction": "Obtain compliant recent photographs." },
+    { "id": "employment-evidence", "claims": ["employment"], "disposition": "applicant-or-employer-supplied", "userAction": "Add the genuine business licence copy and issued employer letter." },
+    { "id": "bank-statements", "claims": ["financial"], "disposition": "third-party-supplied", "userAction": "Obtain genuine personal bank statements for the required period." },
+    { "id": "bookings-and-insurance", "claims": ["travel-evidence", "insurance"], "disposition": "third-party-supplied", "userAction": "Add genuine active transport, accommodation, and insurance evidence." }
+  ]
+}

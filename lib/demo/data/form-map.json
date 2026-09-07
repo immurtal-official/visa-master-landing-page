@@ -1,0 +1,4657 @@
+{
+  "schemaVersion": "visa-master.forms.v1",
+  "mapId": "schengen-application.spain-es-en-zh.2026-08",
+  "revision": 3,
+  "source": {
+    "filename": "02_Official_Schengen_Visa_Application_Form.pdf",
+    "sha256": "bb5f0f894d5264a437daf729aba9903e28251c83d36ee94b0e2c629487ca9ffe",
+    "classification": "flattened-selectable-text",
+    "documentFamily": "schengen-application",
+    "edition": "Spain harmonised application form ES-EN-ZH, retrieved 2026-07-31",
+    "languages": [
+      "es",
+      "en",
+      "zh"
+    ],
+    "pageCount": 5,
+    "pages": [
+      {
+        "page": 1,
+        "rotation": 0,
+        "width": 594.9600219726562,
+        "height": 842.0399780273438
+      },
+      {
+        "page": 2,
+        "rotation": 0,
+        "width": 594.9600219726562,
+        "height": 842.0399780273438
+      },
+      {
+        "page": 3,
+        "rotation": 0,
+        "width": 594.9600219726562,
+        "height": 842.0399780273438
+      },
+      {
+        "page": 4,
+        "rotation": 0,
+        "width": 594.9600219726562,
+        "height": 842.0399780273438
+      },
+      {
+        "page": 5,
+        "rotation": 0,
+        "width": 594.9600219726562,
+        "height": 842.0399780273438
+      }
+    ]
+  },
+  "coordinateSystem": {
+    "origin": "top-left",
+    "unit": "pdf-points"
+  },
+  "questions": [
+    {
+      "id": "applicant.birth.country",
+      "profileKey": "applicant.birth.country",
+      "label": "6. Country of birth",
+      "prompt": "6. Country of birth",
+      "type": "text",
+      "required": true,
+      "format": "country",
+      "transforms": [
+        "uppercase"
+      ]
+    },
+    {
+      "id": "applicant.birth.date",
+      "profileKey": "applicant.birth.date",
+      "label": "4. Date of birth",
+      "prompt": "4. Date of birth",
+      "type": "date",
+      "required": true,
+      "format": "dd-mm-yyyy",
+      "validation": {
+        "pattern": "^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\\d{4}$"
+      }
+    },
+    {
+      "id": "applicant.birth.place",
+      "profileKey": "applicant.birth.place",
+      "label": "5. Place of birth",
+      "prompt": "5. Place of birth",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "transforms": [
+        "uppercase"
+      ]
+    },
+    {
+      "id": "applicant.contact.address",
+      "profileKey": "applicant.contact.address",
+      "label": "19. Home address",
+      "prompt": "19. Home address",
+      "type": "multiline",
+      "required": true,
+      "format": "plain",
+      "validation": {
+        "maxLength": 140
+      }
+    },
+    {
+      "id": "applicant.contact.email",
+      "profileKey": "applicant.contact.email",
+      "label": "19. E-mail address",
+      "prompt": "19. E-mail address",
+      "type": "multiline",
+      "required": true,
+      "format": "email"
+    },
+    {
+      "id": "applicant.contact.phone",
+      "profileKey": "applicant.contact.phone",
+      "label": "19. Telephone number(s)",
+      "prompt": "19. Telephone number(s)",
+      "type": "multiline",
+      "required": true,
+      "format": "phone",
+      "validation": {
+        "pattern": "^\\+?[0-9 ()-]{7,25}$"
+      }
+    },
+    {
+      "id": "applicant.guardian.address",
+      "profileKey": "applicant.guardian.address",
+      "label": "Guardian address",
+      "prompt": "Guardian address",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "applicant.is_minor",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "applicant.guardian.email",
+      "profileKey": "applicant.guardian.email",
+      "label": "Guardian e-mail",
+      "prompt": "Guardian e-mail",
+      "type": "text",
+      "required": true,
+      "format": "email",
+      "condition": {
+        "eq": {
+          "field": "applicant.is_minor",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "applicant.guardian.family",
+      "profileKey": "applicant.guardian.name.family",
+      "label": "Guardian surname",
+      "prompt": "Guardian surname",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "applicant.is_minor",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "applicant.guardian.given",
+      "profileKey": "applicant.guardian.name.given",
+      "label": "Guardian given name",
+      "prompt": "Guardian given name",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "applicant.is_minor",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "applicant.guardian.nationality",
+      "profileKey": "applicant.guardian.nationality",
+      "label": "Guardian nationality",
+      "prompt": "Guardian nationality",
+      "type": "text",
+      "required": true,
+      "format": "country",
+      "condition": {
+        "eq": {
+          "field": "applicant.is_minor",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "applicant.guardian.phone",
+      "profileKey": "applicant.guardian.phone",
+      "label": "Guardian telephone",
+      "prompt": "Guardian telephone",
+      "type": "text",
+      "required": true,
+      "format": "phone",
+      "condition": {
+        "eq": {
+          "field": "applicant.is_minor",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "applicant.identity.national_id",
+      "profileKey": "applicant.identity.national_id",
+      "label": "11. National identity number",
+      "prompt": "11. National identity number",
+      "type": "text",
+      "required": false,
+      "format": "plain",
+      "validation": {
+        "maxLength": 30
+      }
+    },
+    {
+      "id": "applicant.marital_status",
+      "profileKey": "applicant.marital_status",
+      "label": "Civil status",
+      "prompt": "Select the applicant civil status.",
+      "type": "single-choice",
+      "required": true,
+      "choices": [
+        {
+          "value": "single",
+          "label": "Single"
+        },
+        {
+          "value": "married",
+          "label": "Married"
+        },
+        {
+          "value": "registered_union",
+          "label": "Registered union"
+        },
+        {
+          "value": "separated",
+          "label": "Separated"
+        },
+        {
+          "value": "divorced",
+          "label": "Divorced"
+        },
+        {
+          "value": "widowed",
+          "label": "Widowed"
+        },
+        {
+          "value": "other",
+          "label": "Other"
+        }
+      ],
+      "validation": {
+        "minSelections": 1,
+        "maxSelections": 1
+      }
+    },
+    {
+      "id": "applicant.marital_status.other_detail",
+      "profileKey": "applicant.marital_status.other_detail",
+      "label": "9. Other marital status detail",
+      "prompt": "9. Other marital status detail",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "applicant.marital_status",
+          "value": "other"
+        }
+      }
+    },
+    {
+      "id": "applicant.name.family",
+      "profileKey": "applicant.name.family",
+      "label": "1. Surname(s)",
+      "prompt": "1. Surname(s)",
+      "type": "text",
+      "required": true,
+      "format": "passport-name",
+      "transforms": [
+        "uppercase"
+      ],
+      "guidance": "Enter the surname exactly as shown in the travel document. The Workspace converts letters to uppercase.",
+      "references": [
+        {
+          "title": "Official harmonised application form, field 1"
+        }
+      ],
+      "validation": {
+        "maxLength": 60
+      }
+    },
+    {
+      "id": "applicant.name.family_at_birth",
+      "profileKey": "applicant.name.family_at_birth",
+      "label": "2. Surname at birth",
+      "prompt": "2. Surname at birth",
+      "type": "text",
+      "required": true,
+      "format": "passport-name",
+      "transforms": [
+        "uppercase"
+      ],
+      "guidance": "Enter the surname held at birth even when it is the same as the current surname. Do not leave this required field blank.",
+      "references": [
+        {
+          "title": "Official harmonised application form, field 2"
+        }
+      ]
+    },
+    {
+      "id": "applicant.name.given",
+      "profileKey": "applicant.name.given",
+      "label": "3. Given name(s)",
+      "prompt": "3. Given name(s)",
+      "type": "text",
+      "required": true,
+      "format": "passport-name",
+      "transforms": [
+        "uppercase"
+      ]
+    },
+    {
+      "id": "applicant.nationality.birth",
+      "profileKey": "applicant.nationality.birth",
+      "label": "7. Nationality at birth, if different",
+      "prompt": "7. Nationality at birth, if different",
+      "type": "text",
+      "required": true,
+      "format": "country",
+      "condition": {
+        "eq": {
+          "field": "applicant.nationality.birth_differs",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "applicant.nationality.current",
+      "profileKey": "applicant.nationality.current",
+      "label": "7. Current nationality",
+      "prompt": "7. Current nationality",
+      "type": "text",
+      "required": true,
+      "format": "country",
+      "transforms": [
+        "uppercase"
+      ]
+    },
+    {
+      "id": "applicant.nationality.other",
+      "profileKey": "applicant.nationality.other",
+      "label": "7. Other nationalities",
+      "prompt": "7. Other nationalities",
+      "type": "text",
+      "required": true,
+      "format": "country",
+      "condition": {
+        "eq": {
+          "field": "applicant.has_additional_nationality",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "applicant.occupation.current",
+      "profileKey": "applicant.occupation.current",
+      "label": "21. Current occupation",
+      "prompt": "21. Current occupation",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "transforms": [
+        "uppercase"
+      ],
+      "condition": {
+        "not": {
+          "eq": {
+            "field": "applicant.eu_family_qualified",
+            "value": true
+          }
+        }
+      }
+    },
+    {
+      "id": "applicant.photo",
+      "profileKey": "applicant.photo",
+      "label": "Photo",
+      "prompt": "Attach a compliant visa photograph",
+      "type": "photo",
+      "required": true,
+      "format": "photo"
+    },
+    {
+      "id": "applicant.sex",
+      "profileKey": "applicant.sex",
+      "label": "Sex",
+      "prompt": "Select the applicant sex shown on the form.",
+      "type": "single-choice",
+      "required": true,
+      "choices": [
+        {
+          "value": "male",
+          "label": "Male"
+        },
+        {
+          "value": "female",
+          "label": "Female"
+        },
+        {
+          "value": "other",
+          "label": "Other"
+        }
+      ],
+      "validation": {
+        "minSelections": 1,
+        "maxSelections": 1
+      }
+    },
+    {
+      "id": "biometrics.previous",
+      "profileKey": "biometrics.previous",
+      "label": "Previous Schengen fingerprints",
+      "prompt": "Were fingerprints previously collected for a Schengen visa application?",
+      "type": "single-choice",
+      "required": true,
+      "choices": [
+        {
+          "value": "no",
+          "label": "No"
+        },
+        {
+          "value": "yes",
+          "label": "Yes"
+        }
+      ],
+      "validation": {
+        "minSelections": 1,
+        "maxSelections": 1
+      }
+    },
+    {
+      "id": "biometrics.previous.date",
+      "profileKey": "biometrics.previous.date",
+      "label": "29. Previous fingerprint date",
+      "prompt": "29. Previous fingerprint date",
+      "type": "date",
+      "required": false,
+      "format": "dd-mm-yyyy",
+      "condition": {
+        "eq": {
+          "field": "biometrics.previous",
+          "value": "yes"
+        }
+      }
+    },
+    {
+      "id": "biometrics.previous.visa_number",
+      "profileKey": "biometrics.previous.visa_number",
+      "label": "29. Previous visa sticker number",
+      "prompt": "29. Previous visa sticker number",
+      "type": "text",
+      "required": false,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "biometrics.previous",
+          "value": "yes"
+        }
+      }
+    },
+    {
+      "id": "declaration.date",
+      "profileKey": "declaration.date",
+      "label": "Date",
+      "prompt": "Date",
+      "type": "date",
+      "required": true,
+      "format": "dd-mm-yyyy"
+    },
+    {
+      "id": "declaration.place",
+      "profileKey": "declaration.place",
+      "label": "Place",
+      "prompt": "Place",
+      "type": "multiline",
+      "required": true,
+      "format": "plain"
+    },
+    {
+      "id": "declaration.signature",
+      "profileKey": "declaration.signature",
+      "label": "Signature (guardian for minors, if applicable)",
+      "prompt": "Sign the declaration",
+      "type": "signature",
+      "required": true,
+      "format": "signature"
+    },
+    {
+      "id": "employment.address",
+      "profileKey": "employment.address",
+      "label": "22. Employer/educational institution address",
+      "prompt": "22. Employer/educational institution address",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "not": {
+          "eq": {
+            "field": "applicant.eu_family_qualified",
+            "value": true
+          }
+        }
+      }
+    },
+    {
+      "id": "employment.name",
+      "profileKey": "employment.name",
+      "label": "22. Employer/educational institution name",
+      "prompt": "22. Employer/educational institution name",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "not": {
+          "eq": {
+            "field": "applicant.eu_family_qualified",
+            "value": true
+          }
+        }
+      }
+    },
+    {
+      "id": "employment.phone",
+      "profileKey": "employment.phone",
+      "label": "22. Employer telephone",
+      "prompt": "22. Employer telephone",
+      "type": "text",
+      "required": true,
+      "format": "phone",
+      "condition": {
+        "not": {
+          "eq": {
+            "field": "applicant.eu_family_qualified",
+            "value": true
+          }
+        }
+      }
+    },
+    {
+      "id": "eu_family_member.birth_date",
+      "profileKey": "eu_family_member.birth_date",
+      "label": "17. Family member date of birth",
+      "prompt": "17. Family member date of birth",
+      "type": "date",
+      "required": true,
+      "format": "dd-mm-yyyy",
+      "condition": {
+        "eq": {
+          "field": "applicant.eu_family_qualified",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "eu_family_member.document_number",
+      "profileKey": "eu_family_member.document_number",
+      "label": "17. Family member travel/ID number",
+      "prompt": "17. Family member travel/ID number",
+      "type": "multiline",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "applicant.eu_family_qualified",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "eu_family_member.name.family",
+      "profileKey": "eu_family_member.name.family",
+      "label": "17. Family member surname",
+      "prompt": "17. Family member surname",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "applicant.eu_family_qualified",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "eu_family_member.name.given",
+      "profileKey": "eu_family_member.name.given",
+      "label": "17. Family member given name",
+      "prompt": "17. Family member given name",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "applicant.eu_family_qualified",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "eu_family_member.nationality",
+      "profileKey": "eu_family_member.nationality",
+      "label": "17. Family member nationality",
+      "prompt": "17. Family member nationality",
+      "type": "multiline",
+      "required": true,
+      "format": "country",
+      "condition": {
+        "eq": {
+          "field": "applicant.eu_family_qualified",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "eu_family_member.relationship",
+      "profileKey": "eu_family_member.relationship",
+      "label": "Relationship to the EU family member",
+      "prompt": "Select the qualifying family relationship.",
+      "type": "single-choice",
+      "required": true,
+      "choices": [
+        {
+          "value": "spouse",
+          "label": "Spouse"
+        },
+        {
+          "value": "child",
+          "label": "Child"
+        },
+        {
+          "value": "grandchild",
+          "label": "Grandchild"
+        },
+        {
+          "value": "dependent_ascendant",
+          "label": "Dependent ascendant"
+        },
+        {
+          "value": "registered_partnership",
+          "label": "Registered partnership"
+        },
+        {
+          "value": "other",
+          "label": "Other"
+        }
+      ],
+      "validation": {
+        "minSelections": 1,
+        "maxSelections": 1
+      },
+      "condition": {
+        "eq": {
+          "field": "applicant.eu_family_qualified",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "eu_family_member.relationship.other_detail",
+      "profileKey": "eu_family_member.relationship.other_detail",
+      "label": "18. Other family relationship detail",
+      "prompt": "18. Other family relationship detail",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "all": [
+          {
+            "eq": {
+              "field": "applicant.eu_family_qualified",
+              "value": true
+            }
+          },
+          {
+            "eq": {
+              "field": "eu_family_member.relationship",
+              "value": "other"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "final_destination_permit.issued_by",
+      "profileKey": "final_destination_permit.issued_by",
+      "label": "30. Entry permit issued by",
+      "prompt": "30. Entry permit issued by",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.final_destination_permit_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "final_destination_permit.valid_from",
+      "profileKey": "final_destination_permit.valid_from",
+      "label": "30. Entry permit valid from",
+      "prompt": "30. Entry permit valid from",
+      "type": "date",
+      "required": true,
+      "format": "dd-mm-yyyy",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.final_destination_permit_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "final_destination_permit.valid_until",
+      "profileKey": "final_destination_permit.valid_until",
+      "label": "30. Entry permit valid until",
+      "prompt": "30. Entry permit valid until",
+      "type": "date",
+      "required": true,
+      "format": "dd-mm-yyyy",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.final_destination_permit_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "form_filler.address",
+      "profileKey": "form_filler.address",
+      "label": "Form filler address",
+      "prompt": "Form filler address",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "form_filler.differs_from_applicant",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "form_filler.email",
+      "profileKey": "form_filler.email",
+      "label": "Form filler e-mail",
+      "prompt": "Form filler e-mail",
+      "type": "text",
+      "required": false,
+      "format": "email",
+      "condition": {
+        "eq": {
+          "field": "form_filler.differs_from_applicant",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "form_filler.name.family",
+      "profileKey": "form_filler.name.family",
+      "label": "34. Form filler surname",
+      "prompt": "34. Form filler surname",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "form_filler.differs_from_applicant",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "form_filler.name.given",
+      "profileKey": "form_filler.name.given",
+      "label": "34. Form filler given name",
+      "prompt": "34. Form filler given name",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "form_filler.differs_from_applicant",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "form_filler.phone",
+      "profileKey": "form_filler.phone",
+      "label": "Form filler phone",
+      "prompt": "Form filler phone",
+      "type": "text",
+      "required": true,
+      "format": "phone",
+      "condition": {
+        "eq": {
+          "field": "form_filler.differs_from_applicant",
+          "value": true
+        }
+      }
+    },
+    {
+      "id": "funding.applicant.means",
+      "profileKey": "funding.applicant.means",
+      "label": "Applicant means of support",
+      "prompt": "Select every means provided by the applicant.",
+      "type": "multiple-choice",
+      "required": true,
+      "choices": [
+        {
+          "value": "cash",
+          "label": "Cash"
+        },
+        {
+          "value": "traveller_cheques",
+          "label": "Traveller cheques"
+        },
+        {
+          "value": "credit_card",
+          "label": "Credit card"
+        },
+        {
+          "value": "pre_paid_accommodation",
+          "label": "Pre-paid accommodation"
+        },
+        {
+          "value": "pre_paid_transport",
+          "label": "Pre-paid transport"
+        },
+        {
+          "value": "other",
+          "label": "Other"
+        }
+      ],
+      "validation": {
+        "minSelections": 1,
+        "maxSelections": 6
+      },
+      "condition": {
+        "contains": {
+          "field": "funding.payer",
+          "value": "applicant"
+        }
+      }
+    },
+    {
+      "id": "funding.applicant.means.other_detail",
+      "profileKey": "funding.applicant.means.other_detail",
+      "label": "33. Applicant other means detail",
+      "prompt": "33. Applicant other means detail",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "contains": {
+          "field": "funding.applicant.means",
+          "value": "other"
+        }
+      }
+    },
+    {
+      "id": "funding.payer",
+      "profileKey": "funding.payer",
+      "label": "Travel costs paid by",
+      "prompt": "Select every party covering travel and living costs.",
+      "type": "multiple-choice",
+      "required": true,
+      "choices": [
+        {
+          "value": "applicant",
+          "label": "Applicant"
+        },
+        {
+          "value": "sponsor",
+          "label": "Sponsor"
+        }
+      ],
+      "validation": {
+        "minSelections": 1,
+        "maxSelections": 2
+      }
+    },
+    {
+      "id": "funding.sponsor.identity",
+      "profileKey": "funding.sponsor.identity",
+      "label": "Sponsor identity",
+      "prompt": "Identify where the sponsor is specified.",
+      "type": "single-choice",
+      "required": true,
+      "choices": [
+        {
+          "value": "referred_to_in_field_30_or_31",
+          "label": "Referred to in field 30 or 31"
+        },
+        {
+          "value": "other_sponsor",
+          "label": "Other sponsor"
+        }
+      ],
+      "validation": {
+        "minSelections": 1,
+        "maxSelections": 1
+      },
+      "condition": {
+        "contains": {
+          "field": "funding.payer",
+          "value": "sponsor"
+        }
+      }
+    },
+    {
+      "id": "funding.sponsor.identity.other_detail",
+      "profileKey": "funding.sponsor.identity.other_detail",
+      "label": "33. Other sponsor detail",
+      "prompt": "33. Other sponsor detail",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "funding.sponsor.identity",
+          "value": "other_sponsor"
+        }
+      }
+    },
+    {
+      "id": "funding.sponsor.means",
+      "profileKey": "funding.sponsor.means",
+      "label": "Sponsor means of support",
+      "prompt": "Select every means provided by the sponsor.",
+      "type": "multiple-choice",
+      "required": true,
+      "choices": [
+        {
+          "value": "cash",
+          "label": "Cash"
+        },
+        {
+          "value": "accommodation_provided",
+          "label": "Accommodation provided"
+        },
+        {
+          "value": "all_expenses_covered",
+          "label": "All expenses covered"
+        },
+        {
+          "value": "pre_paid_transport",
+          "label": "Pre-paid transport"
+        },
+        {
+          "value": "other",
+          "label": "Other"
+        }
+      ],
+      "validation": {
+        "minSelections": 1,
+        "maxSelections": 5
+      },
+      "condition": {
+        "contains": {
+          "field": "funding.payer",
+          "value": "sponsor"
+        }
+      }
+    },
+    {
+      "id": "funding.sponsor.means.other_detail",
+      "profileKey": "funding.sponsor.means.other_detail",
+      "label": "33. Sponsor other means detail",
+      "prompt": "33. Sponsor other means detail",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "contains": {
+          "field": "funding.sponsor.means",
+          "value": "other"
+        }
+      }
+    },
+    {
+      "id": "host.address",
+      "profileKey": "host.address",
+      "label": "31. Host/hotel address",
+      "prompt": "31. Host/hotel address",
+      "type": "multiline",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.host_details_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "host.email",
+      "profileKey": "host.email",
+      "label": "31. Host/hotel e-mail",
+      "prompt": "31. Host/hotel e-mail",
+      "type": "multiline",
+      "required": false,
+      "format": "email",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.host_details_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "host.name",
+      "profileKey": "host.name",
+      "label": "Inviting person or accommodation name",
+      "prompt": "What is the name of the inviting person, hotel, or temporary accommodation?",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.host_details_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "host.phone",
+      "profileKey": "host.phone",
+      "label": "31. Host/hotel telephone",
+      "prompt": "31. Host/hotel telephone",
+      "type": "multiline",
+      "required": true,
+      "format": "phone",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.host_details_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "inviting_company.address",
+      "profileKey": "inviting_company.address",
+      "label": "32. Inviting company/organisation address",
+      "prompt": "32. Inviting company/organisation address",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.company_details_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "inviting_company.contact.address",
+      "profileKey": "inviting_company.contact.address",
+      "label": "32. Contact address",
+      "prompt": "32. Contact address",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.company_details_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "inviting_company.contact.email",
+      "profileKey": "inviting_company.contact.email",
+      "label": "32. Contact e-mail",
+      "prompt": "32. Contact e-mail",
+      "type": "text",
+      "required": false,
+      "format": "email",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.company_details_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "inviting_company.contact.name.family",
+      "profileKey": "inviting_company.contact.name.family",
+      "label": "32. Contact surname",
+      "prompt": "32. Contact surname",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.company_details_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "inviting_company.contact.name.given",
+      "profileKey": "inviting_company.contact.name.given",
+      "label": "32. Contact given name",
+      "prompt": "32. Contact given name",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.company_details_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "inviting_company.name",
+      "profileKey": "inviting_company.name",
+      "label": "32. Inviting company/organisation name",
+      "prompt": "32. Inviting company/organisation name",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.company_details_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "inviting_company.phone",
+      "profileKey": "inviting_company.phone",
+      "label": "32. Company/organisation telephone",
+      "prompt": "32. Company/organisation telephone",
+      "type": "multiline",
+      "required": true,
+      "format": "phone",
+      "condition": {
+        "all": [
+          {
+            "not": {
+              "eq": {
+                "field": "applicant.eu_family_qualified",
+                "value": true
+              }
+            }
+          },
+          {
+            "eq": {
+              "field": "journey.company_details_required",
+              "value": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "journey.arrival_date",
+      "profileKey": "journey.arrival_date",
+      "label": "28. Intended arrival date",
+      "prompt": "28. Intended arrival date",
+      "type": "date",
+      "required": true,
+      "format": "dd-mm-yyyy"
+    },
+    {
+      "id": "journey.departure_date",
+      "profileKey": "journey.departure_date",
+      "label": "28. Intended departure date",
+      "prompt": "28. Intended departure date",
+      "type": "date",
+      "required": true,
+      "format": "dd-mm-yyyy"
+    },
+    {
+      "id": "journey.destination.first_entry",
+      "profileKey": "journey.destination.first_entry",
+      "label": "26. Member State of first entry",
+      "prompt": "26. Member State of first entry",
+      "type": "multiline",
+      "required": true,
+      "format": "plain",
+      "transforms": [
+        "uppercase"
+      ]
+    },
+    {
+      "id": "journey.destination.main",
+      "profileKey": "journey.destination.main",
+      "label": "25. Main destination Member State",
+      "prompt": "25. Main destination Member State",
+      "type": "multiline",
+      "required": true,
+      "format": "plain",
+      "transforms": [
+        "uppercase"
+      ]
+    },
+    {
+      "id": "journey.destination.other",
+      "profileKey": "journey.destination.other",
+      "label": "25. Other destination Member State(s)",
+      "prompt": "25. Other destination Member State(s)",
+      "type": "multiline",
+      "required": false,
+      "format": "plain",
+      "transforms": [
+        "uppercase"
+      ]
+    },
+    {
+      "id": "journey.entries_requested",
+      "profileKey": "journey.entries_requested",
+      "label": "Entries requested",
+      "prompt": "Select the requested number of entries.",
+      "type": "single-choice",
+      "required": true,
+      "choices": [
+        {
+          "value": "one_entry",
+          "label": "One entry"
+        },
+        {
+          "value": "two_entries",
+          "label": "Two entries"
+        },
+        {
+          "value": "multiple_entries",
+          "label": "Multiple entries"
+        }
+      ],
+      "validation": {
+        "minSelections": 1,
+        "maxSelections": 1
+      }
+    },
+    {
+      "id": "journey.purpose.additional",
+      "profileKey": "journey.purpose.additional",
+      "label": "24. Additional information on purpose of stay",
+      "prompt": "24. Additional information on purpose of stay",
+      "type": "text",
+      "required": false,
+      "format": "plain"
+    },
+    {
+      "id": "journey.purpose.other_detail",
+      "profileKey": "journey.purpose.other_detail",
+      "label": "23. Other journey purpose detail",
+      "prompt": "23. Other journey purpose detail",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "contains": {
+          "field": "journey.purposes",
+          "value": "other"
+        }
+      }
+    },
+    {
+      "id": "journey.purposes",
+      "profileKey": "journey.purposes",
+      "label": "Purpose of journey",
+      "prompt": "Select every purpose that applies to this journey.",
+      "type": "multiple-choice",
+      "required": true,
+      "choices": [
+        {
+          "value": "tourism",
+          "label": "Tourism"
+        },
+        {
+          "value": "business",
+          "label": "Business"
+        },
+        {
+          "value": "visiting_family_or_friends",
+          "label": "Visiting family or friends"
+        },
+        {
+          "value": "cultural",
+          "label": "Cultural"
+        },
+        {
+          "value": "sports",
+          "label": "Sports"
+        },
+        {
+          "value": "official_visit",
+          "label": "Official visit"
+        },
+        {
+          "value": "medical_reasons",
+          "label": "Medical reasons"
+        },
+        {
+          "value": "study",
+          "label": "Study"
+        },
+        {
+          "value": "airport_transit",
+          "label": "Airport transit"
+        },
+        {
+          "value": "other",
+          "label": "Other"
+        }
+      ],
+      "validation": {
+        "minSelections": 1,
+        "maxSelections": 10
+      }
+    },
+    {
+      "id": "residence.other_country",
+      "profileKey": "residence.other_country",
+      "label": "Residence outside nationality country",
+      "prompt": "Does the applicant reside outside the country of current nationality?",
+      "type": "single-choice",
+      "required": true,
+      "choices": [
+        {
+          "value": "no",
+          "label": "No"
+        },
+        {
+          "value": "yes",
+          "label": "Yes"
+        }
+      ],
+      "validation": {
+        "minSelections": 1,
+        "maxSelections": 1
+      }
+    },
+    {
+      "id": "residence.permit.number",
+      "profileKey": "residence.permit.number",
+      "label": "20. Residence permit number",
+      "prompt": "20. Residence permit number",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "residence.other_country",
+          "value": "yes"
+        }
+      }
+    },
+    {
+      "id": "residence.permit.type",
+      "profileKey": "residence.permit.type",
+      "label": "20. Residence permit/document type",
+      "prompt": "20. Residence permit/document type",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "residence.other_country",
+          "value": "yes"
+        }
+      }
+    },
+    {
+      "id": "residence.permit.valid_until",
+      "profileKey": "residence.permit.valid_until",
+      "label": "20. Residence permit valid until",
+      "prompt": "20. Residence permit valid until",
+      "type": "date",
+      "required": true,
+      "format": "dd-mm-yyyy",
+      "condition": {
+        "eq": {
+          "field": "residence.other_country",
+          "value": "yes"
+        }
+      }
+    },
+    {
+      "id": "travel_document.expiry_date",
+      "profileKey": "travel_document.expiry_date",
+      "label": "15. Valid until",
+      "prompt": "15. Valid until",
+      "type": "date",
+      "required": true,
+      "format": "dd-mm-yyyy"
+    },
+    {
+      "id": "travel_document.issue_date",
+      "profileKey": "travel_document.issue_date",
+      "label": "14. Date of issue",
+      "prompt": "14. Date of issue",
+      "type": "date",
+      "required": true,
+      "format": "dd-mm-yyyy"
+    },
+    {
+      "id": "travel_document.issuing_country",
+      "profileKey": "travel_document.issuing_country",
+      "label": "16. Issued by (country)",
+      "prompt": "16. Issued by (country)",
+      "type": "text",
+      "required": true,
+      "format": "country",
+      "transforms": [
+        "uppercase"
+      ]
+    },
+    {
+      "id": "travel_document.number",
+      "profileKey": "travel_document.number",
+      "label": "13. Travel document number",
+      "prompt": "13. Travel document number",
+      "type": "text",
+      "required": true,
+      "format": "plain",
+      "transforms": [
+        "uppercase"
+      ],
+      "validation": {
+        "pattern": "^[A-Z0-9<]{5,20}$"
+      }
+    },
+    {
+      "id": "travel_document.type",
+      "profileKey": "travel_document.type",
+      "label": "Travel document type",
+      "prompt": "Select the applicant travel document type.",
+      "type": "single-choice",
+      "required": true,
+      "choices": [
+        {
+          "value": "ordinary_passport",
+          "label": "Ordinary passport"
+        },
+        {
+          "value": "diplomatic_passport",
+          "label": "Diplomatic passport"
+        },
+        {
+          "value": "service_passport",
+          "label": "Service passport"
+        },
+        {
+          "value": "official_passport",
+          "label": "Official passport"
+        },
+        {
+          "value": "special_passport",
+          "label": "Special passport"
+        },
+        {
+          "value": "other_travel_document",
+          "label": "Other travel document"
+        }
+      ],
+      "validation": {
+        "minSelections": 1,
+        "maxSelections": 1
+      }
+    },
+    {
+      "id": "travel_document.type.other_detail",
+      "profileKey": "travel_document.type.other_detail",
+      "label": "12. Other travel document detail",
+      "prompt": "12. Other travel document detail",
+      "type": "multiline",
+      "required": true,
+      "format": "plain",
+      "condition": {
+        "eq": {
+          "field": "travel_document.type",
+          "value": "other_travel_document"
+        }
+      }
+    }
+  ],
+  "placements": [
+    {
+      "id": "applicant.photo.placement",
+      "questionId": "applicant.photo",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 63.84,
+        "width": 87.5,
+        "height": 106.58
+      },
+      "control": "photo",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.name.family.placement",
+      "questionId": "applicant.name.family",
+      "page": 1,
+      "rect": {
+        "x": 50,
+        "y": 250,
+        "width": 407,
+        "height": 28
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.name.family_at_birth.placement",
+      "questionId": "applicant.name.family_at_birth",
+      "page": 1,
+      "rect": {
+        "x": 50,
+        "y": 297,
+        "width": 407,
+        "height": 21
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.name.given.placement",
+      "questionId": "applicant.name.given",
+      "page": 1,
+      "rect": {
+        "x": 50,
+        "y": 335,
+        "width": 407,
+        "height": 21
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.birth.place.placement",
+      "questionId": "applicant.birth.place",
+      "page": 1,
+      "rect": {
+        "x": 184,
+        "y": 382,
+        "width": 130,
+        "height": 24
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.nationality.current.placement",
+      "questionId": "applicant.nationality.current",
+      "page": 1,
+      "rect": {
+        "x": 318,
+        "y": 382,
+        "width": 138,
+        "height": 18
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.birth.date.placement",
+      "questionId": "applicant.birth.date",
+      "page": 1,
+      "rect": {
+        "x": 50,
+        "y": 394,
+        "width": 128,
+        "height": 22
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.nationality.birth.placement",
+      "questionId": "applicant.nationality.birth",
+      "page": 1,
+      "rect": {
+        "x": 318,
+        "y": 428,
+        "width": 138,
+        "height": 20
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.birth.country.placement",
+      "questionId": "applicant.birth.country",
+      "page": 1,
+      "rect": {
+        "x": 184,
+        "y": 434,
+        "width": 130,
+        "height": 24
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.nationality.other.placement",
+      "questionId": "applicant.nationality.other",
+      "page": 1,
+      "rect": {
+        "x": 318,
+        "y": 466,
+        "width": 138,
+        "height": 17
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.sex.male",
+      "questionId": "applicant.sex",
+      "page": 1,
+      "rect": {
+        "x": 55.58,
+        "y": 505.79,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "male",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "applicant.sex.female",
+      "questionId": "applicant.sex",
+      "page": 1,
+      "rect": {
+        "x": 119.3,
+        "y": 505.79,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "female",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "applicant.marital_status.single",
+      "questionId": "applicant.marital_status",
+      "page": 1,
+      "rect": {
+        "x": 238.37,
+        "y": 505.79,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "single",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "applicant.marital_status.married",
+      "questionId": "applicant.marital_status",
+      "page": 1,
+      "rect": {
+        "x": 319.51,
+        "y": 505.79,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "married",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "applicant.marital_status.registered_union",
+      "questionId": "applicant.marital_status",
+      "page": 1,
+      "rect": {
+        "x": 406.3,
+        "y": 505.79,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "registered_union",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "applicant.sex.other",
+      "questionId": "applicant.sex",
+      "page": 1,
+      "rect": {
+        "x": 55.58,
+        "y": 516.11,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "other",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "applicant.marital_status.separated",
+      "questionId": "applicant.marital_status",
+      "page": 1,
+      "rect": {
+        "x": 384.91,
+        "y": 516.11,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "separated",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "applicant.marital_status.divorced",
+      "questionId": "applicant.marital_status",
+      "page": 1,
+      "rect": {
+        "x": 297.91,
+        "y": 526.55,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "divorced",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "applicant.marital_status.widowed",
+      "questionId": "applicant.marital_status",
+      "page": 1,
+      "rect": {
+        "x": 401.26,
+        "y": 526.55,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "widowed",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "applicant.marital_status.other",
+      "questionId": "applicant.marital_status",
+      "page": 1,
+      "rect": {
+        "x": 302.23,
+        "y": 536.87,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "other",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "applicant.marital_status.other_detail.placement",
+      "questionId": "applicant.marital_status.other_detail",
+      "page": 1,
+      "rect": {
+        "x": 392,
+        "y": 543,
+        "width": 64,
+        "height": 18
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.guardian.family.placement",
+      "questionId": "applicant.guardian.family",
+      "page": 1,
+      "rect": {
+        "x": 50,
+        "y": 616,
+        "width": 125,
+        "height": 15
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.82,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.guardian.given.placement",
+      "questionId": "applicant.guardian.given",
+      "page": 1,
+      "rect": {
+        "x": 178,
+        "y": 616,
+        "width": 125,
+        "height": 15
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.82,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.guardian.nationality.placement",
+      "questionId": "applicant.guardian.nationality",
+      "page": 1,
+      "rect": {
+        "x": 306,
+        "y": 616,
+        "width": 150,
+        "height": 15
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.82,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.guardian.address.placement",
+      "questionId": "applicant.guardian.address",
+      "page": 1,
+      "rect": {
+        "x": 50,
+        "y": 633,
+        "width": 125,
+        "height": 15
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.82,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.guardian.phone.placement",
+      "questionId": "applicant.guardian.phone",
+      "page": 1,
+      "rect": {
+        "x": 178,
+        "y": 633,
+        "width": 125,
+        "height": 15
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.82,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.guardian.email.placement",
+      "questionId": "applicant.guardian.email",
+      "page": 1,
+      "rect": {
+        "x": 306,
+        "y": 633,
+        "width": 150,
+        "height": 15
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.82,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.identity.national_id.placement",
+      "questionId": "applicant.identity.national_id",
+      "page": 1,
+      "rect": {
+        "x": 50,
+        "y": 672,
+        "width": 407,
+        "height": 16
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "travel_document.type.ordinary_passport",
+      "questionId": "travel_document.type",
+      "page": 1,
+      "rect": {
+        "x": 55.58,
+        "y": 701.92,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "ordinary_passport",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "travel_document.type.diplomatic_passport",
+      "questionId": "travel_document.type",
+      "page": 1,
+      "rect": {
+        "x": 229.37,
+        "y": 701.92,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "diplomatic_passport",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "travel_document.type.service_passport",
+      "questionId": "travel_document.type",
+      "page": 1,
+      "rect": {
+        "x": 412.66,
+        "y": 701.92,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "service_passport",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "travel_document.type.official_passport",
+      "questionId": "travel_document.type",
+      "page": 1,
+      "rect": {
+        "x": 188.09,
+        "y": 712.24,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "official_passport",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "travel_document.type.special_passport",
+      "questionId": "travel_document.type",
+      "page": 1,
+      "rect": {
+        "x": 342.43,
+        "y": 712.24,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "special_passport",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "travel_document.type.other_travel_document",
+      "questionId": "travel_document.type",
+      "page": 1,
+      "rect": {
+        "x": 124.94,
+        "y": 722.68,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "other_travel_document",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "travel_document.type.other_detail.placement",
+      "questionId": "travel_document.type.other_detail",
+      "page": 1,
+      "rect": {
+        "x": 132,
+        "y": 738,
+        "width": 324,
+        "height": 30
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "travel_document.number.placement",
+      "questionId": "travel_document.number",
+      "page": 2,
+      "rect": {
+        "x": 50,
+        "y": 77,
+        "width": 116,
+        "height": 17
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "travel_document.issue_date.placement",
+      "questionId": "travel_document.issue_date",
+      "page": 2,
+      "rect": {
+        "x": 171,
+        "y": 77,
+        "width": 80,
+        "height": 17
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "travel_document.expiry_date.placement",
+      "questionId": "travel_document.expiry_date",
+      "page": 2,
+      "rect": {
+        "x": 256,
+        "y": 77,
+        "width": 137,
+        "height": 17
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "travel_document.issuing_country.placement",
+      "questionId": "travel_document.issuing_country",
+      "page": 2,
+      "rect": {
+        "x": 398,
+        "y": 77,
+        "width": 147,
+        "height": 17
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "eu_family_member.name.family.placement",
+      "questionId": "eu_family_member.name.family",
+      "page": 2,
+      "rect": {
+        "x": 50,
+        "y": 183,
+        "width": 230,
+        "height": 18
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "eu_family_member.name.given.placement",
+      "questionId": "eu_family_member.name.given",
+      "page": 2,
+      "rect": {
+        "x": 284,
+        "y": 183,
+        "width": 259,
+        "height": 18
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "eu_family_member.birth_date.placement",
+      "questionId": "eu_family_member.birth_date",
+      "page": 2,
+      "rect": {
+        "x": 50,
+        "y": 236,
+        "width": 230,
+        "height": 30
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "eu_family_member.nationality.placement",
+      "questionId": "eu_family_member.nationality",
+      "page": 2,
+      "rect": {
+        "x": 284,
+        "y": 236,
+        "width": 138,
+        "height": 30
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "eu_family_member.document_number.placement",
+      "questionId": "eu_family_member.document_number",
+      "page": 2,
+      "rect": {
+        "x": 426,
+        "y": 236,
+        "width": 117,
+        "height": 30
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "eu_family_member.relationship.spouse",
+      "questionId": "eu_family_member.relationship",
+      "page": 2,
+      "rect": {
+        "x": 48.24,
+        "y": 300.33,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "spouse",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "eu_family_member.relationship.child",
+      "questionId": "eu_family_member.relationship",
+      "page": 2,
+      "rect": {
+        "x": 129.62,
+        "y": 300.33,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "child",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "eu_family_member.relationship.grandchild",
+      "questionId": "eu_family_member.relationship",
+      "page": 2,
+      "rect": {
+        "x": 196.49,
+        "y": 300.33,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "grandchild",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "eu_family_member.relationship.dependent_ascendant",
+      "questionId": "eu_family_member.relationship",
+      "page": 2,
+      "rect": {
+        "x": 293.71,
+        "y": 300.33,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "dependent_ascendant",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "eu_family_member.relationship.registered_partnership",
+      "questionId": "eu_family_member.relationship",
+      "page": 2,
+      "rect": {
+        "x": 481.42,
+        "y": 300.33,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "registered_partnership",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "eu_family_member.relationship.other",
+      "questionId": "eu_family_member.relationship",
+      "page": 2,
+      "rect": {
+        "x": 189.89,
+        "y": 310.65,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "other",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "eu_family_member.relationship.other_detail.placement",
+      "questionId": "eu_family_member.relationship.other_detail",
+      "page": 2,
+      "rect": {
+        "x": 232,
+        "y": 312,
+        "width": 310,
+        "height": 14
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.contact.address.placement",
+      "questionId": "applicant.contact.address",
+      "page": 2,
+      "rect": {
+        "x": 50,
+        "y": 353,
+        "width": 130,
+        "height": 31
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.contact.email.placement",
+      "questionId": "applicant.contact.email",
+      "page": 2,
+      "rect": {
+        "x": 183,
+        "y": 353,
+        "width": 111,
+        "height": 31
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.contact.phone.placement",
+      "questionId": "applicant.contact.phone",
+      "page": 2,
+      "rect": {
+        "x": 299,
+        "y": 353,
+        "width": 243,
+        "height": 31
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "residence.other_country.no",
+      "questionId": "residence.other_country",
+      "page": 2,
+      "rect": {
+        "x": 48.24,
+        "y": 417.59,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "no",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "residence.permit.type.placement",
+      "questionId": "residence.permit.type",
+      "page": 2,
+      "rect": {
+        "x": 480,
+        "y": 423,
+        "width": 62,
+        "height": 13
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "residence.other_country.yes",
+      "questionId": "residence.other_country",
+      "page": 2,
+      "rect": {
+        "x": 48.24,
+        "y": 427.91,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "yes",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "residence.permit.number.placement",
+      "questionId": "residence.permit.number",
+      "page": 2,
+      "rect": {
+        "x": 88,
+        "y": 435,
+        "width": 130,
+        "height": 12
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "residence.permit.valid_until.placement",
+      "questionId": "residence.permit.valid_until",
+      "page": 2,
+      "rect": {
+        "x": 339,
+        "y": 435,
+        "width": 150,
+        "height": 12
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "applicant.occupation.current.placement",
+      "questionId": "applicant.occupation.current",
+      "page": 2,
+      "rect": {
+        "x": 50,
+        "y": 462,
+        "width": 493,
+        "height": 13
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "employment.name.placement",
+      "questionId": "employment.name",
+      "page": 2,
+      "rect": {
+        "x": 50,
+        "y": 500,
+        "width": 130,
+        "height": 14
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "employment.address.placement",
+      "questionId": "employment.address",
+      "page": 2,
+      "rect": {
+        "x": 183,
+        "y": 500,
+        "width": 215,
+        "height": 14
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "employment.phone.placement",
+      "questionId": "employment.phone",
+      "page": 2,
+      "rect": {
+        "x": 401,
+        "y": 500,
+        "width": 141,
+        "height": 14
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "journey.purpose.tourism",
+      "questionId": "journey.purposes",
+      "page": 2,
+      "rect": {
+        "x": 48.24,
+        "y": 537.71,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "tourism",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.purpose.business",
+      "questionId": "journey.purposes",
+      "page": 2,
+      "rect": {
+        "x": 133.82,
+        "y": 537.71,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "business",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.purpose.visiting_family_or_friends",
+      "questionId": "journey.purposes",
+      "page": 2,
+      "rect": {
+        "x": 219.77,
+        "y": 537.71,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "visiting_family_or_friends",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.purpose.cultural",
+      "questionId": "journey.purposes",
+      "page": 2,
+      "rect": {
+        "x": 436.42,
+        "y": 537.71,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "cultural",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.purpose.sports",
+      "questionId": "journey.purposes",
+      "page": 2,
+      "rect": {
+        "x": 48.24,
+        "y": 548.18,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "sports",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.purpose.official_visit",
+      "questionId": "journey.purposes",
+      "page": 2,
+      "rect": {
+        "x": 124.94,
+        "y": 548.18,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "official_visit",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.purpose.medical_reasons",
+      "questionId": "journey.purposes",
+      "page": 2,
+      "rect": {
+        "x": 254.33,
+        "y": 548.18,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "medical_reasons",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.purpose.study",
+      "questionId": "journey.purposes",
+      "page": 2,
+      "rect": {
+        "x": 393.22,
+        "y": 548.18,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "study",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.purpose.airport_transit",
+      "questionId": "journey.purposes",
+      "page": 2,
+      "rect": {
+        "x": 468.82,
+        "y": 548.18,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "airport_transit",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.purpose.other",
+      "questionId": "journey.purposes",
+      "page": 2,
+      "rect": {
+        "x": 181.37,
+        "y": 558.62,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "other",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.purpose.other_detail.placement",
+      "questionId": "journey.purpose.other_detail",
+      "page": 2,
+      "rect": {
+        "x": 350,
+        "y": 565,
+        "width": 192,
+        "height": 18
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "journey.purpose.additional.placement",
+      "questionId": "journey.purpose.additional",
+      "page": 2,
+      "rect": {
+        "x": 50,
+        "y": 601,
+        "width": 493,
+        "height": 13
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "journey.destination.first_entry.placement",
+      "questionId": "journey.destination.first_entry",
+      "page": 2,
+      "rect": {
+        "x": 299,
+        "y": 657,
+        "width": 243,
+        "height": 41
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "journey.destination.main.placement",
+      "questionId": "journey.destination.main",
+      "page": 2,
+      "rect": {
+        "x": 50,
+        "y": 664,
+        "width": 143,
+        "height": 34
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "journey.destination.other.placement",
+      "questionId": "journey.destination.other",
+      "page": 2,
+      "rect": {
+        "x": 196,
+        "y": 664,
+        "width": 98,
+        "height": 34
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "journey.entries.one_entry",
+      "questionId": "journey.entries_requested",
+      "page": 2,
+      "rect": {
+        "x": 55.58,
+        "y": 722.08,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "one_entry",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.entries.two_entries",
+      "questionId": "journey.entries_requested",
+      "page": 2,
+      "rect": {
+        "x": 138.02,
+        "y": 722.08,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "two_entries",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.entries.multiple_entries",
+      "questionId": "journey.entries_requested",
+      "page": 2,
+      "rect": {
+        "x": 224.21,
+        "y": 722.08,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "multiple_entries",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "journey.arrival_date.placement",
+      "questionId": "journey.arrival_date",
+      "page": 3,
+      "rect": {
+        "x": 455,
+        "y": 68,
+        "width": 86,
+        "height": 11
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "journey.departure_date.placement",
+      "questionId": "journey.departure_date",
+      "page": 3,
+      "rect": {
+        "x": 455,
+        "y": 95,
+        "width": 86,
+        "height": 11
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "biometrics.previous.no",
+      "questionId": "biometrics.previous",
+      "page": 3,
+      "rect": {
+        "x": 222.77,
+        "y": 118.26,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "no",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "biometrics.previous.yes",
+      "questionId": "biometrics.previous",
+      "page": 3,
+      "rect": {
+        "x": 261.65,
+        "y": 118.26,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "yes",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "biometrics.previous.date.placement",
+      "questionId": "biometrics.previous.date",
+      "page": 3,
+      "rect": {
+        "x": 150,
+        "y": 153,
+        "width": 100,
+        "height": 11
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "biometrics.previous.visa_number.placement",
+      "questionId": "biometrics.previous.visa_number",
+      "page": 3,
+      "rect": {
+        "x": 455,
+        "y": 153,
+        "width": 87,
+        "height": 11
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "final_destination_permit.issued_by.placement",
+      "questionId": "final_destination_permit.issued_by",
+      "page": 3,
+      "rect": {
+        "x": 160,
+        "y": 184,
+        "width": 78,
+        "height": 13
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "final_destination_permit.valid_from.placement",
+      "questionId": "final_destination_permit.valid_from",
+      "page": 3,
+      "rect": {
+        "x": 331,
+        "y": 184,
+        "width": 66,
+        "height": 13
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "final_destination_permit.valid_until.placement",
+      "questionId": "final_destination_permit.valid_until",
+      "page": 3,
+      "rect": {
+        "x": 460,
+        "y": 184,
+        "width": 82,
+        "height": 13
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "host.name.placement",
+      "questionId": "host.name",
+      "page": 3,
+      "rect": {
+        "x": 50,
+        "y": 241,
+        "width": 492,
+        "height": 23
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.98,
+        "placement": 0.9
+      },
+      "evidence": [
+        "The form defines one combined area for an inviting person or, when inapplicable, hotel or temporary accommodation.",
+        "The experimental surname and given-name subdivisions were merged to avoid imposing person-name semantics on hotels."
+      ]
+    },
+    {
+      "id": "host.address.placement",
+      "questionId": "host.address",
+      "page": 3,
+      "rect": {
+        "x": 50,
+        "y": 316,
+        "width": 160,
+        "height": 42
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "host.email.placement",
+      "questionId": "host.email",
+      "page": 3,
+      "rect": {
+        "x": 213,
+        "y": 316,
+        "width": 81,
+        "height": 42
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "host.phone.placement",
+      "questionId": "host.phone",
+      "page": 3,
+      "rect": {
+        "x": 299,
+        "y": 316,
+        "width": 243,
+        "height": 42
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "inviting_company.name.placement",
+      "questionId": "inviting_company.name",
+      "page": 3,
+      "rect": {
+        "x": 50,
+        "y": 397,
+        "width": 155,
+        "height": 20
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "inviting_company.address.placement",
+      "questionId": "inviting_company.address",
+      "page": 3,
+      "rect": {
+        "x": 208,
+        "y": 397,
+        "width": 334,
+        "height": 20
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "inviting_company.phone.placement",
+      "questionId": "inviting_company.phone",
+      "page": 3,
+      "rect": {
+        "x": 299,
+        "y": 451,
+        "width": 243,
+        "height": 37
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "inviting_company.contact.name.family.placement",
+      "questionId": "inviting_company.contact.name.family",
+      "page": 3,
+      "rect": {
+        "x": 50,
+        "y": 460,
+        "width": 118,
+        "height": 10
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.82,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "inviting_company.contact.name.given.placement",
+      "questionId": "inviting_company.contact.name.given",
+      "page": 3,
+      "rect": {
+        "x": 171,
+        "y": 460,
+        "width": 123,
+        "height": 10
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.82,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "inviting_company.contact.address.placement",
+      "questionId": "inviting_company.contact.address",
+      "page": 3,
+      "rect": {
+        "x": 50,
+        "y": 472,
+        "width": 244,
+        "height": 8
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.82,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "inviting_company.contact.email.placement",
+      "questionId": "inviting_company.contact.email",
+      "page": 3,
+      "rect": {
+        "x": 50,
+        "y": 482,
+        "width": 244,
+        "height": 7
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.82,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "funding.payer.sponsor",
+      "questionId": "funding.payer",
+      "page": 3,
+      "rect": {
+        "x": 305.11,
+        "y": 521.87,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "sponsor",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.payer.applicant",
+      "questionId": "funding.payer",
+      "page": 3,
+      "rect": {
+        "x": 55.58,
+        "y": 522.59,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "applicant",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.applicant.means.cash",
+      "questionId": "funding.applicant.means",
+      "page": 3,
+      "rect": {
+        "x": 55.58,
+        "y": 553.82,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "cash",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.sponsor.identity.referred",
+      "questionId": "funding.sponsor.identity",
+      "page": 3,
+      "rect": {
+        "x": 319.87,
+        "y": 561.74,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "referred_to_in_field_30_or_31",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.applicant.means.traveller_cheques",
+      "questionId": "funding.applicant.means",
+      "page": 3,
+      "rect": {
+        "x": 55.58,
+        "y": 564.14,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "traveller_cheques",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.applicant.means.credit_card",
+      "questionId": "funding.applicant.means",
+      "page": 3,
+      "rect": {
+        "x": 55.58,
+        "y": 574.46,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "credit_card",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.sponsor.identity.other",
+      "questionId": "funding.sponsor.identity",
+      "page": 3,
+      "rect": {
+        "x": 318.07,
+        "y": 582.5,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "other_sponsor",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.applicant.means.pre_paid_accommodation",
+      "questionId": "funding.applicant.means",
+      "page": 3,
+      "rect": {
+        "x": 55.58,
+        "y": 584.9,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "pre_paid_accommodation",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.applicant.means.pre_paid_transport",
+      "questionId": "funding.applicant.means",
+      "page": 3,
+      "rect": {
+        "x": 55.58,
+        "y": 595.22,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "pre_paid_transport",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.sponsor.identity.other_detail.placement",
+      "questionId": "funding.sponsor.identity.other_detail",
+      "page": 3,
+      "rect": {
+        "x": 310,
+        "y": 596,
+        "width": 230,
+        "height": 14
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "funding.applicant.means.other",
+      "questionId": "funding.applicant.means",
+      "page": 3,
+      "rect": {
+        "x": 55.58,
+        "y": 605.66,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "other",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.applicant.means.other_detail.placement",
+      "questionId": "funding.applicant.means.other_detail",
+      "page": 3,
+      "rect": {
+        "x": 60,
+        "y": 620,
+        "width": 230,
+        "height": 18
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "funding.sponsor.means.cash",
+      "questionId": "funding.sponsor.means",
+      "page": 3,
+      "rect": {
+        "x": 305.11,
+        "y": 624.02,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "cash",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.sponsor.means.accommodation_provided",
+      "questionId": "funding.sponsor.means",
+      "page": 3,
+      "rect": {
+        "x": 305.11,
+        "y": 634.46,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "accommodation_provided",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.sponsor.means.all_expenses_covered",
+      "questionId": "funding.sponsor.means",
+      "page": 3,
+      "rect": {
+        "x": 305.11,
+        "y": 644.06,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "all_expenses_covered",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.sponsor.means.pre_paid_transport",
+      "questionId": "funding.sponsor.means",
+      "page": 3,
+      "rect": {
+        "x": 305.11,
+        "y": 664.34,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "pre_paid_transport",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.sponsor.means.other",
+      "questionId": "funding.sponsor.means",
+      "page": 3,
+      "rect": {
+        "x": 305.11,
+        "y": 673.94,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "control": "checkbox",
+      "choiceValue": "other",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "printed square choice box adjacent to label"
+      ]
+    },
+    {
+      "id": "funding.sponsor.means.other_detail.placement",
+      "questionId": "funding.sponsor.means.other_detail",
+      "page": 3,
+      "rect": {
+        "x": 310,
+        "y": 690,
+        "width": 230,
+        "height": 18
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "form_filler.name.family.placement",
+      "questionId": "form_filler.name.family",
+      "page": 3,
+      "rect": {
+        "x": 50,
+        "y": 752,
+        "width": 242,
+        "height": 13
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "form_filler.name.given.placement",
+      "questionId": "form_filler.name.given",
+      "page": 3,
+      "rect": {
+        "x": 300,
+        "y": 752,
+        "width": 242,
+        "height": 13
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "form_filler.address.placement",
+      "questionId": "form_filler.address",
+      "page": 4,
+      "rect": {
+        "x": 50,
+        "y": 74,
+        "width": 158,
+        "height": 22
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.84,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "form_filler.email.placement",
+      "questionId": "form_filler.email",
+      "page": 4,
+      "rect": {
+        "x": 211,
+        "y": 74,
+        "width": 83,
+        "height": 22
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.84,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "form_filler.phone.placement",
+      "questionId": "form_filler.phone",
+      "page": 4,
+      "rect": {
+        "x": 300,
+        "y": 74,
+        "width": 244,
+        "height": 22
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "declaration.place.placement",
+      "questionId": "declaration.place",
+      "page": 5,
+      "rect": {
+        "x": 50,
+        "y": 693,
+        "width": 150,
+        "height": 40
+      },
+      "control": "multiline",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "declaration.date.placement",
+      "questionId": "declaration.date",
+      "page": 5,
+      "rect": {
+        "x": 203,
+        "y": 693,
+        "width": 90,
+        "height": 40
+      },
+      "control": "text",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.97,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    },
+    {
+      "id": "declaration.signature.placement",
+      "questionId": "declaration.signature",
+      "page": 5,
+      "rect": {
+        "x": 300,
+        "y": 713,
+        "width": 244,
+        "height": 23
+      },
+      "control": "signature",
+      "status": "mapped",
+      "confidence": {
+        "semantic": 0.99,
+        "placement": 0.95
+      },
+      "evidence": [
+        "visible multilingual label",
+        "bounded blank area or printed choice box"
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "id": "official.application_date",
+      "page": 1,
+      "rect": {
+        "x": 460,
+        "y": 291,
+        "width": 84,
+        "height": 22
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.application_number",
+      "page": 1,
+      "rect": {
+        "x": 460,
+        "y": 320,
+        "width": 84,
+        "height": 22
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.01",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 365.25,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.02",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 374.49,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.03",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 383.75,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.04",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 392.87,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.05",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 438.95,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.06",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 521.75,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.07",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 530.87,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.08",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 540.14,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.09",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 549.38,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.10",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 558.5,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.11",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 567.74,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.12",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 613.7,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.13",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 622.94,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.14",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 632.18,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.15",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 641.3,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.16",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 650.54,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.17",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 678.14,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.18",
+      "page": 1,
+      "rect": {
+        "x": 459.7,
+        "y": 733.36,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.19",
+      "page": 1,
+      "rect": {
+        "x": 481.87,
+        "y": 733.36,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.choice.20",
+      "page": 1,
+      "rect": {
+        "x": 503.62,
+        "y": 733.36,
+        "width": 4.86,
+        "height": 8.9
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.border_name",
+      "page": 1,
+      "rect": {
+        "x": 460,
+        "y": 402,
+        "width": 84,
+        "height": 31
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.processed_by",
+      "page": 1,
+      "rect": {
+        "x": 460,
+        "y": 477,
+        "width": 84,
+        "height": 22
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.supporting_other_detail",
+      "page": 1,
+      "rect": {
+        "x": 465,
+        "y": 568,
+        "width": 79,
+        "height": 18
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.valid_from",
+      "page": 1,
+      "rect": {
+        "x": 480,
+        "y": 687,
+        "width": 64,
+        "height": 13
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.valid_until",
+      "page": 1,
+      "rect": {
+        "x": 480,
+        "y": 699,
+        "width": 64,
+        "height": 13
+      },
+      "reason": "official-use"
+    },
+    {
+      "id": "official.number_of_days",
+      "page": 1,
+      "rect": {
+        "x": 460,
+        "y": 761,
+        "width": 84,
+        "height": 16
+      },
+      "reason": "official-use"
+    }
+  ],
+  "approval": {
+    "status": "approved",
+    "schemaValidated": true,
+    "semanticValidated": true,
+    "sourceHashVerified": true,
+    "rendered": true,
+    "visuallyReviewed": true,
+    "reviewer": "Visa Master visual review of the curated form map",
+    "approvedAt": "2026-08-03T14:36:32.000Z",
+    "notes": [
+      "Field 2 surname at birth remains required even when it repeats the current surname.",
+      "Choice groups, selection cardinality, and all conditions use the executable v1 contract.",
+      "Starred fields 21, 22, 30, 31, and 32 are suppressed for qualifying EU-family applicants.",
+      "Field 19 gives the e-mail placement sufficient width while preserving the address and telephone boundaries.",
+      "Normal adult, conditional/minor/sponsor, EU-family, accented Latin, and CJK synthetic scenarios were rendered and visually reviewed on all affected pages."
+    ]
+  }
+}

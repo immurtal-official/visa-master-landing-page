@@ -1,0 +1,418 @@
+{
+  "schemaVersion": "visa-master.route.v1",
+  "id": "spain-schengen-tourism-chengdu-employed-adult",
+  "title": "Spain Schengen tourism from Chengdu — employed adult",
+  "match": {
+    "destination": ["Spain", "西班牙"],
+    "visaFamily": [
+      "Schengen short-stay",
+      "short-stay Schengen",
+      "申根短期签证"
+    ],
+    "purpose": ["tourism", "旅游"],
+    "legalResidence": [
+      "Chengdu, China",
+      "Chengdu, Sichuan, China",
+      "成都",
+      "中国四川成都"
+    ],
+    "travelDocumentIssuer": [
+      "China",
+      "People's Republic of China",
+      "中国",
+      "中华人民共和国"
+    ],
+    "travelDocumentType": ["ordinary passport", "普通护照"],
+    "applicantCategory": [
+      "employed adult",
+      "employed",
+      "在职成年人",
+      "在职人员"
+    ]
+  },
+  "documentLocales": ["en"],
+  "casePlan": {
+    "actions": [
+      {
+        "id": "book-bls-appointment",
+        "number": 1,
+        "title": "Book your BLS appointment",
+        "evidenceGoal": "Secure an application appointment with the visa provider.",
+        "instruction": "Use the current BLS Chengdu booking route and keep the appointment confirmation. Enter credentials, OTPs, and the final booking confirmation yourself.",
+        "completionEvidence": "A current appointment confirmation showing the applicant, center, date, and time.",
+        "completionCriteria": {
+          "evidenceKinds": ["receipt"],
+          "completeEvidenceKinds": ["receipt"]
+        },
+        "visaMasterSupport": "Visa Master can verify the current provider route, summarize the booking requirements, and prepare the details you will need.",
+        "applicantHandoff": {
+          "id": "confirm-bls-appointment",
+          "title": "Applicant books and confirms the appointment",
+          "description": "Open the official provider route yourself. Keep credentials and OTPs private, review the exact appointment, and make the final confirmation.",
+          "consequence": "Confirming will create or change an appointment with BLS.",
+          "sourceId": "bls-home-en"
+        },
+        "claimIds": ["provider", "submission"],
+        "resourceIds": ["start-here-master-checklist"]
+      },
+      {
+        "id": "passport-residence",
+        "number": 2,
+        "title": "Provide passport and residence evidence",
+        "evidenceGoal": "Provide the required passport and residence evidence.",
+        "instruction": "Gather the genuine passport and household-registration evidence described by the current local checklist, including the required originals and copies.",
+        "completionEvidence": "Every required passport and residence item is present, legible, current, and matches the applicant.",
+        "completionCriteria": {
+          "evidenceKinds": ["applicant-evidence"],
+          "completeEvidenceKinds": ["visa-master-check"]
+        },
+        "visaMasterSupport": "Visa Master can explain the compiled checklist and check the supplied set for missing items and inconsistent identity details.",
+        "complianceConditions": [
+          {
+            "id": "passport-validity-pages-signature",
+            "title": "Passport validity, pages, and signature",
+            "instruction": "Use a signed passport that remains valid for the required period after the intended Schengen departure and has the required blank pages.",
+            "completionEvidence": "The recorded passport expiry, signature, and blank-page evidence satisfy the current local condition.",
+            "claimIds": ["passport-hukou"]
+          },
+          {
+            "id": "passport-hukou-originals-copies",
+            "title": "Original and copy handling",
+            "instruction": "Bring the original Hukou and prepare the currently required passport and Hukou page copies; no Hukou translation is requested by this route source.",
+            "completionEvidence": "The original-and-copy set is complete, legible, and recorded against the current checklist.",
+            "claimIds": ["passport-hukou"]
+          }
+        ],
+        "requirementIds": ["passport-and-hukou"]
+      },
+      {
+        "id": "visa-photographs",
+        "guidanceModule": "photograph-evidence",
+        "photographPolicy": {
+          "quantity": 2,
+          "dimensionsMm": { "width": { "min": 26, "max": 35 }, "height": { "min": 32, "max": 45 } },
+          "background": "white",
+          "colorMode": "color",
+          "recency": { "required": true },
+          "medium": "printed",
+          "prohibitedTransforms": ["background-replacement", "ai-alteration", "retouching"],
+          "atHomeCaptureAllowed": false
+        },
+        "number": 3,
+        "title": "Obtain compliant visa photographs",
+        "evidenceGoal": "Provide recent photographs that meet the route requirements.",
+        "instruction": "Obtain recent photographs using the size, quantity, background, and recency conditions in the current local checklist.",
+        "completionEvidence": "The required number of recent photographs satisfies every current route-specific photograph condition.",
+        "completionCriteria": {
+          "evidenceKinds": ["applicant-evidence"],
+          "completeEvidenceKinds": ["visa-master-check"]
+        },
+        "visaMasterSupport": "Visa Master can explain the current photograph conditions and check recorded photograph details against them.",
+        "complianceConditions": [
+          {
+            "id": "visa-photo-format",
+            "title": "Quantity, dimensions, and background",
+            "instruction": "Provide two recent color photographs on a white background measuring 26–35 × 32–45 mm.",
+            "completionEvidence": "Two recorded photographs meet the current quantity, background, width, and height conditions.",
+            "claimIds": ["photos"]
+          }
+        ],
+        "requirementIds": ["photos"]
+      },
+      {
+        "id": "official-application-form",
+        "number": 4,
+        "title": "Complete official visa application form",
+        "evidenceGoal": "Provide a complete signed official visa application form.",
+        "instruction": "Complete the current official form with facts that agree with the passport, itinerary, bookings, insurance, employment, and financial evidence; review it before signing.",
+        "completionEvidence": "The current official form is complete, internally consistent, dated, and signed in every required place.",
+        "completionCriteria": {
+          "evidenceKinds": ["workspace-resource"],
+          "completeEvidenceKinds": ["visa-master-check"]
+        },
+        "visaMasterSupport": "Visa Master can provide the mapped form workstation, explain fields, and check answers for completeness and cross-document consistency.",
+        "requirementIds": ["application-form"],
+        "resourceIds": ["application-form-field-guide"]
+      },
+      {
+        "id": "acknowledgment",
+        "number": 5,
+        "title": "Read and sign acknowledgment",
+        "evidenceGoal": "Provide the required signed acknowledgment.",
+        "instruction": "Read the current acknowledgment, complete only the applicable fields, and date and sign it as instructed.",
+        "completionEvidence": "The current acknowledgment is complete, dated, and signed by the applicant where required.",
+        "completionCriteria": {
+          "evidenceKinds": ["workspace-resource", "applicant-evidence"],
+          "completeEvidenceKinds": ["visa-master-check"]
+        },
+        "visaMasterSupport": "Visa Master can explain the document's route context and check whether the required fields, date, and signature are present.",
+        "requirementIds": ["acknowledgment"]
+      },
+      {
+        "id": "employment-evidence",
+        "guidanceModule": "employment-evidence",
+        "employmentEvidencePolicy": {
+          "factFields": [
+            { "id": "employer-name", "factId": "employment.employer-name", "label": "Employer legal name", "inputType": "text", "required": true },
+            { "id": "job-title", "factId": "employment.job-title", "label": "Job title", "inputType": "text", "required": true },
+            { "id": "start-date", "factId": "employment.start-date", "label": "Employment start date", "inputType": "date", "required": true },
+            { "id": "salary", "factId": "employment.salary", "label": "Genuine salary, currency, and period", "inputType": "text", "required": true },
+            { "id": "leave-start", "factId": "employment.leave-start", "label": "Approved leave start", "inputType": "date", "required": true },
+            { "id": "leave-end", "factId": "employment.leave-end", "label": "Approved leave end", "inputType": "date", "required": true }
+          ],
+          "allowedFormats": ["visa-master-template", "issuer-format", "existing-draft"],
+          "template": { "resourceId": "employer-letter-template", "draftResourceId": "employer-letter-draft", "title": "Employer letter draft", "role": "employer-letter" },
+          "issuerLabel": "employer",
+          "issuedResources": [
+            { "fieldId": "issued-letter", "resourceId": "issued-employer-letter", "title": "Issued employer letter", "role": "employer-letter" },
+            { "fieldId": "business-licence", "resourceId": "sealed-business-licence", "title": "Sealed business-licence copy", "role": "business-licence" }
+          ]
+        },
+        "number": 6,
+        "title": "Provide employment evidence",
+        "evidenceGoal": "Provide genuine employer-issued employment evidence.",
+        "instruction": "Ask the employer to provide one coherent employment-evidence set: the required business-licence copy and an issued letter with the route-specific details, stamp, signature, date, and any required translation.",
+        "completionEvidence": "The genuine employer letter and business-licence evidence are complete, mutually consistent, and satisfy every current route-specific condition.",
+        "completionCriteria": {
+          "evidenceKinds": ["workspace-resource", "applicant-evidence"],
+          "completeEvidenceKinds": ["visa-master-check"]
+        },
+        "visaMasterSupport": "Visa Master can prepare or modify the employer-letter template and check the employer-issued set against the compiled conditions.",
+        "complianceConditions": [
+          {
+            "id": "employer-issued-letter",
+            "title": "Employer issuance, stamp, signature, and translation",
+            "instruction": "Have the employer issue the letter on official paper with the current company, signatory, applicant, salary, service, and leave details; include the required stamp, signature, date, and English text or translation.",
+            "completionEvidence": "The issued letter and sealed business-licence copy contain every current employer, applicant, issuance, and language element.",
+            "claimIds": ["employment"]
+          }
+        ],
+        "requirementIds": ["employment-evidence"],
+        "resourceIds": ["employer-letter-template"]
+      },
+      {
+        "id": "financial-evidence",
+        "number": 7,
+        "title": "Provide personal financial evidence",
+        "evidenceGoal": "Provide the required genuine personal financial evidence.",
+        "instruction": "Obtain genuine personal bank statements for the required period. Use an explanation only when truthful transactions need concise supporting context.",
+        "completionEvidence": "The requested statement period is complete, the records are genuine and legible, and any material inconsistency is truthfully explained.",
+        "completionCriteria": {
+          "evidenceKinds": ["applicant-evidence"],
+          "completeEvidenceKinds": ["visa-master-check"]
+        },
+        "visaMasterSupport": "Visa Master can explain the required period, organize a truthful summary, and check the recorded evidence for gaps or inconsistencies.",
+        "requirementIds": ["bank-statements"],
+        "resourceIds": ["financial-summary-template"]
+      },
+      {
+        "id": "genuine-itinerary",
+        "number": 8,
+        "title": "Prepare genuine itinerary",
+        "evidenceGoal": "Provide a consistent genuine trip itinerary.",
+        "instruction": "Build a realistic day-by-day plan using the genuine travel dates, destinations, accommodation, and transport. Keep it consistent with all other evidence.",
+        "completionEvidence": "Every travel day and overnight stay is covered and the itinerary agrees with transport, accommodation, insurance, leave, and form dates.",
+        "completionCriteria": {
+          "evidenceKinds": ["workspace-resource"],
+          "completeEvidenceKinds": ["visa-master-check"]
+        },
+        "visaMasterSupport": "Visa Master can prepare the itinerary structure and check dates, destinations, transport, accommodation, insurance, and leave for consistency.",
+        "requirementIds": ["itinerary"]
+      },
+      {
+        "id": "transport-evidence",
+        "number": 9,
+        "title": "Obtain round-trip transport evidence",
+        "evidenceGoal": "Provide accepted round-trip transport evidence.",
+        "instruction": "Obtain genuine round-trip transport evidence that covers the proposed journey and matches the itinerary. Follow the current source on whether a reservation is sufficient before paying.",
+        "completionEvidence": "The accepted round-trip transport evidence is genuine, active, legible, and consistent with the complete trip.",
+        "completionCriteria": {
+          "evidenceKinds": ["applicant-evidence"],
+          "completeEvidenceKinds": ["visa-master-check"]
+        },
+        "visaMasterSupport": "Visa Master can clarify the accepted evidence and check the recorded transport details against the itinerary without purchasing or confirming travel.",
+        "requirementIds": ["bookings-and-insurance"],
+        "claimIds": ["travel-evidence"]
+      },
+      {
+        "id": "accommodation-evidence",
+        "number": 10,
+        "title": "Obtain accommodation evidence",
+        "evidenceGoal": "Provide accommodation evidence for the trip.",
+        "instruction": "Gather genuine accommodation evidence covering every overnight stay and make sure names, places, and dates agree with the itinerary.",
+        "completionEvidence": "Every night is covered by genuine, active accommodation evidence consistent with the applicant and itinerary.",
+        "completionCriteria": {
+          "evidenceKinds": ["applicant-evidence"],
+          "completeEvidenceKinds": ["visa-master-check"]
+        },
+        "visaMasterSupport": "Visa Master can identify coverage gaps and check applicant names, places, and dates against the itinerary without making or changing reservations.",
+        "requirementIds": ["bookings-and-insurance"],
+        "claimIds": ["travel-evidence"]
+      },
+      {
+        "id": "travel-insurance",
+        "number": 11,
+        "title": "Obtain travel medical insurance",
+        "evidenceGoal": "Provide compliant travel medical insurance evidence.",
+        "instruction": "Obtain genuine travel medical insurance that satisfies every coverage, territory, duration, and minimum-benefit condition for this Case.",
+        "completionEvidence": "The policy certificate identifies the applicant and satisfies all current route-specific insurance conditions for the full required period.",
+        "completionCriteria": {
+          "evidenceKinds": ["applicant-evidence"],
+          "completeEvidenceKinds": ["visa-master-check"]
+        },
+        "visaMasterSupport": "Visa Master can explain the compiled policy conditions and check a recorded certificate without purchasing, paying for, or activating insurance.",
+        "complianceConditions": [
+          {
+            "id": "insurance-coverage",
+            "title": "Territory, duration, benefits, and minimum coverage",
+            "instruction": "Use a policy covering the required Schengen period, urgent medical care, emergency hospitalization, and repatriation with at least the current minimum benefit.",
+            "completionEvidence": "The recorded certificate identifies the applicant and satisfies the current territory, dates, benefit events, and minimum coverage.",
+            "claimIds": ["insurance"]
+          }
+        ],
+        "requirementIds": ["bookings-and-insurance"],
+        "claimIds": ["travel-evidence"]
+      },
+      {
+        "id": "assemble-application",
+        "number": 12,
+        "title": "Review and assemble complete application",
+        "evidenceGoal": "Assemble the complete application according to the current local checklist.",
+        "instruction": "Review every action outcome, resolve inconsistencies, and assemble originals and copies in the current provider order without inventing or silently substituting evidence.",
+        "completionEvidence": "Every applicable checklist item is present in submission order and the complete set passes a cross-document consistency review.",
+        "completionCriteria": {
+          "evidenceKinds": ["visa-master-check"],
+          "completeEvidenceKinds": ["visa-master-check"]
+        },
+        "visaMasterSupport": "Visa Master can compare the recorded action evidence, flag gaps or conflicts, and prepare a submission-order review.",
+        "requirementIds": ["local-checklist", "submission-index"],
+        "resourceIds": ["start-here-master-checklist", "sources-warnings"]
+      },
+      {
+        "id": "submit-at-bls",
+        "number": 13,
+        "title": "Submit application at BLS",
+        "evidenceGoal": "Submit the application in person and retain the provider receipt.",
+        "instruction": "Attend the confirmed appointment with the assembled application, follow the provider's in-person instructions, and keep the issued submission receipt.",
+        "completionEvidence": "The provider has accepted the application and issued a receipt or tracking reference retained in the Case.",
+        "completionCriteria": {
+          "evidenceKinds": ["receipt"],
+          "completeEvidenceKinds": ["receipt"]
+        },
+        "visaMasterSupport": "Visa Master can prepare the final checklist and explain what to retain, but cannot attend, pay, confirm, or submit the application.",
+        "applicantHandoff": {
+          "id": "submit-application-at-bls",
+          "title": "Applicant submits the application",
+          "description": "Attend the appointment, review any requested payment or service, submit only the intended materials, and retain the provider receipt.",
+          "consequence": "Submission sends the application and supporting documents to BLS and begins external processing.",
+          "sourceId": "bls-home-en"
+        },
+        "claimIds": ["submission"],
+        "resourceIds": ["submission-index"]
+      },
+      {
+        "id": "track-status",
+        "number": 14,
+        "title": "Track application status",
+        "evidenceGoal": "Track the provider application status until passport collection.",
+        "instruction": "Use the provider tracking reference to check the application status and retain any material status notice through passport return or collection.",
+        "completionEvidence": "The final provider status and passport return or collection outcome are recorded with the available receipt or notice.",
+        "completionCriteria": {
+          "evidenceKinds": ["receipt", "applicant-evidence"],
+          "completeEvidenceKinds": ["receipt"]
+        },
+        "visaMasterSupport": "Visa Master can explain the official tracking route and help interpret recorded notices without entering private tracking details on the applicant's behalf.",
+        "claimIds": ["processing"],
+        "resourceIds": ["sources-warnings"]
+      }
+    ],
+    "actionText": {
+      "zh-CN": {
+        "book-bls-appointment": {
+          "title": "预约 BLS 西班牙签证中心",
+          "evidenceGoal": "与签证服务商预约递交申请的时间。",
+          "instruction": "使用当前 BLS 成都领区的预约渠道完成预约，并保留预约确认信息。账号密码、验证码及最终预约确认须由你本人输入和保管。",
+          "visaMasterSupport": "签证助手可核对当前服务商预约渠道、汇总预约要求，并为你准备好预约时所需的信息。"
+        },
+        "passport-residence": {
+          "title": "提供护照与居住证明",
+          "evidenceGoal": "提供所需的护照与居住证明材料。",
+          "instruction": "按当前当地清单收集真实的护照及户口本等居住证明材料，包括要求的原件与复印件。",
+          "visaMasterSupport": "签证助手可解释汇总后的材料清单，并检查所提交材料是否有缺项或身份信息不一致。"
+        },
+        "visa-photographs": {
+          "title": "获取合规的签证照片",
+          "evidenceGoal": "提供符合路线要求的近期照片。",
+          "instruction": "按当前当地清单中的尺寸、数量、背景及拍摄时间要求获取近期照片。",
+          "visaMasterSupport": "签证助手可解释当前照片要求，并核对已登记的照片信息是否符合要求。"
+        },
+        "official-application-form": {
+          "title": "填写官方签证申请表",
+          "evidenceGoal": "提供一份完整并签名的官方签证申请表。",
+          "instruction": "使用与护照、行程、预订、保险、在职及财务材料一致的真实信息填写当前官方表格，签署前请再检查一遍。",
+          "visaMasterSupport": "签证助手可提供已映射的表格工作台、解释各字段，并检查答案的完整性与跨材料一致性。"
+        },
+        "acknowledgment": {
+          "title": "阅读并签署《确认书》",
+          "evidenceGoal": "提供所需并已签署的确认书。",
+          "instruction": "阅读当前确认书，仅填写适用字段，并按说明填写日期并签名。",
+          "visaMasterSupport": "签证助手可解释该文件的路线背景，并检查所需字段、日期与签名是否齐全。"
+        },
+        "employment-evidence": {
+          "title": "提供在职证明材料",
+          "evidenceGoal": "提供真实有效的在职证明。",
+          "instruction": "请雇主提供一套完整的在职证明：所需营业执照副本，以及包含路线特定信息、盖章、签字、日期（如需翻译还需译文）的在职证明信。",
+          "visaMasterSupport": "签证助手可准备或修改在职证明模板，并按汇总后的条件核对雇主出具的材料。"
+        },
+        "financial-evidence": {
+          "title": "提供个人财务证明",
+          "evidenceGoal": "提供所需的真实个人财务证明。",
+          "instruction": "获取规定期限内的真实个人银行流水。仅在真实交易需要简要补充说明时使用解释信。",
+          "visaMasterSupport": "签证助手可解释所需期限、整理真实情况说明，并检查已登记材料的缺漏或不一致。"
+        },
+        "genuine-itinerary": {
+          "title": "准备真实行程计划",
+          "evidenceGoal": "提供一致且真实的旅行行程。",
+          "instruction": "使用真实的旅行日期、目的地、住宿与交通，制定合理的逐日行程，并确保与其他材料保持一致。",
+          "visaMasterSupport": "签证助手可准备行程结构，并核对日期、目的地、交通、住宿、保险与请假安排是否一致。"
+        },
+        "transport-evidence": {
+          "title": "获取往返交通证明",
+          "evidenceGoal": "提供被认可的往返交通证明。",
+          "instruction": "获取覆盖整个行程并与行程一致的往返交通证明。在付款前，先按当前官方来源确认预订是否即可满足要求。",
+          "visaMasterSupport": "签证助手可说明被认可的材料形式，并在不代购或不确认出行的情况下核对已登记的交通信息与行程的一致性。"
+        },
+        "accommodation-evidence": {
+          "title": "获取住宿证明",
+          "evidenceGoal": "提供旅行期间的住宿证明。",
+          "instruction": "收集覆盖每一晚住宿的真实住宿证明，并确保姓名、地点与日期和行程一致。",
+          "visaMasterSupport": "签证助手可识别覆盖缺口，并在不预订或更改住宿的情况下核对申请人姓名、地点与日期是否与行程一致。"
+        },
+        "travel-insurance": {
+          "title": "获取旅行医疗保险",
+          "evidenceGoal": "提供符合要求的旅行医疗保险证明。",
+          "instruction": "获取真实有效的旅行医疗保险，须满足本案例对保额、保障区域、保障期限及最低理赔金额的全部条件。",
+          "visaMasterSupport": "签证助手可解释汇总后的保险条款，并在不购买、不付款或不激活保险的情况下核对已登记保单。"
+        },
+        "assemble-application": {
+          "title": "整理并汇编完整申请材料",
+          "evidenceGoal": "按当前当地清单汇编完整申请材料。",
+          "instruction": "检查每个行动的结果，解决不一致之处，并按当前服务商要求的顺序整理原件与复印件，不得虚构或擅自替换材料。",
+          "visaMasterSupport": "签证助手可比较已登记的各行动材料、标记缺漏或冲突，并准备递交顺序复核。"
+        },
+        "submit-at-bls": {
+          "title": "前往 BLS 递交申请",
+          "evidenceGoal": "本人递交申请并保留服务商回执。",
+          "instruction": "按预约时间携带汇编好的申请材料到场，遵循服务商现场指引，并妥善保管领取的递交回执。",
+          "visaMasterSupport": "签证助手可准备最终清单并说明需要保留的材料，但无法代你到场、缴费、确认或递交申请。"
+        },
+        "track-status": {
+          "title": "跟踪申请进度",
+          "evidenceGoal": "跟踪服务商申请进度直至领取护照。",
+          "instruction": "使用服务商提供的跟踪编号查询申请进度，并在护照寄还或领取前保留任何重要的状态通知。",
+          "visaMasterSupport": "签证助手可说明官方跟踪渠道并帮助解读已登记的通知，但不会代你输入私人跟踪信息。"
+        }
+      }
+    }
+  }
+}

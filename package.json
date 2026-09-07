@@ -12,7 +12,9 @@
     "invite:create": "node --env-file-if-exists=.env.local scripts/create-invite-phrase.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "check": "npm run lint && npm run typecheck && npm run build"
+    "check": "npm run lint && npm run typecheck && npm run test:demo && npm run build",
+    "demo:sync": "node scripts/sync-demo-route.mjs",
+    "test:demo": "node --experimental-strip-types --test scripts/demo-intake.test.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.4",

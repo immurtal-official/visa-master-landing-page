@@ -17,13 +17,15 @@ export function AccountButton({
   initialViewer,
   onGetStarted,
   onViewerChange,
+  onWorkspace,
 }: {
   getStarted: string;
   finishSetup: string;
   workspace: string;
   initialViewer: AccountViewer | null;
   onGetStarted: () => void;
-  onViewerChange: (displayName: string | null) => void;
+  onViewerChange: (viewer: AccountViewer | null) => void;
+  onWorkspace?: () => void;
 }) {
   const router = useRouter();
   const [viewer, setViewer] = useState<AccountViewer | null>(initialViewer);
@@ -48,7 +50,7 @@ export function AccountButton({
         const displayName = displayNameFromMetadata(data.user.user_metadata);
         if (active) {
           setViewer({ displayName });
-          onViewerChange(displayName);
+          onViewerChange({ displayName });
         }
       } catch {
         if (active) {
@@ -87,7 +89,7 @@ export function AccountButton({
     <button
       className="quiet-button account-button"
       type="button"
-      onClick={() => router.push(viewer.displayName ? "/workspace" : "/onboarding/profile?next=/workspace")}
+      onClick={onWorkspace ?? (() => router.push(viewer.displayName ? "/workspace" : "/onboarding/profile?next=/workspace"))}
     >
       {viewer.displayName ? workspace : finishSetup}
     </button>

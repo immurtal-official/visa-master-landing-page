@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "visa-master.route-sources.v1",
+  "initial": [
+    {
+      "id": "consulate-jurisdiction",
+      "url": "https://www.exteriores.gob.es/Consulados/Chengdu/es/Consulado/Paginas/Demarcaci%C3%B3n.aspx",
+      "filename": "consulate-jurisdiction.html",
+      "expect": "html"
+    },
+    {
+      "id": "consulate-contact-bls",
+      "url": "https://www.exteriores.gob.es/Consulados/Chengdu/es/Consulado/Paginas/Horario%2C-localizaci%C3%B3n-y-contacto.aspx",
+      "filename": "consulate-contact-bls.html",
+      "expect": "html"
+    },
+    {
+      "id": "bls-home-en",
+      "url": "https://web.blscn.cn/chengdu/",
+      "filename": "bls-home-en.html",
+      "expect": "html"
+    },
+    {
+      "id": "bls-home-zh",
+      "url": "https://web.blscn.cn/chengdu/chinese/",
+      "filename": "bls-home-zh.html",
+      "expect": "html",
+      "inspection": {
+        "selector": "#exampleModal",
+        "expectedSha256": "ff13f778eeaca27951ace3828d3fdd1befd65d6121252d9e207f03ec9224c854",
+        "claimIds": ["submission", "filing-window", "financial"]
+      }
+    },
+    {
+      "id": "bls-tourism-en",
+      "url": "https://web.blscn.cn/chengdu/short_term_visa_tourism.php",
+      "filename": "bls-tourism-en.html",
+      "expect": "html"
+    },
+    {
+      "id": "bls-tourism-zh",
+      "url": "https://web.blscn.cn/chengdu/chinese/short_term_visa_tourism.php",
+      "filename": "bls-tourism-zh.html",
+      "expect": "html"
+    },
+    {
+      "id": "bls-visa-type-en",
+      "url": "https://web.blscn.cn/chengdu/visa-type.php",
+      "filename": "bls-visa-type-en.html",
+      "expect": "html"
+    },
+    {
+      "id": "bls-contact",
+      "url": "https://web.blscn.cn/chengdu/contact.php",
+      "filename": "bls-contact.html",
+      "expect": "html"
+    },
+    {
+      "id": "bls-faq",
+      "url": "https://web.blscn.cn/chengdu/faq.php",
+      "filename": "bls-faq.html",
+      "expect": "html"
+    },
+    {
+      "id": "ec-applying",
+      "url": "https://home-affairs.ec.europa.eu/policies/schengen/visa-policy/applying-schengen-visa_en",
+      "filename": "ec-applying.html",
+      "expect": "html"
+    },
+    {
+      "id": "ec-china-baseline",
+      "url": "https://home-affairs.ec.europa.eu/document/download/99f6ef02-bd70-4c1e-bc35-b780bea8c9da_en",
+      "filename": "ec-china-supporting-documents.pdf",
+      "expect": "pdf"
+    }
+  ],
+  "downloads": [
+    {
+      "id": "chengdu-tourism-checklist",
+      "filename": "chengdu-tourism-checklist.pdf",
+      "output": "01_Official_Documents/02_Official_Chengdu_Tourism_Checklist.pdf",
+      "expect": "pdf",
+      "purpose": "Current Chengdu tourism checklist",
+      "required": true,
+      "selectors": [
+        { "parent": "bls-tourism-en", "textPattern": "Chengdu Checklist", "urlPattern": "Tourism\\.pdf" },
+        { "parent": "bls-tourism-zh", "textPattern": "Chengdu Checklist", "urlPattern": "Tourism\\.pdf" }
+      ]
+    },
+    {
+      "id": "schengen-application-form",
+      "filename": "schengen-application-form.pdf",
+      "output": "01_Official_Documents/01_Official_Schengen_Visa_Application_Form.pdf",
+      "expect": "pdf",
+      "purpose": "Official multilingual Schengen application form",
+      "semanticRole": "mapped-official-form",
+      "mediaFormat": "application/pdf",
+      "fillable": true,
+      "required": true,
+      "selectors": [
+        { "parent": "bls-tourism-en", "textPattern": "Visa Application Form", "urlPattern": "Visa-Application-Form" },
+        { "parent": "bls-tourism-zh", "textPattern": "签证申请表", "urlPattern": "Visa-Application-Form" }
+      ]
+    },
+    {
+      "id": "acknowledgment-questionnaire",
+      "filename": "acknowledgment-questionnaire.pdf",
+      "output": "01_Official_Documents/03_Official_Acknowledgment.pdf",
+      "expect": "pdf",
+      "purpose": "Acknowledgment required by the Chengdu parent page",
+      "required": true,
+      "selectors": [
+        { "parent": "bls-tourism-zh", "textPattern": "知悉声明|所有申请必须交|question", "urlPattern": "questionare\\.pdf" }
+      ]
+    }
+  ]
+}

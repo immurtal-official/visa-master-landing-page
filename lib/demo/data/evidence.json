@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "visa-master.route-evidence.v1",
+  "claims": [
+    {
+      "id": "jurisdiction",
+      "question": "Does the Spanish Consulate General in Chengdu remain competent for Sichuan?",
+      "value": "Sichuan is within the consular district of the Consulate General of Spain in Chengdu.",
+      "critical": true,
+      "checks": [{ "source": "consulate-jurisdiction", "all": ["Sichuan", "Chengdu"] }]
+    },
+    {
+      "id": "provider",
+      "question": "Does the Chengdu mission still designate BLS for visa submissions?",
+      "value": "BLS remains the designated visa application provider for the Chengdu route.",
+      "critical": true,
+      "checks": [{ "source": "consulate-contact-bls", "all": ["BLS", "visado"] }]
+    },
+    {
+      "id": "center",
+      "question": "What are the current Chengdu center address, hours, email, and telephone?",
+      "value": "Room 2008, Tower A, Oriental Hope Tianxiang Square, No. 530 Middle Section of Tianfu Avenue, Chengdu; submission and collection 08:00–15:00 Monday–Friday; info.chd@blshelpline.com; 4000596969.",
+      "critical": true,
+      "checks": [{ "source": "bls-contact", "all": ["Room No.2008", "08:00 to 15:00", "info.chd@blshelpline.com", "4000596969"] }]
+    },
+    {
+      "id": "fees",
+      "question": "What adult visa and BLS service fees are displayed now?",
+      "value": "Adult visa fee CNY 700 plus BLS service fee CNY 116, payable in cash; fees may change and are non-refundable.",
+      "critical": true,
+      "checks": [{ "source": "bls-tourism-en", "all": ["Adults", "700 CNY", "116 CNY", "payable in cash", "non-refundable"] }]
+    },
+    {
+      "id": "submission",
+      "question": "What appointment procedure applies to regular Chengdu short-stay applicants?",
+      "value": "Book a free appointment through the official BLS website before submitting, choose the correct visa category, and enter details exactly as shown in the passport. Treat the homepage's urgent-travel walk-in notice as a narrow exception to recheck, not the regular route.",
+      "critical": true,
+      "checks": [
+        { "source": "bls-home-en", "all": ["requested to book the appointment prior to submitting", "Chengdu", "appointments are free of charge", "correct visa category"] },
+        { "source": "bls-home-zh", "all": ["成都", "预约后方可", "所有预约均为免费", "正确的签证类别"] }
+      ]
+    },
+    {
+      "id": "filing-window",
+      "question": "What filing window applies to this Schengen application?",
+      "value": "Submit no earlier than six months before departure and at least 15 days before departure; allow additional time for appointment availability and processing.",
+      "critical": true,
+      "checks": [
+        { "source": "bls-home-en", "all": ["at least 15 days", "more than six months"] },
+        { "source": "bls-home-zh", "all": ["至少15天", "超过六个月"] }
+      ]
+    },
+    {
+      "id": "processing",
+      "question": "What processing periods are currently stated?",
+      "value": "BLS states 15 working days in most cases and up to 45 days; EU guidance states a normal 15-day period and up to 45 days.",
+      "critical": true,
+      "checks": [
+        { "source": "bls-faq", "all": ["15 working days", "up to 45 days"] },
+        { "source": "ec-applying", "all": ["normal processing time", "15 days", "up to 45 days"] }
+      ]
+    },
+    {
+      "id": "passport-insurance-biometrics",
+      "question": "What general passport, insurance, and biometric rules remain current?",
+      "value": "Passport validity extends at least three months beyond Schengen departure; medical insurance covers emergency care, hospitalization and repatriation; fingerprints are normally collected at submission.",
+      "critical": true,
+      "checks": [{ "source": "ec-applying", "all": ["at least 3 months", "Medical insurance", "repatriation", "fingerprints will be collected"] }]
+    },
+    {
+      "id": "biometric-reuse",
+      "question": "When can prior Schengen fingerprints normally be reused?",
+      "value": "Applicants whose Schengen biometrics were collected within the preceding 59 months may not need to submit them again; fresh collection may still be requested.",
+      "critical": true,
+      "checks": [{ "source": "bls-visa-type-en", "all": ["following 59 months", "not be required to submit their biometric data again"] }]
+    },
+    {
+      "id": "employment",
+      "question": "What employment documents and employer-letter fields does the local checklist require?",
+      "value": "A sealed business-licence copy and an original employer letter on official paper with stamp, signature, date, company address/telephone/fax, signatory name/position, applicant name/position/salary/service years, and approved leave; English or Chinese with English translation.",
+      "critical": true,
+      "checks": [{ "source": "chengdu-tourism-checklist", "all": ["sealed copy of the business licence", "letter from the employer", "address, telephone and fax", "salary and years of service", "approval for leave"] }]
+    },
+    {
+      "id": "financial",
+      "question": "What bank-statement period applies after reconciling the checklist with the current Chengdu notice?",
+      "value": "Provide personal bank statements covering at least the latest six months. This current Chengdu notice is stricter than the checklist's 3–6 month range; a deposit certificate is not the requested substitute.",
+      "critical": true,
+      "checks": [
+        { "source": "chengdu-tourism-checklist", "all": ["Bank statements from the last 3 to 6 months", "no deposits"] },
+        { "source": "bls-home-en", "all": ["bank statements from at least", "last six months"] },
+        { "source": "bls-home-zh", "all": ["至少最近6个月", "银行流水账单"] }
+      ]
+    },
+    {
+      "id": "travel-evidence",
+      "question": "What itinerary, transport, flight, and accommodation evidence is required?",
+      "value": "A clear travel programme with transport and itinerary, a genuine return-flight reservation, and accommodation covering the whole intended stay.",
+      "critical": true,
+      "checks": [{ "source": "chengdu-tourism-checklist", "all": ["Travel programme", "Flight Reservation", "Proof of accommodation", "whole duration"] }]
+    },
+    {
+      "id": "insurance",
+      "question": "What local travel-medical-insurance coverage is required?",
+      "value": "Insurance must cover the Schengen stay, urgent medical care, emergency hospitalization and repatriation for medical reasons or death, with at least EUR 30,000 coverage.",
+      "critical": true,
+      "checks": [{ "source": "chengdu-tourism-checklist", "all": ["travel medical insurance", "emergency hospital treatment", "repatriation", "30.000 euros"] }]
+    },
+    {
+      "id": "passport-hukou",
+      "question": "What local passport and Hukou handling is required?",
+      "value": "Signed passport valid at least three months after intended exit with two blank pages, copies of all passport pages and two bio-page copies; original Hukou without translation plus copies of all pages.",
+      "critical": true,
+      "checks": [{ "source": "chengdu-tourism-checklist", "all": ["Signed passport valid for at least three months", "two blank pages", "photocopy of all the pages", "Original “Hukou”", "no translation"] }]
+    },
+    {
+      "id": "photos",
+      "question": "What photograph size and quantity does the local checklist state?",
+      "value": "Two recent color photos on a white background, 26–35 mm wide and 32–45 mm high; follow the current BLS photo-quality rules.",
+      "critical": true,
+      "checks": [{ "source": "chengdu-tourism-checklist", "all": ["Two recent colour photograph", "white background", "26-35mm", "32-45mm"] }]
+    },
+    {
+      "id": "questionnaire",
+      "question": "Does the Chengdu route page still require the acknowledgment despite the PDF's Guangzhou wording?",
+      "value": "The Chengdu Chinese parent page says all applications must submit the acknowledgment; retain it even though the PDF text mentions Guangzhou, unless stronger current evidence rejects it.",
+      "critical": true,
+      "checks": [
+        { "source": "bls-tourism-zh", "all": ["知悉声明", "所有申请必须交", "questionare"] },
+        { "source": "acknowledgment-questionnaire", "all": ["Consulate-General of Spain in Guangzhou"] }
+      ]
+    }
+  ]
+}

@@ -567,22 +567,30 @@ export function AuthDialog({
   open,
   onOpenChange,
   locale,
+  next = "/workspace",
+  forWorkspace = false,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   locale: AuthLocale;
+  next?: string;
+  forWorkspace?: boolean;
 }) {
   if (!open) return null;
 
-  return <OpenAuthDialog onOpenChange={onOpenChange} locale={locale} />;
+  return <OpenAuthDialog onOpenChange={onOpenChange} locale={locale} next={next} forWorkspace={forWorkspace} />;
 }
 
 function OpenAuthDialog({
   onOpenChange,
   locale,
+  next = "/workspace",
+  forWorkspace = false,
 }: {
   onOpenChange: (open: boolean) => void;
   locale: AuthLocale;
+  next?: string;
+  forWorkspace?: boolean;
 }) {
   const modalRef = useRef<HTMLDivElement>(null);
   const t = copy[locale];
@@ -602,6 +610,7 @@ function OpenAuthDialog({
     ].join(",");
 
     document.body.style.overflow = "hidden";
+    modalRef.current?.querySelector<HTMLElement>(focusableSelector)?.focus();
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         event.preventDefault();
@@ -640,8 +649,8 @@ function OpenAuthDialog({
         <button className="modal-close" type="button" onClick={() => onOpenChange(false)} aria-label={t.close}>×</button>
         {view === "early-access" && <>
           <small>{t.waitlistKicker}</small>
-          <h2 id="signup-title">{t.waitlistTitle}</h2>
-          <p>{t.waitlistBody}</p>
+          <h2 id="signup-title">{forWorkspace ? (locale === "cn" ? "登录，打开你的工作台。" : locale === "es" ? "Accede a tu espacio de trabajo." : "Sign in to open your workspace.") : t.waitlistTitle}</h2>
+          <p>{forWorkspace ? (locale === "cn" ? "你的回答会保留在此标签页。新账户需凭邀请注册，也可先加入候补名单。" : locale === "es" ? "Tus respuestas permanecen en esta pestaña. Las cuentas nuevas requieren invitación; también puedes unirte a la lista de espera." : "Your answers stay in this tab. New accounts require an invitation; you can also join the waitlist.") : t.waitlistBody}</p>
           <EarlyAccessPanel
             locale={locale}
             onAuthorized={(email) => {
@@ -656,14 +665,14 @@ function OpenAuthDialog({
           <small>{t.invitedKicker}</small>
           <h2 id="signup-title">{t.invitedTitle}</h2>
           <p>{t.invitedBody}</p>
-          <AuthPanel locale={locale} initialEmail={authorizedEmail} allowSignUp />
+          <AuthPanel next={next} locale={locale} initialEmail={authorizedEmail} allowSignUp />
         </>}
 
         {view === "sign-in" && <>
           <small>{t.signInKicker}</small>
           <h2 id="signup-title">{t.signInTitle}</h2>
           <p>{t.signInBody}</p>
-          <AuthPanel locale={locale} />
+          <AuthPanel next={next} locale={locale} />
           <button className="modal-back-link" type="button" onClick={() => setView("early-access")}>{t.backToEarlyAccess}</button>
         </>}
       </div>

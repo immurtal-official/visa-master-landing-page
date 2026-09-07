@@ -1,0 +1,249 @@
+{
+  "schemaVersion": "visa-master.documents.v1",
+  "documents": [
+    {
+      "id": "start-here-master-checklist",
+      "output": "00_Start_Here/00_Start_Here_and_Master_Checklist.pdf",
+      "deliverAs": "pdf",
+      "title": "Spain Tourist Visa — Start Here and Master Checklist",
+      "subtitle": "Chengdu filing route • Employed adult • {{intake.tripDuration}} trip planned for {{intake.travelPeriod}} • Prepared {{intake.preparedDate}}",
+      "blocks": [
+        { "type": "notice", "tone": "urgent", "text": "Apply as soon as your genuine documents are ready. {{evidence.processing}}" },
+        { "type": "notice", "tone": "info", "text": "Privacy: complete personal details, passport data, employer facts, financial information, exact dates, signatures, and bookings only in the local files you control." },
+        { "type": "heading", "level": 1, "text": "1. Filing route" },
+        { "type": "bullets", "items": [
+          "Visa: Spain short-stay Schengen visa for tourism.",
+          "{{evidence.jurisdiction}}",
+          "{{evidence.provider}}",
+          "{{evidence.center}}",
+          "{{evidence.submission}}",
+          "{{evidence.filing-window}}"
+        ] },
+        { "type": "heading", "level": 1, "text": "2. Official documents to complete" },
+        { "type": "checklist", "items": [
+          "Complete and sign the multilingual Schengen application form.",
+          "Use the current Chengdu tourism checklist to assemble the set.",
+          "Read, date, and sign the acknowledgment. {{evidence.questionnaire}}"
+        ] },
+        { "type": "heading", "level": 1, "text": "3. Documents to obtain and add" },
+        { "type": "checklist", "items": [
+          "{{evidence.passport-hukou}}",
+          "{{evidence.photos}}",
+          "{{evidence.employment}}",
+          "{{evidence.financial}}",
+          "{{evidence.travel-evidence}}",
+          "{{evidence.insurance}}"
+        ] },
+        { "type": "heading", "level": 1, "text": "4. Fees and submission" },
+        { "type": "bullets", "items": [
+          "Checked {{intake.preparedDate}}: {{evidence.fees}}",
+          "{{evidence.passport-insurance-biometrics}}",
+          "{{evidence.biometric-reuse}}",
+          "Keep the BLS receipt and obtain current Chengdu-specific instructions before using representative or courier return."
+        ] },
+        { "type": "heading", "level": 1, "text": "5. Final consistency check" },
+        { "type": "checklist", "items": [
+          "Names and passport details match the passport exactly.",
+          "Flights, accommodation, insurance, itinerary, leave, and requested visa dates agree.",
+          "Every reservation is genuine and active.",
+          "Spain is genuinely the main destination.",
+          "All originals and copies are present in the submission order.",
+          "Fees, hours, and appointment availability were rechecked shortly before submission."
+        ] },
+        { "type": "notice", "tone": "warning", "text": "VISA MASTER — UNOFFICIAL. This pack is a preparation aid, not a guarantee. The consular authority may request more evidence and decides the application." }
+      ]
+    },
+    {
+      "id": "submission-index",
+      "output": "00_Start_Here/01_Submission_Index.pdf",
+      "deliverAs": "pdf",
+      "title": "Suggested Submission Index",
+      "subtitle": "Practical order; follow any different current instruction from BLS staff",
+      "blocks": [
+        { "type": "notice", "tone": "info", "text": "VISA MASTER — UNOFFICIAL organizational aid. Keep personal documents local." },
+        { "type": "table", "headers": ["Order", "Item", "Status / notes"], "widths": [1, 6, 3], "rows": [
+          ["1", "Schengen application form, completed and signed", "[  ]"],
+          ["2", "Acknowledgment, dated and signed", "[  ] Guangzhou wording noted"],
+          ["3", "Chengdu tourism checklist", "[  ]"],
+          ["4", "Passport original and required copies", "[  ]"],
+          ["5", "Two compliant recent photographs", "[  ]"],
+          ["6", "Stamped employer business-licence copy", "[  ]"],
+          ["7", "Original employer letter and English translation if needed", "[  ]"],
+          ["8", "Personal bank statements covering at least the latest six months", "[  ]"],
+          ["9", "Day-by-day itinerary and transport plan", "[  ]"],
+          ["10", "Genuine round-trip flight reservation", "[  ]"],
+          ["11", "Accommodation for every night", "[  ]"],
+          ["12", "Travel medical insurance certificate", "[  ] EUR 30,000 minimum"],
+          ["13", "Original Hukou and copies of every page", "[  ] No translation"],
+          ["14", "Optional cover letter or financial explanation, if useful", "[  ] / N/A"],
+          ["15", "Current fees, appointment, and filing procedure rechecked", "[  ]"]
+        ] },
+        { "type": "notice", "tone": "warning", "text": "Do not use a deposit certificate in place of requested statements. Never submit false, cancelled, or nonexistent reservations." }
+      ]
+    },
+    {
+      "id": "application-form-field-guide",
+      "output": "00_Start_Here/02_Application_Form_Field_Guide.pdf",
+      "deliverAs": "pdf",
+      "layout": "landscape",
+      "title": "Schengen Application Form — Field Guide",
+      "subtitle": "Unofficial completion aid for the multilingual Spain form included in this pack",
+      "blocks": [
+        { "type": "notice", "tone": "warning", "text": "VISA MASTER — UNOFFICIAL. Complete the official PDF locally. Copy passport fields exactly, never guess, and sign only after every answer agrees with the supporting evidence." },
+        { "type": "table", "headers": ["Fields", "Subject", "Completion rule"], "widths": [2, 4, 8], "rows": [
+          ["1–3", "Names", "Copy exactly from the travel document, including former surname only when applicable."],
+          ["4–9", "Birth and civil status", "Use genuine civil records and tick the applicable status."],
+          ["10", "Minor's parent or guardian", "Not applicable to an adult unless the form instruction says otherwise."],
+          ["11", "National identity number", "Complete sensitive data locally only when applicable."],
+          ["12–16", "Travel document", "Choose Ordinary Passport and copy number, issue date, expiry, and issuer exactly."],
+          ["17–18", "Covered EU/EEA/Swiss/UK family member", "Complete only if genuinely applicable."],
+          ["19–22", "Contact, residence, occupation, employer", "Use current genuine details consistent with the employer letter and business licence."],
+          ["23–24", "Purpose", "Choose Tourism and briefly describe the genuine trip."],
+          ["25–28", "Destination, first entry, entries, dates", "Use the actual itinerary. Spain must genuinely be the main destination for this route."],
+          ["29–30", "Prior fingerprints and final-destination permit", "Answer truthfully; do not invent dates or permit data."],
+          ["31–32", "Accommodation or inviter", "Use genuine accommodation contacts; company invitation is normally inapplicable to self-arranged tourism."],
+          ["33", "Costs", "Choose the genuine funding source and means, consistent with financial evidence."],
+          ["34 and final", "Preparer, place, date, signature", "Complete the preparer only when different; review all facts before signing locally."]
+        ] },
+        { "type": "notice", "tone": "info", "text": "Prior fingerprints: {{evidence.biometric-reuse}}" },
+        { "type": "notice", "tone": "info", "text": "Check that destination, first entry, dates, hotels, funding, employment, insurance, and all evidence are mutually consistent. The approved Workspace field map should be used when the downloaded PDF matches it exactly." }
+      ]
+    },
+    {
+      "id": "employer-letter-template",
+      "semanticRole": "employer-letter-template",
+      "mediaFormat": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "output": "02_Editable_Templates/01_Employer_Letter_Template.docx",
+      "deliverAs": "docx",
+      "layout": "portrait",
+      "title": "Employer Letter Template",
+      "subtitle": "UNOFFICIAL editable template — issue on genuine company letterhead",
+      "blocks": [
+        { "type": "notice", "tone": "warning", "text": "VISA MASTER — UNOFFICIAL. The employer must verify, issue, stamp, sign, and date the final letter. Never invent company facts, salary, leave, stamp, or signature." },
+        { "type": "paragraph", "text": "[COMPANY LETTERHEAD]" },
+        { "type": "paragraph", "text": "Date: [DD MONTH YYYY]" },
+        { "type": "paragraph", "text": "To: Consulate General of Spain in Chengdu" },
+        { "type": "heading", "level": 1, "text": "Employment and Approved Leave Confirmation" },
+        { "type": "paragraph", "text": "This confirms that [APPLICANT FULL NAME AS IN PASSPORT] has been employed by [COMPANY LEGAL NAME] as [JOB TITLE] since [START DATE / YEARS OF SERVICE]. Their genuine current salary is [SALARY, CURRENCY, AND PERIOD]." },
+        { "type": "paragraph", "text": "The company approves leave from [LEAVE START] through [LEAVE END] for private tourism in Spain. [APPLICANT NAME] is expected to resume work on [RETURN-TO-WORK DATE]." },
+        { "type": "paragraph", "text": "[IF TRUE, STATE WHO PAYS TRAVEL AND LIVING COSTS; OTHERWISE DELETE.]" },
+        { "type": "heading", "level": 2, "text": "Company contact details" },
+        { "type": "table", "headers": ["Item", "Verified detail"], "widths": [3, 7], "rows": [
+          ["Address", "[COMPANY ADDRESS]"],
+          ["Telephone", "[COMPANY TELEPHONE]"],
+          ["Fax", "[COMPANY FAX OR EMPLOYER-APPROVED NOT-AVAILABLE WORDING]"],
+          ["Email", "[COMPANY EMAIL]"]
+        ] },
+        { "type": "signature", "fields": ["Authorized signatory: [NAME]", "Position: [POSITION]", "Signature: [SIGN LOCALLY]", "Company stamp/seal: [EMPLOYER APPLIES]", "Date: [DATE]"] },
+        { "type": "notice", "tone": "info", "text": "Issue in English, or attach an English translation to a Chinese letter. Add the separate sealed/stamped company business-licence copy." }
+      ]
+    },
+    {
+      "id": "itinerary-template",
+      "output": "02_Editable_Templates/02_Travel_Itinerary_Template.docx",
+      "deliverAs": "docx",
+      "layout": "portrait",
+      "title": "Tourism Itinerary Template",
+      "subtitle": "UNOFFICIAL editable aid — replace every placeholder with genuine, consistent travel facts",
+      "blocks": [
+        { "type": "notice", "tone": "warning", "text": "VISA MASTER — UNOFFICIAL. Never invent bookings. Dates, cities, transport, hotels, insurance, leave, and the application form must agree." },
+        { "type": "table", "headers": ["Day / date", "City and overnight stay", "Genuine activities", "Transport / reference"], "widths": [2, 3, 5, 3], "rows": [
+          ["Day [N] — [DATE]", "[CITY / HOTEL]", "[ARRIVAL OR REALISTIC ACTIVITIES]", "[FLIGHT / TRAIN / LOCAL TRANSFER]"],
+          ["Day [N] — [DATE]", "[CITY / HOTEL]", "[PLANNED ACTIVITIES]", "[TRANSPORT]"],
+          ["Day [N] — [DATE]", "[CITY / HOTEL]", "[PLANNED ACTIVITIES]", "[TRANSPORT]"],
+          ["Day [N] — [DATE]", "[CITY / HOTEL]", "[PLANNED ACTIVITIES]", "[TRANSPORT]"],
+          ["Day [N] — [DATE]", "[CITY / DEPARTURE]", "[FINAL ACTIVITIES OR DEPARTURE]", "[RETURN FLIGHT / TRANSFER]"]
+        ] },
+        { "type": "paragraph", "text": "Add or remove day rows locally so the table covers the complete genuine trip." },
+        { "type": "checklist", "items": [
+          "Every night has matching accommodation evidence.",
+          "Every intercity move has a realistic plan.",
+          "Flights and bookings are genuine and active.",
+          "Insurance covers the complete Schengen period.",
+          "Dates match employment leave and the application form.",
+          "Spain is genuinely the main destination."
+        ] }
+      ]
+    },
+    {
+      "id": "cover-letter-template",
+      "output": "02_Editable_Templates/03_Optional_Cover_Letter_Template.docx",
+      "deliverAs": "docx",
+      "layout": "portrait",
+      "title": "Optional Applicant Cover Letter Template",
+      "subtitle": "UNOFFICIAL — use only when a concise supported explanation helps",
+      "blocks": [
+        { "type": "notice", "tone": "warning", "text": "VISA MASTER — UNOFFICIAL. Delete this document if it adds nothing useful. Replace every placeholder with truthful, documented facts." },
+        { "type": "paragraph", "text": "Date: [DATE]" },
+        { "type": "paragraph", "text": "To: Consulate General of Spain in Chengdu" },
+        { "type": "paragraph", "text": "Subject: Short-stay Schengen visa application for tourism" },
+        { "type": "paragraph", "text": "Dear Visa Officer," },
+        { "type": "paragraph", "text": "I am applying for a short-stay Schengen visa for genuine tourism in Spain from [ARRIVAL] to [DEPARTURE]. My itinerary, accommodation, and transport evidence cover the trip." },
+        { "type": "paragraph", "text": "I work as [JOB TITLE] for [EMPLOYER]. My employer has approved leave, supported by the attached employer letter and company document." },
+        { "type": "paragraph", "text": "Travel and living costs will be paid by [TRUTHFUL FUNDING SOURCE]. [ADD A SHORT DOCUMENT-SUPPORTED EXPLANATION ONLY IF NEEDED.]" },
+        { "type": "paragraph", "text": "I will return to China and resume work on [RETURN-TO-WORK DATE]." },
+        { "type": "paragraph", "text": "Thank you for considering my application." },
+        { "type": "signature", "fields": ["Applicant name: [FULL NAME]", "Signature: [SIGN LOCALLY]", "Date: [DATE]"] }
+      ]
+    },
+    {
+      "id": "financial-summary-template",
+      "output": "02_Editable_Templates/04_Optional_Financial_Summary_and_Explanation.docx",
+      "deliverAs": "docx",
+      "layout": "portrait",
+      "title": "Optional Financial Summary and Explanation",
+      "subtitle": "UNOFFICIAL aid — never a substitute for official bank statements",
+      "blocks": [
+        { "type": "notice", "tone": "urgent", "text": "VISA MASTER — UNOFFICIAL. Attach genuine personal bank statements covering at least the latest six months. Keep account numbers, balances, and transactions local." },
+        { "type": "heading", "level": 1, "text": "Statement set summary" },
+        { "type": "table", "headers": ["Period", "Bank / local account label", "Pages", "Notes"], "widths": [3, 4, 2, 5], "rows": [
+          ["[MONTH–MONTH]", "[LOCAL LABEL]", "[PAGES]", "[OPTIONAL]"],
+          ["[MONTH–MONTH]", "[LOCAL LABEL]", "[PAGES]", "[OPTIONAL]"]
+        ] },
+        { "type": "heading", "level": 1, "text": "Optional explanation of unusual genuine transactions" },
+        { "type": "table", "headers": ["Date", "Transaction", "Truthful explanation", "Supporting evidence"], "widths": [2, 4, 5, 4], "rows": [
+          ["[DATE]", "[DESCRIPTION / AMOUNT ENTERED LOCALLY]", "[FACTUAL EXPLANATION]", "[DOCUMENT NAME]"],
+          ["[DATE]", "[DESCRIPTION / AMOUNT]", "[FACTUAL EXPLANATION]", "[DOCUMENT NAME]"]
+        ] },
+        { "type": "checklist", "items": [
+          "Statements cover at least the complete latest six-month period.",
+          "The applicant name is consistent.",
+          "No page is omitted or altered.",
+          "Every explanation is concise, truthful, and supported.",
+          "This aid does not replace bank statements or recast a deposit certificate as the requested proof."
+        ] }
+      ]
+    },
+    {
+      "id": "sources-warnings",
+      "output": "04_Sources_and_Warnings/Official_Sources_and_Current_Warnings.pdf",
+      "deliverAs": "pdf",
+      "layout": "landscape",
+      "title": "Official Sources and Current Warnings",
+      "subtitle": "Sources checked {{intake.preparedDate}} • Recheck volatile details before submission",
+      "blocks": [
+        { "type": "table", "headers": ["Source", "URL", "Used for"], "widths": [3, 7, 5], "rows": [
+          ["Spanish Consulate General in Chengdu — jurisdiction", "https://www.exteriores.gob.es/Consulados/Chengdu/es/Consulado/Paginas/Demarcaci%C3%B3n.aspx", "Filing jurisdiction"],
+          ["Spanish Consulate General in Chengdu — contact", "https://www.exteriores.gob.es/Consulados/Chengdu/es/Consulado/Paginas/Horario%2C-localizaci%C3%B3n-y-contacto.aspx", "BLS designation"],
+          ["BLS Chengdu home — English", "https://web.blscn.cn/chengdu/", "Current popup notices: finances, appointment, filing window"],
+          ["BLS Chengdu home — Chinese", "https://web.blscn.cn/chengdu/chinese/", "Chinese popup notices and local wording"],
+          ["BLS Chengdu tourism — English", "https://web.blscn.cn/chengdu/short_term_visa_tourism.php", "Fees, forms, checklist, insurance, photos"],
+          ["BLS Chengdu tourism — Chinese", "https://web.blscn.cn/chengdu/chinese/short_term_visa_tourism.php", "Localized route and acknowledgment"],
+          ["BLS Chengdu — general visa information", "https://web.blscn.cn/chengdu/visa-type.php", "Local biometric-reuse guidance"],
+          ["BLS Chengdu contact", "https://web.blscn.cn/chengdu/contact.php", "Address, hours, contact"],
+          ["BLS Chengdu FAQ", "https://web.blscn.cn/chengdu/faq.php", "Processing and FAQ context"],
+          ["European Commission — applying", "https://home-affairs.ec.europa.eu/policies/schengen/visa-policy/applying-schengen-visa_en", "General passport, insurance, biometric, timing rules"],
+          ["European Commission — China list C(2024) 6135", "https://home-affairs.ec.europa.eu/document/download/99f6ef02-bd70-4c1e-bc35-b780bea8c9da_en", "China employed-adult baseline"]
+        ] },
+        { "type": "heading", "level": 1, "text": "Current warnings" },
+        { "type": "bullets", "items": [
+          "Recheck fees, hours, appointment availability, and filing-window notices shortly before attending.",
+          "{{evidence.processing}}",
+          "{{evidence.biometric-reuse}}",
+          "{{evidence.questionnaire}}",
+          "A preparation pack cannot guarantee issuance; the Spanish consular authority decides the application."
+        ] }
+      ]
+    }
+  ]
+}

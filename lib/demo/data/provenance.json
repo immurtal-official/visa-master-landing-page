@@ -1,0 +1,35 @@
+{
+  "repository": "immurtal-official/visa-master",
+  "revision": "70e44bce9883e2f0dc5f0cabd91713ed000ac7fb",
+  "liveVerified": false,
+  "files": {
+    "route": {
+      "path": "agent/skills/research-core/references/routes/spain-schengen-tourism-chengdu-employed-adult/route.json",
+      "sha256": "d6fa3cd92f74c1eb0b063fa9e8db18e84d824db5f7ea7521fe1496bf2d8642ff"
+    },
+    "artifacts": {
+      "path": "agent/skills/research-core/references/routes/spain-schengen-tourism-chengdu-employed-adult/artifacts.json",
+      "sha256": "b20dade56352ab4b6936a4d820edcdb080188d0a88c18a8a1b4555350e3a104f"
+    },
+    "sources": {
+      "path": "agent/skills/research-core/references/routes/spain-schengen-tourism-chengdu-employed-adult/sources.json",
+      "sha256": "775f6185c328a4405a6c6fd13ac3145727a51180cf138c60582e26a0d2a2e7e6"
+    },
+    "evidence": {
+      "path": "agent/skills/research-core/references/routes/spain-schengen-tourism-chengdu-employed-adult/evidence.json",
+      "sha256": "afb883affef427744b50b2afa385dda0543fc4fc1601bdcf24dcab41b0b6864d"
+    },
+    "documents.en": {
+      "path": "agent/skills/research-core/references/routes/spain-schengen-tourism-chengdu-employed-adult/documents.en.json",
+      "sha256": "4a79a088f09050080ec9a5c7cfa2c8e9df0040187ca6f1ea46ab12c4ffaeea86"
+    },
+    "form-map": {
+      "path": "toolchain/forms/maps/schengen-application/spain-es-en-zh-2026-08.json",
+      "sha256": "53a81fbc7d67094591923c4b926a2e5f54ae77867ea6a61fae60ca1d0c93f31b"
+    },
+    "form-map-verification": {
+      "path": "toolchain/forms/maps/schengen-application/spain-es-en-zh-2026-08.verification.json",
+      "sha256": "0c73c112c87ef851e9d5247639fb56e3636e10430e903f83d00e13d9df2154e2"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "visa-master.form-map-verification.v1",
+  "mapId": "schengen-application.spain-es-en-zh.2026-08",
+  "revision": 3,
+  "sourceSha256": "bb5f0f894d5264a437daf729aba9903e28251c83d36ee94b0e2c629487ca9ffe",
+  "reviewedAt": "2026-08-03T14:36:32.000Z",
+  "reviewer": "Visa Master visual review of the curated form map",
+  "checks": {
+    "jsonSchema": true,
+    "semantic": true,
+    "geometry": true,
+    "sourceHash": true,
+    "sourceUnchanged": true,
+    "syntheticRender": true,
+    "visualReview": true
+  },
+  "scenarios": [
+    {
+      "id": "adult-tourism",
+      "fixture": "../../tests/fixtures/schengen-adult-tourism.json",
+      "fixtureSha256": "9066c3a2b0abfd98a391251c4bf588f8402ebccd00da0c414f35e4c166d98d50",
+      "qaOutputSha256": "4b25b9d3b6d7d510362c50b14df404ccb1823f81808c1c62216bb15e2111b466",
+      "pagesInspected": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "conditional-minor-sponsor",
+      "fixture": "../../tests/fixtures/schengen-conditional-branches.json",
+      "fixtureSha256": "45861bb0cceb7be65ae5c21ba041716987571592aa7095a0d83b43f3ada23be1",
+      "qaOutputSha256": "84ae6069a280c168f08052995456844fcba272a513ef400c9c02bf656a63fa29",
+      "pagesInspected": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "id": "eu-family-exemption",
+      "fixture": "../../tests/fixtures/schengen-eu-family.json",
+      "fixtureSha256": "74fedf19c4be22e9beea4812d4d4095225db21333aa364e51d81a7e3ab0fc47a",
+      "qaOutputSha256": "59fb4a003b7f87199345844a511fece5e63e282bb35772cc27f5d28ec82bf0d4",
+      "pagesInspected": [
+        2,
+        3
+      ]
+    }
+  ],
+  "debugOverlaySha256": "ae762016e8a8caf9b4596c21be2e2d0f720bd15b94e8c69fc6425cd7157fe31b",
+  "unresolved": [],
+  "result": "approved"
+}

@@ -8,7 +8,11 @@ import { CSSProperties, FormEvent, PointerEvent as ReactPointerEvent, useEffect,
 import { AuthDialog } from "@/components/auth/auth-panel";
 import { AccountButton, type AccountViewer } from "@/components/auth/account-button";
 
-type Stage = "idle" | "checking" | "ready";
+import { IntakeThread } from "@/components/demo/intake-thread";
+import { CaseWorkspace } from "@/components/demo/case-workspace";
+import { local, matchesRoute, restoreDemo, startDemo, storageKey, type DemoState } from "@/lib/demo/intake";
+
+type Stage = "idle" | "thread" | "workspace";
 
 const dict = {
   en: {
@@ -27,21 +31,7 @@ const dict = {
     placeholder: "Travel to somewhere",
     buildPlan: "Build my visa plan",
     try: "Try",
-    suggestions: ["Chengdu → Madrid", "UK visitor visa", "Spain nomad visa"],
-    mapping: "Mapping your route",
-    checking: "Checking jurisdiction, entry rules and official sources…",
-    yourRoute: "YOUR ROUTE",
-    edit: "Edit",
-    assistant: "I checked your route against official sources. Here’s the application workspace I prepared.",
-    sources: "official sources",
-    mapped: "Requirements mapped",
-    updated: "Updated today",
-    workspace: "GENERATED WORKSPACE",
-    pack: "France · Short-stay visa",
-    files: "8 files",
-    rows: [["01", "Application roadmap", "Interactive checklist"], ["02", "Requirements matrix", "Evidence matched"], ["03", "Cover letter", "Ready to personalize"], ["04", "Travel itinerary", "12 days · generated"]],
-    download: "Download pack",
-    open: "Open my workspace",
+    suggestions: ["Chengdu → Madrid", "Spain tourist visa", "Help me plan a trip"],
     showPhoto: "Show photo for",
     hidePhoto: "Hide photo for",
     privacy: "Privacy",
@@ -60,24 +50,10 @@ const dict = {
     easy: "轻松搞定。",
     subhead: "基于最新官方要求，获取分步指导。Visa Master 帮你整理证明材料、准备一致的文件，交付一份即用型申请材料包，全程由你掌控。",
     dest: "旅行目的地",
-    placeholder: "想去哪里旅行",
+    placeholder: "想去哪里",
     buildPlan: "生成我的签证方案",
     try: "试试",
-    suggestions: ["成都 → 马德里", "英国旅游签证", "西班牙数字游民签证"],
-    mapping: "正在规划路线",
-    checking: "正在核对管辖范围、入境规则和官方来源…",
-    yourRoute: "你的路线",
-    edit: "编辑",
-    assistant: "我已对照官方来源核对了你的路线。这是我为你准备的申请工作台。",
-    sources: "个官方来源",
-    mapped: "需求已匹配",
-    updated: "今日已更新",
-    workspace: "生成的工作台",
-    pack: "法国 · 短期签证",
-    files: "8 个文件",
-    rows: [["01", "申请路线图", "交互式清单"], ["02", "需求矩阵", "证据已匹配"], ["03", "求职信", "可个性化"], ["04", "旅行行程", "12 天 · 已生成"]],
-    download: "下载材料包",
-    open: "打开我的工作台",
+    suggestions: ["成都 → 马德里", "西班牙旅游签证", "帮我计划一次旅行"],
     showPhoto: "显示照片：",
     hidePhoto: "隐藏照片：",
     privacy: "隐私",
@@ -99,21 +75,7 @@ const dict = {
     placeholder: "Viajar a algún lugar",
     buildPlan: "Crear mi plan de visa",
     try: "Prueba",
-    suggestions: ["Chengdú → Madrid", "Visado de visitante del Reino Unido", "Visado nómada de España"],
-    mapping: "Trazando tu ruta",
-    checking: "Comprobando jurisdicción, reglas de entrada y fuentes oficiales…",
-    yourRoute: "TU RUTA",
-    edit: "Editar",
-    assistant: "Verifiqué tu ruta con fuentes oficiales. Aquí está el espacio de trabajo que preparé.",
-    sources: "fuentes oficiales",
-    mapped: "Requisitos mapeados",
-    updated: "Actualizado hoy",
-    workspace: "ESPACIO DE TRABAJO GENERADO",
-    pack: "Francia · Visado de corta estancia",
-    files: "8 archivos",
-    rows: [["01", "Hoja de ruta", "Lista interactiva"], ["02", "Matriz de requisitos", "Evidencia emparejada"], ["03", "Carta de presentación", "Lista para personalizar"], ["04", "Itinerario de viaje", "12 días · generado"]],
-    download: "Descargar paquete",
-    open: "Abrir mi espacio de trabajo",
+    suggestions: ["Chengdú → Madrid", "Visado turístico de España", "Ayúdame a planear un viaje"],
     showPhoto: "Mostrar foto de",
     hidePhoto: "Ocultar foto de",
     privacy: "Privacidad",
@@ -175,13 +137,14 @@ function Globe({ themeName, docked, locale }: { themeName: keyof typeof globeThe
     globeRef.current = globe;
     setWebgl(true);
 
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const render = () => {
       if (dragRef.current.dx || dragRef.current.dy) {
         phi += dragRef.current.dx / 150;
         theta = Math.max(-1.05, Math.min(1.05, theta + dragRef.current.dy / 210));
         dragRef.current.dx = 0;
         dragRef.current.dy = 0;
-      } else if (!dragRef.current.active) {
+      } else if (!dragRef.current.active && !reducedMotion.matches) {
         phi += dockedRef.current ? 0.0008 : 0.0012;
       }
       globe.update({ phi, theta });
@@ -347,7 +310,8 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
   const siteRef = useRef<HTMLElement>(null);
   const journeyRef = useRef<HTMLDivElement>(null);
   const brandMarkRef = useRef<HTMLSpanElement>(null);
-  const readyTimerRef = useRef<number | null>(null);
+  const [demo, setDemo] = useState<DemoState | null>(null);
+  const [localeReady, setLocaleReady] = useState(false);
   const returnFrameRef = useRef<number | null>(null);
   const returnFrameTwoRef = useRef<number | null>(null);
   const returnRevealTimerRef = useRef<number | null>(null);
@@ -356,7 +320,9 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
   const [globeDocked, setGlobeDocked] = useState(false);
   const [globeReturning, setGlobeReturning] = useState(false);
   const [query, setQuery] = useState("");
-  const [viewerDisplayName, setViewerDisplayName] = useState<string | null>(initialViewer?.displayName ?? null);
+  const [viewer, setViewer] = useState<AccountViewer | null>(initialViewer);
+  const viewerDisplayName = viewer?.displayName;
+  const [gateForWorkspace, setGateForWorkspace] = useState(false);
   const [gate, setGate] = useState(false);
   const [locale, setLocale] = useState<Locale>("en");
   const t = dict[locale];
@@ -364,19 +330,61 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
 
   useEffect(() => {
     document.documentElement.lang = locale === "cn" ? "zh-CN" : locale;
-    localStorage.setItem("locale", locale);
-  }, [locale]);
+    if (localeReady) { try { localStorage.setItem("locale", locale); } catch { /* Storage is optional. */ } }
+  }, [locale, localeReady]);
 
   // Detect the saved/browser locale only after hydration so the server-rendered
   // HTML always matches the client's first render (no hydration mismatch).
   useEffect(() => {
-    const saved = localStorage.getItem("locale") as Locale | null;
+    let saved: Locale | null = null;
+    let restored: DemoState | null = null;
+    try {
+      saved = localStorage.getItem("locale") as Locale | null;
+      restored = restoreDemo(sessionStorage.getItem(storageKey));
+    } catch { /* Continue without browser storage. */ }
     const lang = navigator.language.toLowerCase();
     const frame = requestAnimationFrame(() => {
+      setLocaleReady(true);
+      if (restored) {
+        const requested = new URLSearchParams(window.location.search).get("openWorkspace") === "1";
+        const view = initialViewer && (restored.view === "workspace" || requested) && matchesRoute(restored.answers) ? "workspace" : "thread";
+        setDemo({ ...restored, view }); setQuery(restored.query); setStage(view); setGlobeDocked(true);
+      }
       setLocale(saved === "en" || saved === "cn" || saved === "es" ? saved : lang.startsWith("zh") ? "cn" : lang.startsWith("es") ? "es" : "en");
     });
     return () => cancelAnimationFrame(frame);
-  }, []);
+  }, [initialViewer]);
+
+  useEffect(() => {
+    if (demo) { try { sessionStorage.setItem(storageKey, JSON.stringify(demo)); } catch { /* The demo also works in memory. */ } }
+  }, [demo]);
+
+  function updateDemo(next: DemoState) {
+    if (next.view === "workspace" && !viewer) {
+      setDemo({ ...next, view: "thread" });
+      setStage("thread");
+      setGateForWorkspace(true);
+      setGate(true);
+      return;
+    }
+    setDemo(next); setStage(next.view);
+  }
+
+  useEffect(() => {
+    if (!viewer || !demo || !gateForWorkspace || !matchesRoute(demo.answers)) return;
+    const frame = requestAnimationFrame(() => {
+      setDemo({ ...demo, view: "workspace" });
+      setStage("workspace");
+      setGate(false);
+      setGateForWorkspace(false);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [viewer, demo, gateForWorkspace]);
+
+  function changeGate(open: boolean) {
+    setGate(open);
+    if (!open) setGateForWorkspace(false);
+  }
 
   useLayoutEffect(() => {
     const composer = journeyRef.current;
@@ -470,14 +478,26 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
   }, [stage]);
 
   useEffect(() => () => {
-    if (readyTimerRef.current !== null) window.clearTimeout(readyTimerRef.current);
     if (returnFrameRef.current !== null) window.cancelAnimationFrame(returnFrameRef.current);
     if (returnFrameTwoRef.current !== null) window.cancelAnimationFrame(returnFrameTwoRef.current);
     if (returnRevealTimerRef.current !== null) window.clearTimeout(returnRevealTimerRef.current);
   }, []);
 
+  function cancelGlobeReturn() {
+    if (returnFrameRef.current !== null) window.cancelAnimationFrame(returnFrameRef.current);
+    if (returnFrameTwoRef.current !== null) window.cancelAnimationFrame(returnFrameTwoRef.current);
+    if (returnRevealTimerRef.current !== null) window.clearTimeout(returnRevealTimerRef.current);
+  }
+
+  function resumeDemo() {
+    if (!demo) return;
+    cancelGlobeReturn();
+    setGlobeDocked(true);
+    setGlobeReturning(false);
+    updateDemo(demo);
+  }
+
   function returnToRouteEditor() {
-    if (readyTimerRef.current !== null) window.clearTimeout(readyTimerRef.current);
     if (returnFrameRef.current !== null) window.cancelAnimationFrame(returnFrameRef.current);
     if (returnFrameTwoRef.current !== null) window.cancelAnimationFrame(returnFrameTwoRef.current);
     if (returnRevealTimerRef.current !== null) window.clearTimeout(returnRevealTimerRef.current);
@@ -511,17 +531,23 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
 
   function submit(e: FormEvent) {
     e.preventDefault();
-    if (!query.trim() || stage === "checking") return;
+    if (!query.trim() || stage !== "idle") return;
+    cancelGlobeReturn();
     setGlobeReturning(false);
     setGlobeDocked(true);
-    setStage("checking");
-    readyTimerRef.current = window.setTimeout(() => setStage("ready"), 1350);
+    updateDemo(startDemo(query));
   }
   return (
     <main ref={siteRef} className={`site${darkTheme ? " theme-dark" : ""} stage-${stage}${globeReturning ? " globe-returning" : ""}`} data-theme={darkTheme ? "dark" : "light"} style={{ "--composer-top": "calc(100dvh - 148px)" } as CSSProperties}>
       <header className="topbar">
-        <button className="brand" type="button" aria-label={t.home} onClick={returnToLanding}><span className="brand-mark-slot" ref={brandMarkRef}><span className="brand-orbit" /></span><span>visa<span>master</span></span></button>
-        <div className="top-actions"><span className="theme-toggle locale-toggle"><Icon name="lang" /><select aria-label={t.localeName} title={t.localeName} value={locale} onChange={(e) => setLocale(e.target.value as Locale)}><option value="en">English</option><option value="cn">中文</option><option value="es">Español</option></select></span><button className="theme-toggle" type="button" aria-label={darkTheme ? t.useLight : t.useDark} title={darkTheme ? t.useLight : t.useDark} onClick={() => setDarkTheme((current) => !current)}><Icon name={darkTheme ? "sun" : "moon"} /></button><AccountButton getStarted={t.getStarted} finishSetup={t.finishSetup} workspace={t.workspaceAction} initialViewer={initialViewer} onGetStarted={() => setGate(true)} onViewerChange={setViewerDisplayName} /></div>
+        <button className="brand" type="button" aria-label={t.home} onClick={returnToLanding}>{stage !== "idle" && <svg className="demo-back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 12H5m6-6-6 6 6 6" /></svg>}<span className="brand-mark-slot" ref={brandMarkRef}><span className="brand-orbit" /></span><span>visa<span>master</span></span></button>
+        {stage === "workspace" && (
+          <div className="workspace-route-heading">
+            <span className="workspace-route-name">{local(locale, "Chengdu → Spain", "成都 → 西班牙", "Chengdú → España")}</span>
+            <span className="workspace-route-profile">{local(locale, "Employed adult · 1 applicant", "在职成年人 · 1 位申请人", "Adulto empleado · 1 solicitante")}</span>
+          </div>
+        )}
+        <div className="top-actions"><span className="theme-toggle locale-toggle"><Icon name="lang" /><select aria-label={t.localeName} title={t.localeName} value={locale} onChange={(e) => setLocale(e.target.value as Locale)}><option value="en">English</option><option value="cn">中文</option><option value="es">Español</option></select></span><button className="theme-toggle" type="button" aria-label={darkTheme ? t.useLight : t.useDark} title={darkTheme ? t.useLight : t.useDark} onClick={() => setDarkTheme((current) => !current)}><Icon name={darkTheme ? "sun" : "moon"} /></button><AccountButton getStarted={t.getStarted} finishSetup={t.finishSetup} workspace={t.workspaceAction} initialViewer={initialViewer} onGetStarted={() => { setGateForWorkspace(false); setGate(true); }} onViewerChange={setViewer} onWorkspace={demo ? () => updateDemo({ ...demo, view: matchesRoute(demo.answers) ? "workspace" : "thread" }) : undefined} /></div>
       </header>
 
       <section className="hero">
@@ -529,36 +555,23 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
         <div className={`globe-home ${globeDocked ? "docked" : ""}`}>
           <Globe themeName={globeTheme} docked={globeDocked} locale={locale} />
         </div>
-        <div className="hero-copy"><h1>{viewerDisplayName && <span className="hero-greeting"><span>{t.greeting}</span> <em>{viewerDisplayName}</em></span>}<span className="hero-lead-line">{t.lead}</span><br /><em>{t.easy}</em></h1><p className="subhead">{t.subhead}</p></div>
+        <div className="hero-copy" inert={stage !== "idle"}><h1>{viewerDisplayName && <span className="hero-greeting"><span>{t.greeting}</span> <em>{viewerDisplayName}</em></span>}<span className="hero-lead-line">{t.lead}</span><br /><em>{t.easy}</em></h1><p className="subhead">{t.subhead}</p></div>
 
-        <div className="journey-card" ref={journeyRef}>
+        <div className="journey-card" ref={journeyRef} hidden={stage !== "idle"}>
           {stage === "idle" && <>
             <form className="prompt" onSubmit={submit}>
-              <div className="prompt-field"><input aria-label={t.dest} placeholder={t.placeholder} value={query} onChange={(e) => setQuery(e.target.value)} autoComplete="off" /></div>
-              <button type="submit" aria-label={t.buildPlan}><Icon name="arrow" /></button>
+              <div className="prompt-field"><input aria-label={t.dest} placeholder={t.placeholder} value={query} maxLength={500} onChange={(e) => setQuery(e.target.value)} autoComplete="off" onKeyDown={(e) => { if (e.nativeEvent.isComposing && e.key === "Enter") e.preventDefault(); }} /></div>
+              <button type="submit" disabled={!query.trim()} aria-label={t.buildPlan}><Icon name="arrow" /></button>
             </form>
             <div className="suggestions"><span>{t.try}</span>{t.suggestions.map((item) => <button key={item} onClick={() => setQuery(item)}>{item}</button>)}</div>
           </>}
 
-          {stage === "checking" && <div className="checking-state"><div className="scan-orb"><span /></div><div><p>{t.mapping}</p><strong>{t.checking}</strong></div><div className="checking-bars"><i/><i/><i/></div></div>}
 
-          {stage === "ready" && <div className="workspace-preview">
-            <div className="thread">
-              <div className="thread-head"><span className="status-dot" /><div><small>{t.yourRoute}</small><strong>{query}</strong></div><button onClick={returnToRouteEditor}>{t.edit}</button></div>
-              <div className="assistant-message"><span className="mini-mark"><Icon name="spark" /></span><p>{t.assistant}</p></div>
-              <div className="proof-row"><span><Icon name="source" /><b>7</b> {t.sources}</span><span><Icon name="check" />{t.mapped}</span><span><Icon name="check" />{t.updated}</span></div>
-            </div>
-            <div className="pack-panel">
-              <div className="pack-title"><span><Icon name="folder" /></span><div><small>{t.workspace}</small><strong>{t.pack}</strong></div><span className="complete">{t.files}</span></div>
-              <div className="file-list">
-                {t.rows.map(([n,title,meta]) =>
-                  <button className="file-row" key={n} onClick={() => setGate(true)}><span className="file-no">{n}</span><Icon name="file" /><span><strong>{title}</strong><small>{meta}</small></span><Icon name="lock" /></button>
-                )}
-              </div>
-              <div className="pack-actions"><button className="secondary-cta" onClick={() => setGate(true)}>{t.download}</button><button className="primary-cta" onClick={() => setGate(true)}>{t.open} <Icon name="arrow" /></button></div>
-            </div>
-          </div>}
         </div>
+        {stage !== "idle" && demo && <div className="demo-surface">
+          {stage === "thread" ? <IntakeThread state={demo} locale={locale} onChange={updateDemo} /> : <CaseWorkspace state={demo} locale={locale} onChange={updateDemo} viewer={viewer} onSignedOut={() => { setViewer(null); updateDemo({ ...demo, view: "thread" }); }} onSignIn={() => { setGateForWorkspace(true); setGate(true); }} />}
+        </div>}
+        {stage === "idle" && demo && <button className="demo-resume" onClick={resumeDemo}>{local(locale, "Resume your route", "继续你的路线", "Retomar tu ruta")} <Icon name="arrow" /></button>}
       </section>
 
       <footer className="product-foot">
@@ -566,7 +579,7 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
         <nav aria-label="Legal"><Link href="/privacy">{t.privacy}</Link><Link href="/terms">{t.terms}</Link></nav>
       </footer>
 
-      <AuthDialog open={gate} onOpenChange={setGate} locale={locale} />
+      <AuthDialog open={gate} onOpenChange={changeGate} locale={locale} forWorkspace={gateForWorkspace} next={gateForWorkspace ? "/?openWorkspace=1" : "/workspace"} />
     </main>
   );
 }

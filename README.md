@@ -34,14 +34,15 @@ The page presents one responsive visual direction with a warm light theme and a 
 - A draggable WebGL globe with interactive landmark cards and an SVG loading fallback.
 - The hero message “DIY visa applications. The easy way.”
 - A destination prompt with example searches.
-- Simulated requirement-checking and generated-Workspace states.
+- A deterministic Chengdu → Spain intake conversation, editable route review, and a Workspace with 14 Case actions.
+- Contextual guide/template previews, official source links, and an application-form field reference from the existing curated route.
 - A private-beta waitlist with revocable, single-use invite phrases and a five-failures-per-IP, 24-hour limit.
 - Supabase Auth for invited email/password and Google accounts, plus a separate path for existing users.
 - First-session display-name onboarding stored in Supabase Auth metadata for email and Google accounts.
 - A session-aware header that opens the workspace under the signed-in user's display name.
 - A theme toggle, responsive layouts, and reduced-motion support.
 
-The analysis delay and displayed results are demonstrations. Authentication is live when Supabase is configured, but the page does not yet call an Agent API, download files, or persist visa-case data. Counts, document names, routes, and status messages are example content rather than live visa guidance.
+The public demo uses a bundled snapshot of the employed-adult Chengdu → Spain tourism route. It does not call an Agent or verify current official requirements. Intake answers persist only in `sessionStorage` in the current browser tab; they are not saved as a production Case. Unsupported applicants can explicitly explore a sample. Resources expose free guide/template previews and official document source pages. Opening the Workspace requires sign-in through the existing invitation-only signup flow, with intake retained in this tab. Action messages, document editing, browser automation, and Visa Master resource downloads show demo paid-feature prompts. These prompts never collect payment or grant a paid entitlement; they are presentation gates, not server-enforced download protection. PDF autofill, uploads, payment, bookings, and personalized pack generation are outside this demo. Authentication and early-access registration remain live when Supabase is configured.
 
 ## Technology
 
@@ -80,7 +81,9 @@ package.json
 tsconfig.json
 ```
 
-The prototype is deliberately compact. Most behavior currently lives in `app/page.tsx`; larger production integrations should be extracted into focused components and service modules as they are introduced.
+The landing shell lives in `components/landing-page.tsx`. The conversation and Workspace live in `components/demo/`, with scoped styles in `app/demo.css`. Individual actions use the main Workspace’s conversation/composer/Artifacts-panel pattern, adapted to deterministic curated replies. Each action keeps its own message history and composer draft in the tab’s demo state; this is not the production Action Thread store. `lib/demo/intake.ts` owns deterministic route matching and storage validation. `lib/demo/resources.ts` associates Case actions with bundled resources.
+
+Run `npm run demo:sync -- /path/to/visa-master` to deliberately refresh the checked-in snapshot in `lib/demo/data/`. The import script records source paths, the source repository revision, and SHA-256 hashes; it does not perform live verification. The deployed demo has no sibling-repository dependency. `npm run test:demo` checks route matching, unsupported answers, storage recovery, and snapshot integrity.
 
 ## Run locally
 
@@ -140,3 +143,15 @@ In Supabase Auth, set the Site URL to the canonical production domain and allow 
 The remaining product work includes configuring production SMTP and Google OAuth, connecting the Agent API, replacing simulated results with secure job state, hosting landmark images under project control, confirming the legal operator and jurisdiction in the public policies, implementing consent-aware analytics, and covering signup and job submission with end-to-end tests. Apple sign-in is intentionally deferred.
 
 Until those integrations exist, this repository should be described as an interactive frontend prototype rather than a working visa-application service.
+
+### Route-matching audit — 7 September 2026
+
+The landing demo deliberately supports a narrower profile than Spain's full visa rules: Chengdu hukou, currently resident in mainland China, Spain as the tourism destination responsible for the application, a trip of up to 90 days with no Schengen stays in the preceding 180 days, a Chinese ordinary passport, and one employed adult paying from their own income/savings. Missing new facts in saved sessions are asked again before reopening the Workspace. Recent stays and sponsored funding create additional-review flags rather than blocking the roadmap. Other core profiles are outside demo coverage, not declared visa-ineligible.
+
+Source checks:
+- [Spanish Consulate General in Chengdu — jurisdiction](https://www.exteriores.gob.es/Consulados/Chengdu/es/Consulado/Paginas/Demarcaci%C3%B3n.aspx): Sichuan, Yunnan, Guizhou and Chongqing. Chengdu-city-only matching is a demo limit.
+- [BLS Chengdu Chinese FAQ](https://web.blscn.cn/chengdu/chinese/faq.php): hukou-based filing and the four-region district. Residence-permit exceptions are not implemented; the site also contains older notices, so generalized exception handling needs specific current confirmation.
+- [European Commission — applying for a Schengen visa](https://home-affairs.ec.europa.eu/policies/schengen/visa-policy/applying-schengen-visa_en): longest stay / equal-stay first entry, normal legal-residence filing, and the rolling 90/180-day limit. The demo does not calculate travel-date histories.
+- [BLS Chengdu notices](https://web.blscn.cn/chengdu/): six months of bank statements; parental funding requires original and copy of the birth certificate. Sponsored funding needs additional evidence; the roadmap remains accessible with a review flag.
+
+BLS and consulate content was available through current indexed official pages; direct fetches of several pages and the tourism PDF returned HTTP 403. This audit does not revalidate every bundled document or its current bytes. The original resource snapshots and hashes remain intact. A route match is not visa approval, a passport-validity check, an existing-visa/EU-family-rights assessment, or a filing-date check (normally no earlier than six months and at least 15 days before travel).
