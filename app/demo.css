@@ -2086,3 +2086,59 @@ button.demo-profile-details:hover, button.demo-profile-details[aria-current="pag
   .workspace-journey-line .workspace-route-name { font-size: 16px; }
   .workspace-journey-meta { font-size: 10px; }
 }
+
+/* One native sidebar scroller, with the navigation and profile pinned inside it. */
+@media (min-width: 701px) {
+  .demo-sidebar {
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+    padding-right: 0;
+    padding-bottom: 0;
+    scroll-padding-top: 174px;
+    scroll-padding-bottom: 64px;
+  }
+  .demo-sidebar-title {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    margin-left: -6px;
+    padding-left: 16px;
+    background: var(--sidebar-surface);
+  }
+  .demo-sidebar > nav:not(.demo-action-list),
+  .showing-action .demo-sidebar > nav:not(.demo-action-list) {
+    position: sticky;
+    top: 78px;
+    z-index: 3;
+    margin-right: 0;
+    background: var(--sidebar-surface);
+  }
+  .demo-sidebar > nav:not(.demo-action-list)::before {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 1px;
+    background: var(--line);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .showing-action .demo-sidebar[data-scrolled="true"] > nav:not(.demo-action-list)::before {
+    opacity: 1;
+  }
+  .demo-sidebar .demo-action-list {
+    flex: none;
+    overflow: visible;
+    margin-right: 0;
+  }
+  .demo-sidebar-bottom,
+  .showing-action .demo-sidebar-bottom {
+    position: sticky;
+    bottom: 0;
+    z-index: 4;
+    margin-right: 0;
+    padding-bottom: 8px;
+  }
+}

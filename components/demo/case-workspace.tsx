@@ -127,7 +127,9 @@ export function CaseWorkspace({
       className={`demo-workspace demo-enter${action ? " showing-action" : ""}`}
       aria-label={c("Case Workspace", "申请工作台", "Espacio de trabajo")}
     >
-      <aside className="demo-sidebar">
+      <aside className="demo-sidebar" onScroll={(event) => {
+        event.currentTarget.dataset.scrolled = String(event.currentTarget.scrollTop > 1);
+      }}>
         <h2 className="demo-sidebar-title"><span aria-hidden="true">🇪🇸</span>{c("A journey to Spain", "开启西班牙之旅", "Un viaje a España")}</h2>
         <nav
           aria-label={c(
