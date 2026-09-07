@@ -1930,17 +1930,7 @@ body:has(.site.stage-workspace) {
   background: color-mix(in srgb, var(--ink) 18%, transparent);
   pointer-events: none;
 }
-.demo-sidebar > nav:not(.demo-action-list) { position: relative; z-index: 2; }
-.showing-action .demo-sidebar > nav:not(.demo-action-list)::after {
-  content: "";
-  position: absolute;
-  inset: 100% -18px auto;
-  height: 16px;
-  background: color-mix(in srgb, var(--sidebar-surface) 70%, transparent);
-  backdrop-filter: blur(4px);
-  mask-image: linear-gradient(to bottom, black, transparent);
-  pointer-events: none;
-}
+.demo-sidebar-scroll > nav:not(.demo-action-list) { position: relative; z-index: 2; }
 .demo-sidebar-profile {
   display: flex;
   align-items: center;
@@ -1962,7 +1952,6 @@ button.demo-sidebar-profile:hover { background: color-mix(in srgb, var(--ink) 5%
 .demo-profile-avatar svg { width: 18px; height: 18px; }
 .demo-profile-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 @media (max-width: 700px) {
-  .showing-action .demo-sidebar > nav:not(.demo-action-list)::after { height: 12px; }
   .demo-sidebar-bottom, .showing-action .demo-sidebar-bottom { display: block; margin-inline: -12px; margin-top: 8px; padding: 6px 12px 0; }
   .demo-sidebar-profile { min-height: 40px; padding-block: 2px; font-size: 13px; }
   .demo-profile-avatar { width: 28px; height: 28px; }
@@ -1994,15 +1983,15 @@ button.demo-sidebar-profile:hover { background: color-mix(in srgb, var(--ink) 5%
   .demo-sidebar { padding-top: 0; }
   .demo-case-tag { display: flex; flex-direction: column; justify-content: center; min-height: 78px; padding: 12px 10px; }
   .demo-case-tag > strong { margin-top: 0; }
-  .demo-sidebar > nav:not(.demo-action-list) { margin-top: 16px; }
+  .demo-sidebar-scroll > nav:not(.demo-action-list) { margin-top: 16px; }
 }
-.showing-action .demo-sidebar > nav:not(.demo-action-list) { padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--ink) 18%, transparent); }
+.showing-action .demo-sidebar-scroll > nav:not(.demo-action-list) { padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--ink) 18%, transparent); }
 .demo-sidebar .demo-action-list { border-top: 0; }
 .demo-sidebar-profile { padding: 0; gap: 6px; }
 button.demo-profile-details { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; min-height: 36px; padding: 4px 10px; border: 0; border-radius: 14px; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 button.demo-profile-details:hover, button.demo-profile-details[aria-current="page"] { background: color-mix(in srgb, var(--ink) 7%, transparent); }
 @media (max-width: 700px) {
-  .showing-action .demo-sidebar > nav:not(.demo-action-list) { padding-bottom: 8px; }
+  .showing-action .demo-sidebar-scroll > nav:not(.demo-action-list) { padding-bottom: 8px; }
 }
 
 /* Keep control shapes stable when entering hover, focus, or selected states. */
@@ -2040,7 +2029,6 @@ button.demo-profile-details:hover, button.demo-profile-details[aria-current="pag
     text-overflow: ellipsis;
   }
   .demo-sidebar-bottom, .showing-action .demo-sidebar-bottom { margin-inline: -6px; padding-inline: 6px; }
-  .showing-action .demo-sidebar > nav:not(.demo-action-list)::after { left: -6px; right: -6px; }
 }
 
 /* The journey title sits above the fixed workspace navigation. */
@@ -2057,19 +2045,14 @@ button.demo-profile-details:hover, button.demo-profile-details[aria-current="pag
   line-height: 1.35;
   font-weight: 550;
 }
-.demo-sidebar > nav:not(.demo-action-list),
-.showing-action .demo-sidebar > nav:not(.demo-action-list) {
+.demo-sidebar-scroll > nav:not(.demo-action-list),
+.showing-action .demo-sidebar-scroll > nav:not(.demo-action-list) {
   height: 78px;
   min-height: 78px;
   margin: 0 -6px;
   padding: 1px 6px;
   gap: 4px;
   border-bottom: 0;
-}
-.showing-action .demo-sidebar > nav:not(.demo-action-list)::after {
-  top: 100%;
-  left: 0;
-  right: 0;
 }
 .workspace-route-heading { flex-direction: row; align-items: center; justify-content: flex-start; gap: 14px; overflow: hidden; white-space: nowrap; }
 .workspace-journey-line { display: flex; align-items: baseline; gap: 14px; min-width: 0; max-width: 100%; flex-shrink: 0; }
@@ -2081,15 +2064,27 @@ button.demo-profile-details:hover, button.demo-profile-details[aria-current="pag
 @media (max-width: 700px) {
   .demo-sidebar { padding-top: 0; }
   .demo-sidebar-title { min-height: 48px; padding: 12px 10px 4px; font-size: 16px; }
-  .demo-sidebar > nav:not(.demo-action-list), .showing-action .demo-sidebar > nav:not(.demo-action-list) { height: 62px; min-height: 62px; margin: 0 -12px; padding: 12px; align-items: center; }
+  .demo-sidebar-scroll > nav:not(.demo-action-list), .showing-action .demo-sidebar-scroll > nav:not(.demo-action-list) { height: 62px; min-height: 62px; margin: 0 -12px; padding: 12px; align-items: center; }
   .workspace-journey-line { gap: 8px; }
   .workspace-journey-line .workspace-route-name { font-size: 16px; }
   .workspace-journey-meta { font-size: 10px; }
 }
 
-/* One native sidebar scroller, with the navigation and profile pinned inside it. */
+/* The profile sits outside the native scroller; title and navigation stick inside it. */
+.demo-sidebar-scroll { display: contents; }
 @media (min-width: 701px) {
   .demo-sidebar {
+    overflow: hidden;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+  .demo-sidebar > .demo-sidebar-scroll {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    margin-left: -6px;
+    padding-left: 6px;
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: auto;
@@ -2098,7 +2093,7 @@ button.demo-profile-details:hover, button.demo-profile-details[aria-current="pag
     padding-right: 0;
     padding-bottom: 0;
     scroll-padding-top: 174px;
-    scroll-padding-bottom: 64px;
+    scroll-padding-bottom: 20px;
   }
   .demo-sidebar-title {
     position: sticky;
@@ -2108,15 +2103,15 @@ button.demo-profile-details:hover, button.demo-profile-details[aria-current="pag
     padding-left: 16px;
     background: var(--sidebar-surface);
   }
-  .demo-sidebar > nav:not(.demo-action-list),
-  .showing-action .demo-sidebar > nav:not(.demo-action-list) {
+  .demo-sidebar-scroll > nav:not(.demo-action-list),
+  .showing-action .demo-sidebar-scroll > nav:not(.demo-action-list) {
     position: sticky;
     top: 78px;
     z-index: 3;
     margin-right: 0;
     background: var(--sidebar-surface);
   }
-  .demo-sidebar > nav:not(.demo-action-list)::before {
+  .demo-sidebar-scroll > nav:not(.demo-action-list)::before {
     content: "";
     position: absolute;
     inset: auto 0 0;
@@ -2125,7 +2120,7 @@ button.demo-profile-details:hover, button.demo-profile-details[aria-current="pag
     opacity: 0;
     pointer-events: none;
   }
-  .showing-action .demo-sidebar[data-scrolled="true"] > nav:not(.demo-action-list)::before {
+  .showing-action .demo-sidebar-scroll[data-scrolled="true"] > nav:not(.demo-action-list)::before {
     opacity: 1;
   }
   .demo-sidebar .demo-action-list {
@@ -2135,10 +2130,13 @@ button.demo-profile-details:hover, button.demo-profile-details[aria-current="pag
   }
   .demo-sidebar-bottom,
   .showing-action .demo-sidebar-bottom {
-    position: sticky;
-    bottom: 0;
+    position: relative;
     z-index: 4;
     margin-right: 0;
     padding-bottom: 8px;
   }
+}
+
+@media (min-width: 701px) {
+  .demo-sidebar-scroll > :not(.demo-action-list) { flex-shrink: 0; }
 }

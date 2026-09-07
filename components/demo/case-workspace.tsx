@@ -127,9 +127,10 @@ export function CaseWorkspace({
       className={`demo-workspace demo-enter${action ? " showing-action" : ""}`}
       aria-label={c("Case Workspace", "申请工作台", "Espacio de trabajo")}
     >
-      <aside className="demo-sidebar" onScroll={(event) => {
+      <aside className="demo-sidebar">
+        <div className="demo-sidebar-scroll" onScroll={(event) => {
         event.currentTarget.dataset.scrolled = String(event.currentTarget.scrollTop > 1);
-      }}>
+        }}>
         <h2 className="demo-sidebar-title"><span aria-hidden="true">🇪🇸</span>{c("A journey to Spain", "开启西班牙之旅", "Un viaje a España")}</h2>
         <nav
           aria-label={c(
@@ -163,6 +164,7 @@ export function CaseWorkspace({
             ))}
           </nav>
         )}
+        </div>
         <div className="demo-sidebar-bottom">
             <div className="demo-sidebar-profile" aria-label={c("Your profile", "个人资料", "Tu perfil")}>
               <button className="demo-profile-details" onClick={() => showTab("details")}
