@@ -31,14 +31,12 @@ export function CaseWorkspace({
   locale,
   onChange,
   viewer,
-  onSignIn,
   onSignedOut,
 }: {
   state: DemoState;
   locale: Locale;
   onChange: (state: DemoState) => void;
-  viewer: AccountViewer | null;
-  onSignIn: () => void;
+  viewer: AccountViewer;
   onSignedOut: () => void;
 }) {
   const c = (en: string, cn: string, es: string) => local(locale, en, cn, es);
@@ -89,11 +87,6 @@ export function CaseWorkspace({
       icon: "file",
       count: resources.length,
     },
-    {
-      id: "details",
-      title: c("Your details", "你的信息", "Tus datos"),
-      icon: "chat",
-    },
   ];
   function showTab(id: Tab) {
     setTab(id);
@@ -135,21 +128,7 @@ export function CaseWorkspace({
       aria-label={c("Case Workspace", "申请工作台", "Espacio de trabajo")}
     >
       <aside className="demo-sidebar">
-        <div className="demo-case-tag">
-          <span className="demo-eyebrow">
-            {c("YOUR CASE", "你的申请", "TU SOLICITUD")}
-          </span>
-          <strong>
-            {c("A journey to Spain", "开启西班牙之旅", "Un viaje a España")}
-          </strong>
-          <span>
-            {c(
-              "Tourism · Schengen short-stay",
-              "旅游 · 申根短期签证",
-              "Turismo · Estancia corta Schengen",
-            )}
-          </span>
-        </div>
+        <h2 className="demo-sidebar-title"><span aria-hidden="true">🇪🇸</span>{c("A journey to Spain", "开启西班牙之旅", "Un viaje a España")}</h2>
         <nav
           aria-label={c(
             "Workspace navigation",
@@ -173,7 +152,7 @@ export function CaseWorkspace({
         {action && (
           <nav className="demo-action-list" aria-label={c("Case actions", "申请行动", "Acciones")}>
             {actions.map((item, index) => (
-              <button key={item.id} aria-current={item.id === selected ? "step" : undefined}
+              <button key={item.id} title={actionText(item, locale).title} aria-current={item.id === selected ? "step" : undefined}
                 className={item.id === selected ? "active" : ""}
                 onClick={() => setSelected(item.id)}>
                 <small>{String(index + 1).padStart(2, "0")}</small>
@@ -183,22 +162,19 @@ export function CaseWorkspace({
           </nav>
         )}
         <div className="demo-sidebar-bottom">
-          {viewer ? (
             <div className="demo-sidebar-profile" aria-label={c("Your profile", "个人资料", "Tu perfil")}>
+              <button className="demo-profile-details" onClick={() => showTab("details")}
+                aria-label={`${c("Your details", "你的信息", "Tus datos")} · ${viewer.displayName || c("Your account", "你的账户", "Tu cuenta")}`}
+                aria-current={!action && tab === "details" ? "page" : undefined}>
               <span className="demo-profile-avatar" aria-hidden="true">{viewer.displayName ? Array.from(viewer.displayName)[0].toLocaleUpperCase() : <DemoIcon name="user" />}</span>
-              <span className="demo-profile-name">{viewer.displayName || c("Your account", "你的账户", "Tu cuenta")}</span>
+                <span className="demo-profile-name">{viewer.displayName || c("Your account", "你的账户", "Tu cuenta")}</span>
+              </button>
               <button className="demo-profile-logout" onClick={signOut} disabled={signingOut}
                 aria-label={signingOut ? c("Logging out…", "正在退出…", "Cerrando sesión…") : c("Log out", "退出登录", "Cerrar sesión")}
                 title={c("Log out", "退出登录", "Cerrar sesión")}>
                 <DemoIcon name="logout" />
               </button>
             </div>
-          ) : (
-            <button className="demo-sidebar-profile" onClick={onSignIn}>
-              <span className="demo-profile-avatar"><DemoIcon name="user" /></span>
-              <span className="demo-profile-name">{c("Sign up / Log in", "注册 / 登录", "Registrarse / Iniciar sesión")}</span>
-            </button>
-          )}
           {signOutError && <p role="alert">{c("Could not log out. Try again.", "退出失败，请重试。", "No se pudo cerrar sesión. Inténtalo de nuevo.")}</p>}
         </div>
       </aside>

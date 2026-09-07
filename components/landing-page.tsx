@@ -31,7 +31,7 @@ const dict = {
     placeholder: "Travel to somewhere",
     buildPlan: "Build my visa plan",
     try: "Try",
-    suggestions: ["Chengdu → Madrid", "Spain tourist visa", "Help me plan a trip"],
+    suggestions: ["Chengdu → Madrid", "Spain tourist visa", "Spain nomad visa"],
     showPhoto: "Show photo for",
     hidePhoto: "Hide photo for",
     privacy: "Privacy",
@@ -53,7 +53,7 @@ const dict = {
     placeholder: "想去哪里",
     buildPlan: "生成我的签证方案",
     try: "试试",
-    suggestions: ["成都 → 马德里", "西班牙旅游签证", "帮我计划一次旅行"],
+    suggestions: ["成都 → 马德里", "西班牙旅游签证", "西班牙数字游民签证"],
     showPhoto: "显示照片：",
     hidePhoto: "隐藏照片：",
     privacy: "隐私",
@@ -75,7 +75,7 @@ const dict = {
     placeholder: "Viajar a algún lugar",
     buildPlan: "Crear mi plan de visa",
     try: "Prueba",
-    suggestions: ["Chengdú → Madrid", "Visado turístico de España", "Ayúdame a planear un viaje"],
+    suggestions: ["Chengdú → Madrid", "Visado turístico de España", "Visado nómada de España"],
     showPhoto: "Mostrar foto de",
     hidePhoto: "Ocultar foto de",
     privacy: "Privacidad",
@@ -381,6 +381,15 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
     return () => cancelAnimationFrame(frame);
   }, [viewer, demo, gateForWorkspace]);
 
+  useEffect(() => {
+    if (viewer || !demo || demo.view !== "workspace") return;
+    const frame = requestAnimationFrame(() => {
+      setDemo({ ...demo, view: "thread" });
+      setStage("thread");
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [viewer, demo]);
+
   function changeGate(open: boolean) {
     setGate(open);
     if (!open) setGateForWorkspace(false);
@@ -489,14 +498,6 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
     if (returnRevealTimerRef.current !== null) window.clearTimeout(returnRevealTimerRef.current);
   }
 
-  function resumeDemo() {
-    if (!demo) return;
-    cancelGlobeReturn();
-    setGlobeDocked(true);
-    setGlobeReturning(false);
-    updateDemo(demo);
-  }
-
   function returnToRouteEditor() {
     if (returnFrameRef.current !== null) window.cancelAnimationFrame(returnFrameRef.current);
     if (returnFrameTwoRef.current !== null) window.cancelAnimationFrame(returnFrameTwoRef.current);
@@ -543,8 +544,13 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
         <button className="brand" type="button" aria-label={t.home} onClick={returnToLanding}>{stage !== "idle" && <svg className="demo-back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 12H5m6-6-6 6 6 6" /></svg>}<span className="brand-mark-slot" ref={brandMarkRef}><span className="brand-orbit" /></span><span>visa<span>master</span></span></button>
         {stage === "workspace" && (
           <div className="workspace-route-heading">
-            <span className="workspace-route-name">{local(locale, "Chengdu → Spain", "成都 → 西班牙", "Chengdú → España")}</span>
-            <span className="workspace-route-profile">{local(locale, "Employed adult · 1 applicant", "在职成年人 · 1 位申请人", "Adulto empleado · 1 solicitante")}</span>
+            <div className="workspace-journey-line">
+              <span className="workspace-route-name">{local(locale, "Chengdu → Spain", "成都 → 西班牙", "Chengdú → España")}</span>
+            </div>
+            <div className="workspace-journey-meta" title={local(locale, "Tourism · Schengen short-stay · Employed adult · 1 applicant", "旅游 · 申根短期签证 · 在职成年人 · 1 位申请人", "Turismo · Estancia corta Schengen · Adulto empleado · 1 solicitante")}>
+              <span>{local(locale, "Tourism · Schengen short-stay", "旅游 · 申根短期签证", "Turismo · Estancia corta Schengen")}</span>
+              <span className="workspace-route-profile">{local(locale, "Employed adult · 1 applicant", "在职成年人 · 1 位申请人", "Adulto empleado · 1 solicitante")}</span>
+            </div>
           </div>
         )}
         <div className="top-actions"><span className="theme-toggle locale-toggle"><Icon name="lang" /><select aria-label={t.localeName} title={t.localeName} value={locale} onChange={(e) => setLocale(e.target.value as Locale)}><option value="en">English</option><option value="cn">中文</option><option value="es">Español</option></select></span><button className="theme-toggle" type="button" aria-label={darkTheme ? t.useLight : t.useDark} title={darkTheme ? t.useLight : t.useDark} onClick={() => setDarkTheme((current) => !current)}><Icon name={darkTheme ? "sun" : "moon"} /></button><AccountButton getStarted={t.getStarted} finishSetup={t.finishSetup} workspace={t.workspaceAction} initialViewer={initialViewer} onGetStarted={() => { setGateForWorkspace(false); setGate(true); }} onViewerChange={setViewer} onWorkspace={demo ? () => updateDemo({ ...demo, view: matchesRoute(demo.answers) ? "workspace" : "thread" }) : undefined} /></div>
@@ -569,9 +575,8 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
 
         </div>
         {stage !== "idle" && demo && <div className="demo-surface">
-          {stage === "thread" ? <IntakeThread state={demo} locale={locale} onChange={updateDemo} /> : <CaseWorkspace state={demo} locale={locale} onChange={updateDemo} viewer={viewer} onSignedOut={() => { setViewer(null); updateDemo({ ...demo, view: "thread" }); }} onSignIn={() => { setGateForWorkspace(true); setGate(true); }} />}
+          {stage === "thread" || !viewer ? <IntakeThread state={demo} locale={locale} onChange={updateDemo} /> : <CaseWorkspace state={demo} locale={locale} onChange={updateDemo} viewer={viewer} onSignedOut={() => { setViewer(null); updateDemo({ ...demo, view: "thread" }); }} />}
         </div>}
-        {stage === "idle" && demo && <button className="demo-resume" onClick={resumeDemo}>{local(locale, "Resume your route", "继续你的路线", "Retomar tu ruta")} <Icon name="arrow" /></button>}
       </section>
 
       <footer className="product-foot">
