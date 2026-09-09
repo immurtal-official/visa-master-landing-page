@@ -5,12 +5,12 @@ import { local, type Locale } from "@/lib/demo/intake";
 import { DemoIcon } from "./icon";
 
 export function ThreadComposer({ id, locale, value, onChange, onSubmit, label,
-  maxLength = 2000, inputRef, error, jumpVisible, onJump, disabled = false,
+  maxLength = 2000, inputRef, error, jumpVisible, onJump, disabled = false, submitDisabled = false,
 }: {
   id: string; locale: Locale; value: string; onChange: (value: string) => void;
   onSubmit: (event: FormEvent) => void; label: string; maxLength?: number;
   inputRef?: RefObject<HTMLTextAreaElement | null>; error?: string;
-  jumpVisible: boolean; onJump: () => void; disabled?: boolean;
+  jumpVisible: boolean; onJump: () => void; disabled?: boolean; submitDisabled?: boolean;
 }) {
   const ownRef = useRef<HTMLTextAreaElement>(null);
   const field = inputRef ?? ownRef;
@@ -46,10 +46,10 @@ export function ThreadComposer({ id, locale, value, onChange, onSubmit, label,
           onKeyDown={event => {
             if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) {
               event.preventDefault();
-              if (value.trim()) event.currentTarget.form?.requestSubmit();
+              if (value.trim() && !submitDisabled) event.currentTarget.form?.requestSubmit();
             }
           }} />
-        <button type="submit" disabled={disabled || !value.trim()}
+        <button type="submit" disabled={disabled || submitDisabled || !value.trim()}
           aria-label={c("Send message", "发送消息", "Enviar mensaje")}><DemoIcon name="arrow" /></button>
       </form>
     </div>

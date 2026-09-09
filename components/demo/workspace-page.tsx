@@ -61,7 +61,7 @@ export function DemoWorkspacePage({ viewer }: { viewer: AccountViewer }) {
   }
 
   return (
-    <main className={`site stage-workspace${darkTheme ? " theme-dark" : ""}`} data-theme={darkTheme ? "dark" : "light"}>
+    <main className={`site stage-workspace${demo?.activeAction ? " has-active-action" : ""}${darkTheme ? " theme-dark" : ""}`} data-theme={darkTheme ? "dark" : "light"}>
       <header className="topbar">
         <button className="brand" type="button" aria-label={local(locale, "Back to conversation", "返回对话", "Volver a la conversación")} onClick={() => { if (demo) updateDemo({ ...demo, view: "thread" }); else router.push("/"); }}>
           <DemoIcon name="back" className="demo-back-icon" />

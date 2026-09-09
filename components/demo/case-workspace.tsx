@@ -57,7 +57,15 @@ export function CaseWorkspace({
     }
   }
   const selected = state.activeAction ?? null;
+  const roadmapPosition = useRef(0);
+  const returningToRoadmap = useRef(false);
+  const lastOpenedAction = useRef<string | null>(null);
   function setSelected(id: string | null) {
+    if (id && !selected) {
+      roadmapPosition.current = scrollRef.current?.scrollTop ?? 0;
+      lastOpenedAction.current = id;
+    }
+    returningToRoadmap.current = id === null && selected !== null;
     onChange({ ...state, activeAction: id ?? undefined });
   }
   const [resource, setResource] = useState<Resource | null>(null);
@@ -66,8 +74,16 @@ export function CaseWorkspace({
   const scrollRef = useRef<HTMLDivElement>(null);
   const action = actions.find((a) => a.id === selected);
   useEffect(() => {
-    headingRef.current?.focus({ preventScroll: true });
-    scrollRef.current?.scrollTo({ top: 0 });
+    if (!selected && tab === "roadmap" && returningToRoadmap.current) {
+      scrollRef.current?.scrollTo({ top: roadmapPosition.current, behavior: "instant" });
+      const row = Array.from(scrollRef.current?.querySelectorAll<HTMLButtonElement>("[data-action-id]") ?? [])
+        .find(button => button.dataset.actionId === lastOpenedAction.current);
+      row?.focus({ preventScroll: true });
+      returningToRoadmap.current = false;
+    } else {
+      headingRef.current?.focus({ preventScroll: true });
+      scrollRef.current?.scrollTo({ top: 0, behavior: "instant" });
+    }
   }, [tab, selected]);
   const tabs: {
     id: Tab;
@@ -91,6 +107,7 @@ export function CaseWorkspace({
   function showTab(id: Tab) {
     setTab(id);
     setSelected(null);
+    returningToRoadmap.current = false;
   }
   function card(r: Resource) {
     return (
@@ -252,6 +269,7 @@ export function CaseWorkspace({
                   {actions.map((item) => (
                     <button
                       className="demo-action-row"
+                      data-action-id={item.id}
                       key={item.id}
                       onClick={() => setSelected(item.id)}
                     >
@@ -377,6 +395,13 @@ export function CaseWorkspace({
                   )}
                   <DemoIcon name="back" />
                 </button>
+                <div className="demo-mobile-account-actions">
+                  <button className="demo-secondary" onClick={signOut} disabled={signingOut}>
+                    <DemoIcon name="logout" />
+                    {signingOut ? c("Logging out…", "正在退出…", "Cerrando sesión…") : c("Log out", "退出登录", "Cerrar sesión")}
+                  </button>
+                  {signOutError && <p role="alert">{c("Could not log out. Try again.", "退出失败，请重试。", "No se pudo cerrar sesión. Inténtalo de nuevo.")}</p>}
+                </div>
               </>
             )}
             <footer className="demo-workspace-footer">
@@ -399,6 +424,19 @@ export function CaseWorkspace({
           </div>
         </div>
       )}
+      <nav className="demo-mobile-nav" aria-label={c("Workspace navigation", "工作台导航", "Navegación del espacio")}>
+        {tabs.map(item => <button key={item.id} type="button"
+          aria-current={!action && tab === item.id ? "page" : undefined}
+          onClick={() => showTab(item.id)}>
+          <DemoIcon name={item.icon} /><span>{item.title}</span>
+        </button>)}
+        <button type="button" onClick={() => showTab("details")}
+          aria-label={`${c("Your details", "你的信息", "Tus datos")} · ${viewer.displayName}`}
+          aria-current={!action && tab === "details" ? "page" : undefined}>
+          <span className="demo-mobile-avatar" aria-hidden="true">{Array.from(viewer.displayName || "?")[0].toLocaleUpperCase()}</span>
+          <span>{viewer.displayName || c("Your account", "你的账户", "Tu cuenta")}</span>
+        </button>
+      </nav>
       {resource && (
         <ResourcePreview
           onRequestPaid={setPaidFeature}

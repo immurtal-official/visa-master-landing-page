@@ -299,6 +299,7 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
   const journeyRef = useRef<HTMLDivElement>(null);
   const brandMarkRef = useRef<HTMLSpanElement>(null);
   const [demo, setDemo] = useState<DemoState | null>(null);
+  const [animateIntake, setAnimateIntake] = useState(false);
   const [localeReady, setLocaleReady] = useState(false);
   const returnFrameRef = useRef<number | null>(null);
   const returnFrameTwoRef = useRef<number | null>(null);
@@ -513,6 +514,7 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
     cancelGlobeReturn();
     setGlobeReturning(false);
     setGlobeDocked(true);
+    setAnimateIntake(true);
     updateDemo(startDemo(query));
   }
   return (
@@ -541,7 +543,7 @@ export function LandingPage({ initialViewer }: { initialViewer: AccountViewer | 
 
         </div>
         {stage !== "idle" && demo && <div className="demo-surface">
-          <IntakeThread state={demo} locale={locale} onChange={updateDemo} />
+          <IntakeThread animateInitial={animateIntake} state={demo} locale={locale} onChange={updateDemo} />
         </div>}
       </section>
 

@@ -17,18 +17,23 @@ import {
 import { AdditionalReview } from "./additional-review";
 import { ThreadComposer } from "./thread-composer";
 import { useThreadScroll } from "./use-thread-scroll";
+import { ResponseReveal } from "./response-reveal";
 import { DemoIcon } from "./icon";
 
 export function IntakeThread({
   state,
   locale,
   onChange,
+  animateInitial = false,
 }: {
+  animateInitial?: boolean;
   state: DemoState;
   locale: Locale;
   onChange: (state: DemoState) => void;
 }) {
   const c = (en: string, cn: string, es: string) => local(locale, en, cn, es);
+  const [animate, setAnimate] = useState(animateInitial);
+  const [generating, setGenerating] = useState(animateInitial);
   const [editing, setEditing] = useState<FieldId>();
   const [draft, setDraft] = useState("");
   const [error, setError] = useState("");
@@ -45,7 +50,9 @@ export function IntakeThread({
   }, [count, current, complete, unsupported]);
 
   function answer(value: string) {
-    if (!current) return;
+    if (!current || generating) return;
+    setAnimate(true);
+    setGenerating(true);
     resumeFollowing();
     onChange({ ...state, answers: { ...state.answers, [current]: value }, inferred: state.inferred?.filter(id => id !== current), replies: [...(state.replies ?? []), { question: current, text: answerLabel(current, value, locale) }].slice(-100) });
     setEditing(undefined);
@@ -54,7 +61,7 @@ export function IntakeThread({
   }
   function submit(event: FormEvent) {
     event.preventDefault();
-    if (!current || !draft.trim()) return;
+    if (!current || generating || !draft.trim()) return;
     const answers = applyIntakeMessage(state.answers, draft, current);
     if (JSON.stringify(answers) === JSON.stringify(state.answers)) {
       setError(
@@ -67,6 +74,8 @@ export function IntakeThread({
       return;
     }
     resumeFollowing();
+    setAnimate(true);
+    setGenerating(true);
     const inferred = new Set(state.inferred ?? []);
     for (const id of fieldIds) if (id !== current && answers[id] && answers[id] !== state.answers[id]) inferred.add(id);
     inferred.delete(current);
@@ -76,6 +85,7 @@ export function IntakeThread({
     setError("");
   }
   function edit(id: FieldId) {
+    setAnimate(false);
     resumeFollowing();
     setEditing(id);
     setDraft("");
@@ -96,19 +106,16 @@ export function IntakeThread({
           {(state.replies ?? fieldIds.filter(id => state.answers[id] && !state.inferred?.includes(id)).map(id => ({ question: id, text: answerLabel(id, state.answers[id]!, locale) }))).map((reply, index) => (
             <div className="demo-exchange" key={index}>
               <p>{questions[reply.question].prompt[locale]}</p>
-              <button className="demo-answer-bubble" onClick={() => edit(reply.question)}
+              <button className="demo-answer-bubble" disabled={generating} onClick={() => edit(reply.question)}
                 aria-label={`${c("Edit", "修改", "Editar")} ${questions[reply.question].label[locale]}`}>
                 {reply.text}<span aria-hidden="true">{c("Edit", "修改", "Editar")}</span>
               </button>
             </div>
           ))}
-          <div aria-live="polite" aria-atomic="true">
+          <div>
             {question && current && (
-              <div className="demo-question demo-enter" key={current}>
-                <h3 ref={activeHeadingRef} tabIndex={-1}>
-                  {question.prompt[locale]}
-                </h3>
-                <p>{question.detail[locale]}</p>
+              <div className="demo-question" key={`${current}-${count}-${state.replies?.length}-${locale}`}>
+                <ResponseReveal title={question.prompt[locale]} text={question.detail[locale]} locale={locale} animate={animate} headingRef={activeHeadingRef} onBusyChange={setGenerating}>
                 <div className="demo-options">
                   {question.options.map((option, index) => (
                     <button
@@ -122,24 +129,19 @@ export function IntakeThread({
                     </button>
                   ))}
                 </div>
+                </ResponseReveal>
               </div>
             )}
             {unsupported && !editing && (
-              <div className="demo-question demo-enter">
-                <h3 ref={activeHeadingRef} tabIndex={-1}>
-                  {c(
+              <div className="demo-question" key={`demo-question-${count}-${locale}`}><ResponseReveal title={c(
                     "This preview isn’t a match yet.",
                     "当前演示路线与你的情况不匹配。",
                     "Esta vista previa no encaja todavía.",
-                  )}
-                </h3>
-                <p>
-                  {c(
+                  )} text={c(
                     "This answer needs a route or additional checks outside this demo. It does not mean you cannot apply for a visa.",
                     "这个回答需要此演示之外的路线或额外核验，不代表你不能申请签证。",
                     "Esta respuesta requiere otra ruta o comprobaciones fuera de la demo. No significa que no puedas solicitar un visado.",
-                  )}
-                </p>
+                  )} locale={locale} animate={animate} headingRef={activeHeadingRef} onBusyChange={setGenerating}>
                 <div className="demo-options">
                   <button onClick={() => edit(unsupported)}>
                     {c(
@@ -150,7 +152,9 @@ export function IntakeThread({
                     <DemoIcon name="back" />
                   </button>
                   <button
-                    onClick={() =>
+                    onClick={() => {
+                      setAnimate(true);
+                      setGenerating(true);
                       onChange({
                         ...state,
                         sample: true,
@@ -158,8 +162,8 @@ export function IntakeThread({
                           fieldIds.map((id) => [id, "supported"]),
                         ),
                         view: "thread",
-                      })
-                    }
+                      });
+                    }}
                   >
                     {c(
                       "Explore a sample applicant",
@@ -169,24 +173,19 @@ export function IntakeThread({
                     <DemoIcon name="arrow" />
                   </button>
                 </div>
+                </ResponseReveal>
               </div>
             )}
             {complete && (
-              <div className="demo-match demo-enter">
-                <h3 ref={activeHeadingRef} tabIndex={-1}>
-                  {c(
+              <div className="demo-match" key={`demo-match-${count}-${locale}`}><ResponseReveal title={c(
                     "Your route is ready.",
                     "路线已准备好。",
                     "Tu ruta está lista.",
-                  )}
-                </h3>
-                <p>
-                  {c(
+                  )} text={c(
                     "Confirm your details to open the roadmap.",
                     "确认信息后，打开行动路线图。",
                     "Confirma tus datos para abrir la hoja de ruta.",
-                  )}
-                </p>
+                  )} locale={locale} animate={animate} headingRef={activeHeadingRef} onBusyChange={setGenerating}>
                 <AdditionalReview answers={state.answers} locale={locale} />
                 <dl className="demo-review">
                   {fieldIds.map((id) => (
@@ -224,6 +223,7 @@ export function IntakeThread({
                     )}
                   </small>
                 )}
+                </ResponseReveal>
               </div>
             )}
           </div>
@@ -231,7 +231,7 @@ export function IntakeThread({
         <ThreadComposer id="demo-answer" locale={locale} value={draft}
           onChange={value => { setDraft(value); setError(""); }} onSubmit={submit}
           label={question?.prompt[locale] ?? c("Message", "消息", "Mensaje")}
-          maxLength={1000} error={error} disabled={!current}
+          maxLength={1000} error={error} disabled={!current} submitDisabled={generating}
           jumpVisible={jumpVisible} onJump={jumpToLatest} />
       </div>
     </section>

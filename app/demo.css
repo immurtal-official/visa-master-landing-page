@@ -1732,3 +1732,9 @@ button.demo-profile-details:hover, button.demo-profile-details[aria-current="pag
 @media (min-width: 701px) {
   .demo-sidebar-scroll > :not(.demo-action-list) { flex-shrink: 0; }
 }
+
+/* A small response cue, followed by word-sized text updates. */
+.response-reveal { min-height: 24px; }
+.response-pulse { display: inline-block; width: 9px; height: 9px; margin: 8px 0; border-radius: 50%; background: currentColor; animation: response-pulse 900ms ease-in-out infinite alternate; }
+@keyframes response-pulse { to { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .response-pulse { animation: none; } }
