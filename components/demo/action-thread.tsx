@@ -16,7 +16,6 @@ import {
 import { DemoIcon } from "./icon";
 import { AdditionalReview } from "./additional-review";
 import { ThreadComposer } from "./thread-composer";
-import { type PaidFeature } from "./paid-feature-dialog";
 import { useThreadScroll } from "./use-thread-scroll";
 import { resourceKind } from "./resource-preview";
 
@@ -31,7 +30,6 @@ export function ActionThread({
   onThreadChange,
   onBack,
   onResource,
-  onRequestPaid,
 }: {
   action: Action;
   answers: Answers;
@@ -40,7 +38,6 @@ export function ActionThread({
   onThreadChange: (next: ActionThreadState) => void;
   onBack: () => void;
   onResource: (resource: Resource) => void;
-  onRequestPaid: (feature: PaidFeature) => void;
 }) {
   const c = (en: string, cn: string, es: string) => local(locale, en, cn, es);
   const text = actionText(action, locale);
@@ -61,8 +58,13 @@ export function ActionThread({
   function send(value: string) {
     const message = value.trim();
     if (!message) return;
-    if (message !== thread.draft) onThreadChange({ ...thread, draft: message });
-    onRequestPaid("message");
+
+    const suggestion = suggestions.indexOf(message);
+    const intent = suggestion === 0 ? "requirements" : suggestion === 1 ? "resources" : suggestion === 2 ? "completion" : "limits";
+    onThreadChange({ ...thread, draft: "", messages: [...thread.messages,
+      { id: crypto.randomUUID(), role: "user", text: message },
+      { id: crypto.randomUUID(), role: "assistant", intent },
+    ] });
   }
   function submit(event: FormEvent) {
     event.preventDefault();
@@ -215,7 +217,8 @@ export function ActionThread({
             aria-label={c("Messages", "消息", "Mensajes")}
           >
             <li className="assistant">
-              <div><AdditionalReview answers={answers} locale={locale} actionId={action.id} />{reply("guidance")}</div>
+              <div><AdditionalReview answers={answers} locale={locale} actionId={action.id} />{reply("guidance")}
+              </div>
             </li>
             {thread.messages.map((message) => (
               <li key={message.id} className={message.role}>
@@ -228,9 +231,9 @@ export function ActionThread({
             ))}
           </ol>
           {(action.id === "book-bls-appointment" || action.id === "track-status") && (
-            <div className="demo-automation-entry"><button className="demo-secondary" onClick={() => onRequestPaid("automation")}>
+            <div className="demo-automation-entry"><button className="demo-secondary" disabled aria-describedby="automation-availability">
               <DemoIcon name="globe" />{c("Use browser automation", "使用浏览器自动化", "Automatización del navegador")}
-            </button></div>
+            </button><p id="automation-availability" className="demo-feature-availability">{c("Browser automation is not connected yet.", "浏览器自动化尚未接入。", "La automatización aún no está conectada.")}</p></div>
           )}
           <ThreadComposer id={`action-message-${action.id}`} locale={locale}
             value={thread.draft} onChange={draft => onThreadChange({ ...thread, draft })}

@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+const FormActionThread = dynamic(() => import("./form-action-thread").then(m => m.FormActionThread), { ssr: false });
 import {
   actions,
   actionResources,
@@ -21,7 +23,6 @@ import { AdditionalReview } from "./additional-review";
 import { ActionThread } from "./action-thread";
 import { DemoIcon } from "./icon";
 import { ResourcePreview, resourceKind } from "./resource-preview";
-import { PaidFeatureDialog, type PaidFeature } from "./paid-feature-dialog";
 import { type AccountViewer } from "@/components/auth/account-button";
 import { createClient } from "@/lib/supabase/client";
 
@@ -69,7 +70,11 @@ export function CaseWorkspace({
     onChange({ ...state, activeAction: id ?? undefined });
   }
   const [resource, setResource] = useState<Resource | null>(null);
-  const [paidFeature, setPaidFeature] = useState<PaidFeature | null>(null);
+  function openForm() {
+    setResource(null);
+    setSelected("official-application-form");
+  }
+
   const headingRef = useRef<HTMLHeadingElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const action = actions.find((a) => a.id === selected);
@@ -199,9 +204,10 @@ export function CaseWorkspace({
           {signOutError && <p role="alert">{c("Could not log out. Try again.", "退出失败，请重试。", "No se pudo cerrar sesión. Inténtalo de nuevo.")}</p>}
         </div>
       </aside>
-      {action ? (
+      {action ? (action.id === "official-application-form" ? (
+        <FormActionThread state={state} onChange={onChange} locale={locale} action={action} onBack={() => setSelected(null)} />
+      ) : (
         <ActionThread
-          onRequestPaid={setPaidFeature}
           key={action.id}
           action={action}
           answers={state.answers}
@@ -220,7 +226,7 @@ export function CaseWorkspace({
             else setResource(resource);
           }}
         />
-      ) : (
+      )) : (
         <div className="demo-workspace-main" ref={scrollRef}>
           <div className="demo-workspace-content">
             <AdditionalReview answers={state.answers} locale={locale} />
@@ -310,7 +316,7 @@ export function CaseWorkspace({
                       "Recibe ayuda con cada acción, personaliza tus documentos y prepara tu solicitud.",
                     )}
                   </p>
-                  <button className="demo-primary" onClick={() => setPaidFeature("message")}>
+                  <button className="demo-primary" onClick={() => setSelected(actions[0].id)}>
                     {c(
                       "Continue preparing",
                       "继续准备",
@@ -439,13 +445,12 @@ export function CaseWorkspace({
       </nav>
       {resource && (
         <ResourcePreview
-          onRequestPaid={setPaidFeature}
           resource={resource}
           locale={locale}
+          onOpenForm={openForm}
           onClose={() => setResource(null)}
         />
       )}
-      {paidFeature && <PaidFeatureDialog feature={paidFeature} locale={locale} onClose={() => setPaidFeature(null)} />}
     </section>
   );
 }

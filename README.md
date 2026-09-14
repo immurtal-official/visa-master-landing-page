@@ -36,14 +36,14 @@ The page presents one responsive visual direction with a warm light theme and a 
 - A destination prompt with example searches.
 - A deterministic Chengdu → Spain intake conversation, editable route review, and a Workspace with 14 Case actions.
 - Landing and intake live at `/`; the authenticated demo Workspace lives at `/workspace`. Login returns there directly, restoring the same tab's sessionStorage state. Missing or incomplete intake returns to `/`.
-- Contextual guide/template previews, official source links, and an application-form field reference from the existing curated route.
+- Contextual guide/template previews, official source links, and an conversational official application-form flow using the existing curated field map.
 - A private-beta waitlist with revocable, single-use invite phrases and a five-failures-per-IP, 24-hour limit.
 - Supabase Auth for invited email/password and Google accounts, plus a separate path for existing users.
 - First-session display-name onboarding stored in Supabase Auth metadata for email and Google accounts.
 - A session-aware header that opens the workspace under the signed-in user's display name.
 - A theme toggle, responsive layouts, and reduced-motion support.
 
-The public demo uses a bundled snapshot of the employed-adult Chengdu → Spain tourism route. It does not call an Agent or verify current official requirements. Intake answers persist only in `sessionStorage` in the current browser tab; they are not saved as a production Case. Unsupported applicants can explicitly explore a sample. Resources expose free guide/template previews and official document source pages. Opening the Workspace requires sign-in through the existing invitation-only signup flow, with intake retained in this tab. Action messages, document editing, browser automation, and Visa Master resource downloads show demo paid-feature prompts. These prompts never collect payment or grant a paid entitlement; they are presentation gates, not server-enforced download protection. PDF autofill, uploads, payment, bookings, and personalized pack generation are outside this demo. Authentication and early-access registration remain live when Supabase is configured.
+The public demo uses a bundled snapshot of the employed-adult Chengdu → Spain tourism route. It does not call an Agent or verify current official requirements. Intake answers persist only in `sessionStorage` in the current browser tab; they are not saved as a production Case. Unsupported applicants can explicitly explore a sample. Resources expose free guide/template previews and official document source pages. Opening the Workspace requires sign-in through the existing invitation-only signup flow, with intake retained in this tab. There are no payment gates or redemption codes. Action messages use local, predefined demo replies. The official application-form action supports mapped fields, conditional questions, a PDF.js preview, and draft PDF downloads generated in the browser with pdf-lib. Form answers share the tab’s sessionStorage and are not saved to Supabase. Other document editing/export and browser automation remain disabled. Uploads, payments, bookings, and personalized pack generation are outside this demo. Authentication and early-access registration remain live when Supabase is configured.
 
 ## Technology
 
@@ -156,3 +156,18 @@ Source checks:
 - [BLS Chengdu notices](https://web.blscn.cn/chengdu/): six months of bank statements; parental funding requires original and copy of the birth certificate. Sponsored funding needs additional evidence; the roadmap remains accessible with a review flag.
 
 BLS and consulate content was available through current indexed official pages; direct fetches of several pages and the tourism PDF returned HTTP 403. This audit does not revalidate every bundled document or its current bytes. The original resource snapshots and hashes remain intact. A route match is not visa approval, a passport-validity check, an existing-visa/EU-family-rights assessment, or a filing-date check (normally no earlier than six months and at least 15 days before travel).
+
+### Official application-form conversation
+
+Open action 04, **Complete official visa application form**. The action starts directly with the next unanswered question. Reply in the existing composer or use the question's choices; answers appear in the thread and remain editable. Confirmed intake facts are reused, and conditional questions follow the official field map. On refresh, both answers and conversation history resume from sessionStorage.
+
+The folded **Artifacts** panel contains the live PDF, prefilled answers for review, and draft download. There is no separate editor or launch button. Photo/signature areas stay blank, and downloading never marks the Case action complete. Added PDF text currently uses Latin characters/pinyin.
+
+- `components/demo/form-action-thread.tsx`: guided questions and answers in the existing Action Thread layout, with PDF artifacts.
+- `lib/demo/official-form.ts`: map-driven fields, conditional visibility, validation and draft restoration, adapted from the runtime Workspace form session.
+- `lib/demo/form-pdf.ts`: checked source hash, mapped text/checkmarks, fitting and draft export.
+- `components/demo/form-pdf-preview.tsx`: PDF.js preview of the actual export bytes.
+- `public/forms/spain-schengen.pdf`: official five-page source matching map revision 3, retrieved July 31, 2026; not a live source verification.
+- `scripts/prepare-pdf-worker.mjs`: copies the installed PDF.js worker before dev/build; generated worker is untracked.
+
+`npm run test:demo` checks source identity/geometry, conditional fields, validation, persistence and PDF rendering. This is a deterministic local demo, not a connection to the runtime Workspace API or Agent.

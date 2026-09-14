@@ -1,0 +1,128 @@
+/* Form preparation uses the same message column and composer as every action. */
+.form-thread-controls {
+  margin-top: 20px;
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+}
+.form-thread-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.form-thread-options button[aria-pressed="true"] {
+  border-color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 10%, var(--paper));
+}
+.form-answer-edit {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.form-answer-edit:hover {
+  background: color-mix(in srgb, var(--ink) 7%, var(--paper));
+}
+.form-thread-date {
+  display: grid;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.form-thread-date input {
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+}
+.form-artifact-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+.form-artifact-toolbar button {
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+.form-artifact-toolbar button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.form-artifact-note {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.form-thread-artifacts details {
+  margin-top: 24px;
+}
+.form-answer-review button {
+  display: grid;
+  width: 100%;
+  gap: 6px;
+  padding: 12px 0;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+.form-answer-review small {
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.official-pdf-page {
+  position: relative;
+  background: white;
+  box-shadow: 0 2px 16px #0001;
+}
+.official-pdf-page canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.official-field-highlight {
+  position: absolute;
+  pointer-events: none;
+  outline: 2px solid #596ee7;
+  background: #596ee710;
+}
+
+.form-pdf-preview-open { display:block; width:100%; padding:0; border:0; background:transparent; cursor:zoom-in; text-align:left; }
+.form-pdf-overlay {
+  position:fixed; inset:0; width:100%; max-width:none; height:100dvh; max-height:none;
+  margin:0; padding:48px 72px; border:0; border-radius:0; background:transparent;
+  overflow:auto; box-shadow:none; color:#fff;
+}
+.form-pdf-overlay::backdrop { background:rgba(10,12,20,.72); }
+.form-pdf-overlay-page { width:min(960px,100%); margin:0 auto; }
+.form-pdf-overlay .official-pdf-page { box-shadow:0 8px 40px #0004; }
+.form-pdf-overlay>button {
+  position:fixed; z-index:1; display:grid; place-items:center; width:44px; height:44px;
+  padding:0; border:0; border-radius:50%; background:rgba(20,22,30,.5); color:#fff;
+  font-size:24px; cursor:pointer;
+}
+.form-pdf-overlay>button:hover { background:rgba(20,22,30,.85); }
+.form-pdf-overlay>button:disabled { opacity:.25; cursor:default; }
+.form-pdf-overlay-close { top:max(16px,env(safe-area-inset-top)); right:max(16px,env(safe-area-inset-right)); }
+.form-pdf-overlay-prev { top:calc(50dvh - 22px); left:max(12px,calc((100vw - 960px)/2 - 60px)); }
+.form-pdf-overlay-next { top:calc(50dvh - 22px); right:max(12px,calc((100vw - 960px)/2 - 60px)); }
+@media(max-width:700px), (max-height:500px) and (pointer:coarse) {
+ .form-pdf-overlay { padding:calc(64px + env(safe-area-inset-top)) calc(32px + env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) calc(32px + env(safe-area-inset-left)); }
+ .form-pdf-overlay-prev { left:max(4px,env(safe-area-inset-left)); }
+ .form-pdf-overlay-next { right:max(4px,env(safe-area-inset-right)); }
+ .form-pdf-overlay-prev,.form-pdf-overlay-next { width:44px; height:44px; font-size:22px; }
+ .form-pdf-overlay-close { top:calc(10px + env(safe-area-inset-top)); right:max(10px,env(safe-area-inset-right)); }
+}

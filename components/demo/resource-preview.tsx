@@ -8,7 +8,6 @@ import {
   type Resource,
 } from "@/lib/demo/resources";
 import { local, type Locale } from "@/lib/demo/intake";
-import { type PaidFeature } from "./paid-feature-dialog";
 import { DemoIcon } from "./icon";
 
 export function resourceKind(kind: Resource["kind"], locale: Locale) {
@@ -91,12 +90,12 @@ export function ResourcePreview({
   resource,
   locale,
   onClose,
-  onRequestPaid,
+  onOpenForm,
 }: {
+  onOpenForm: () => void;
   resource: Resource;
   locale: Locale;
   onClose: () => void;
-  onRequestPaid: (feature: PaidFeature) => void;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   const c = (en: string, cn: string, es: string) => local(locale, en, cn, es);
@@ -153,9 +152,9 @@ export function ResourcePreview({
           <>
             <p>
               {c(
-                "A field-by-field reference for the five-page official form. Form filling is not part of this preview.",
-                "五页官方申请表的逐字段参考。本次预览暂不支持填写表格。",
-                "Referencia de los campos del formulario oficial de cinco páginas. Esta vista previa no permite rellenarlo.",
+                "A field-by-field reference for the five-page official form. Continue in the action conversation to prepare and review the form.",
+                "五页官方申请表的逐字段参考。在行动对话中继续填写并检查草稿。",
+                "Referencia de los campos del formulario oficial de cinco páginas. Continúa en la conversación de la acción para prepararlo.",
               )}
             </p>
             <span className="demo-badge">
@@ -179,19 +178,20 @@ export function ResourcePreview({
       </article>
       <footer>
         <span>
-          {c(
-            "Preview · Personalization comes later",
-            "预览 · 个性化填写将后续开放",
-            "Vista previa · Personalización más adelante",
+          {resource.kind === "map" ? c("Prepare this form in the action conversation", "在行动对话中准备表格", "Preparar en la conversación") : c(
+            "Preview · Editing and export are not connected yet",
+            "预览 · 编辑与导出尚未接入",
+            "Vista previa · Edición y exportación aún no conectadas",
           )}
         </span>
-        {(resource.kind === "template" || resource.kind === "map") && (
-          <button className="demo-secondary" onClick={() => onRequestPaid("edit")}>
+        {(resource.kind === "template") && (
+          <button className="demo-secondary" disabled title={c("Document editing is not connected yet", "文档编辑尚未接入", "El editor aún no está conectado")}>
             {c("Edit document", "编辑文档", "Editar documento")}
           </button>
         )}
+        {resource.kind === "map" && <button className="demo-secondary" onClick={onOpenForm}>{c("Open action", "打开行动", "Abrir acción")}</button>}
         {resource.blocks && (
-          <button className="demo-secondary" onClick={() => onRequestPaid("download")}>
+          <button className="demo-secondary" disabled title={c("Document export is not connected yet", "文档导出尚未接入", "La exportación aún no está conectada")}>
             {c(
               "Download",
               "下载",

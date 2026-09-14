@@ -27,6 +27,8 @@ export type DemoState = {
   sample: boolean;
   threads?: Record<string, ActionThreadState>;
   activeAction?: string;
+  formTurns?: { questionId: string; prompt: string; text: string }[];
+  formValues?: Record<string, string | string[] | boolean>;
 };
 export const storageKey = "visa-master.curated-demo.v1";
 const words = (en: string, cn: string, es: string) => ({ en, cn, es });
@@ -446,6 +448,13 @@ export function restoreDemo(raw: string | null): DemoState | null {
     }
     return {
       ...(data.threads ? { threads } : {}),
+      ...(Array.isArray(data.formTurns) ? { formTurns: data.formTurns.slice(-500).filter((turn: {questionId:string;prompt:string;text:string}) =>
+        turn && typeof turn.questionId === "string" && /^[a-z][a-z0-9_.]{0,100}$/.test(turn.questionId) && typeof turn.prompt === "string" && turn.prompt.length <= 2000 && typeof turn.text === "string" && turn.text.length <= 2000) } : {}),
+      ...(data.formValues && typeof data.formValues === "object" && !Array.isArray(data.formValues) ? {
+        formValues: Object.fromEntries(Object.entries(data.formValues).slice(0, 120).filter(([key, value]) =>
+          /^[a-z][a-z0-9_.]{0,100}$/.test(key) && (typeof value === "boolean" || (typeof value === "string" && value.length <= 2000) ||
+          (Array.isArray(value) && value.length <= 20 && value.every(item => typeof item === "string" && item.length < 100))))) as Record<string, string | string[] | boolean>
+      } : {}),
       ...(typeof data.activeAction === "string" &&
       /^[a-z][a-z-]{0,80}$/.test(data.activeAction)
         ? { activeAction: data.activeAction }
