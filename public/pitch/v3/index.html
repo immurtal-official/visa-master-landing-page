@@ -1743,7 +1743,7 @@ class SlidePresentation {
   }
   clampStrip(start) { return Math.max(0, Math.min(start, this.slides.length - 7)); }
   positionStrip() { document.getElementById('pageTrack').style.transform = 'translateX(' + (-this.stripStart * 44) + 'px)'; }
-  /* Rest the pointer on the right- or left-most number for 3 s and the strip
+  /* Rest the pointer on the right- or left-most number for 1.5 s and the strip
      starts creeping one number at a time in that direction, without changing
      the slide. Moving away stops it. */
   setupStripHover() {
@@ -1762,7 +1762,7 @@ class SlidePresentation {
       if (newEdge === edge && (holdTimer || creepTimer)) return;
       stop(); edge = newEdge;
       if (!edge) return;
-      holdTimer = setTimeout(() => { creep(); creepTimer = setInterval(creep, 700); }, 3000);
+      holdTimer = setTimeout(() => { creep(); creepTimer = setInterval(creep, 400); }, 1500);
     });
     strip.addEventListener('pointerleave', () => { stop(); edge = 0; });
   }
