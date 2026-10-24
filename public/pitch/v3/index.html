@@ -1735,14 +1735,39 @@ class SlidePresentation {
         track.append(button);
       });
     }
-    const window_ = 7, n = this.slides.length;
-    const start = Math.max(0, Math.min(this.currentSlide - 3, n - window_));
-    track.style.transform = 'translateX(' + (-start * 44) + 'px)';
+    this.stripStart = this.clampStrip(this.currentSlide - 3);
+    this.positionStrip();
     [...track.children].forEach((button, i) => {
       if (i === this.currentSlide) button.setAttribute('aria-current', 'true'); else button.removeAttribute('aria-current');
     });
   }
+  clampStrip(start) { return Math.max(0, Math.min(start, this.slides.length - 7)); }
+  positionStrip() { document.getElementById('pageTrack').style.transform = 'translateX(' + (-this.stripStart * 44) + 'px)'; }
+  /* Rest the pointer on the right- or left-most number for 3 s and the strip
+     starts creeping one number at a time in that direction, without changing
+     the slide. Moving away stops it. */
+  setupStripHover() {
+    const strip = document.getElementById('pageStrip');
+    let edge = 0, holdTimer, creepTimer;
+    const stop = () => { clearTimeout(holdTimer); clearInterval(creepTimer); holdTimer = creepTimer = null; };
+    const creep = () => {
+      const next = this.clampStrip(this.stripStart + edge);
+      if (next === this.stripStart) { stop(); return; }
+      this.stripStart = next; this.positionStrip();
+    };
+    strip.addEventListener('pointermove', event => {
+      const r = strip.getBoundingClientRect();
+      const x = event.clientX - r.left;
+      const newEdge = x >= r.width - 44 ? 1 : x <= 44 ? -1 : 0;
+      if (newEdge === edge && (holdTimer || creepTimer)) return;
+      stop(); edge = newEdge;
+      if (!edge) return;
+      holdTimer = setTimeout(() => { creep(); creepTimer = setInterval(creep, 700); }, 3000);
+    });
+    strip.addEventListener('pointerleave', () => { stop(); edge = 0; });
+  }
   setupControls() {
+    this.setupStripHover();
     document.getElementById('firstButton').onclick = () => this.showSlide(0);
     document.getElementById('lastButton').onclick = () => this.showSlide(this.slides.length - 1);
     document.getElementById('previousButton').onclick = () => this.advance(-1);
