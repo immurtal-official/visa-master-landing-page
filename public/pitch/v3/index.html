@@ -447,6 +447,7 @@ button:hover { background: #eeefeb; }
 .deck-controls button { padding: 9px 8px; }
 .page-strip { width: 308px; overflow: hidden; }
 .page-track { display: flex; transition: transform .28s cubic-bezier(.2,.8,.25,1); }
+.page-track.dragging { transition: none; }
 @media (prefers-reduced-motion: reduce) { .page-track { transition: none; } }
 .page-track button { flex: 0 0 44px; width: 44px; padding: 9px 0; font-variant-numeric: tabular-nums; color: var(--muted); border-radius: 7px; }
 .page-track button:hover { color: var(--ink); background: #e9e9e3; }
@@ -1742,7 +1743,28 @@ class SlidePresentation {
     });
   }
   clampStrip(start) { return Math.max(0, Math.min(start, this.slides.length - 7)); }
-  positionStrip() { document.getElementById('pageTrack').style.transform = 'translateX(' + (-this.stripStart * 44) + 'px)'; }
+  positionStrip(px = this.stripStart * 44) { document.getElementById('pageTrack').style.transform = 'translateX(' + (-px) + 'px)'; }
+  /* Two-finger trackpad swipe (horizontal wheel) drags the number strip; it snaps to whole numbers when the gesture ends. */
+  setupStripWheel() {
+    const strip = document.getElementById('pageStrip');
+    const track = document.getElementById('pageTrack');
+    const maxPx = () => (this.slides.length - 7) * 44;
+    let px = null, settle;
+    strip.addEventListener('wheel', event => {
+      const delta = Math.abs(event.deltaX) >= Math.abs(event.deltaY) ? event.deltaX : (event.shiftKey ? event.deltaY : 0);
+      if (!delta) return;
+      event.preventDefault(); event.stopPropagation();
+      if (px === null) { px = this.stripStart * 44; track.classList.add('dragging'); }
+      px = Math.max(0, Math.min(maxPx(), px + delta));
+      this.positionStrip(px);
+      clearTimeout(settle);
+      settle = setTimeout(() => {
+        this.stripStart = this.clampStrip(Math.round(px / 44));
+        px = null; track.classList.remove('dragging');
+        this.positionStrip();
+      }, 140);
+    }, { passive: false });
+  }
   /* Rest the pointer on the right- or left-most number for 1.5 s and the strip
      starts creeping one number at a time in that direction, without changing
      the slide. Moving away stops it. */
@@ -1768,6 +1790,7 @@ class SlidePresentation {
   }
   setupControls() {
     this.setupStripHover();
+    this.setupStripWheel();
     document.getElementById('firstButton').onclick = () => this.showSlide(0);
     document.getElementById('lastButton').onclick = () => this.showSlide(this.slides.length - 1);
     document.getElementById('previousButton').onclick = () => this.advance(-1);
