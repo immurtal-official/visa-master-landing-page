@@ -309,7 +309,9 @@ button.metric-trigger:hover { background: none; }
 /* === DESTINATION REVEAL: the earlier source table, explicitly provisional === */
 .destination-panel { position: absolute; inset: 0; z-index: 5; background: var(--slide-bg); padding: 74px 100px; }
 .destination-panel[hidden], [data-slide-notes][hidden] { display: none; }
-.destination-close { position: absolute; top: 72px; right: 100px; font-size: 25px; border: 1px solid #c9c9c0; padding: 15px 24px; }
+.slide-x { position: absolute; top: 40px; right: 48px; z-index: 20; display: grid; place-items: center; width: 96px; height: 96px; padding: 0 0 8px; border: 0; border-radius: 50%; background: #1c3a53; color: #fff; font-size: 72px; line-height: 1; cursor: pointer; box-shadow: 0 6px 24px #0004; }
+.slide-x:hover { background: #b52f35; }
+.slide-x:focus-visible { outline: 4px solid #7de1cb; outline-offset: 3px; }
 .destination-legend { display: flex; align-items: center; gap: 40px; margin: 14px 0 50px; font-size: 23px; }
 .destination-legend span { display: flex; align-items: center; gap: 12px; }
 .swatch { display: inline-block; width: 21px; height: 21px; border-radius: 3px; background: #b52f35; }
@@ -443,6 +445,13 @@ button:hover { background: #eeefeb; }
 .deck-controls { width: max-content; flex-wrap: wrap; justify-content: center; }
 .destination-open .deck-controls, .destination-open .edit-toggle { visibility: hidden; }
 .deck-controls button { padding: 9px 8px; }
+.page-strip { width: 308px; overflow: hidden; }
+.page-track { display: flex; transition: transform .28s cubic-bezier(.2,.8,.25,1); }
+@media (prefers-reduced-motion: reduce) { .page-track { transition: none; } }
+.page-track button { flex: 0 0 44px; width: 44px; padding: 9px 0; font-variant-numeric: tabular-nums; color: var(--muted); border-radius: 7px; }
+.page-track button:hover { color: var(--ink); background: #e9e9e3; }
+.page-track button[aria-current="true"] { color: #fff; background: var(--ink); font-weight: 600; }
+#pageCount { font-size: 13px; color: var(--muted); min-width: 56px; text-align: center; }
 button:disabled { opacity: .35; cursor: default; }
 button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 button[aria-pressed="true"] { background: var(--ink); color: white; }
@@ -470,6 +479,10 @@ button[aria-pressed="true"] { background: var(--ink); color: white; }
 .demo-controls button:hover { background: #ffffff22; }
 .demo-controls button:focus-visible, .demo-start button:focus-visible { outline-color: #fff; }
 .demo-progress { flex: 1; min-width: 0; height: 36px; cursor: pointer; accent-color: #7de1cb; touch-action: none; }
+.dialog-x-bar { position: sticky; top: 0; height: 0; z-index: 5; text-align: right; }
+.dialog-x { display: inline-grid; place-items: center; width: 64px; height: 64px; margin: -8px -8px 0 0; padding: 0 0 6px; border: 0; border-radius: 50%; background: #1c3a53; color: #fff; font-size: 48px; line-height: 1; cursor: pointer; box-shadow: 0 4px 18px #0004; transform: translate(14px, -14px); }
+.dialog-x:hover { background: #b52f35; }
+.dialog-x:focus-visible { outline: 3px solid #7de1cb; outline-offset: 2px; }
 .demo-time { font-size: 23px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .demo-volume { width: 150px; flex: 0 0 auto; height: 36px; cursor: pointer; accent-color: #7de1cb; touch-action: none; }
 .demo-controls .demo-nav { border-left: 1px solid #ffffff33; border-radius: 0; }
@@ -613,7 +626,8 @@ dialog button { float: right; background: #e9eae5; }
 
 .plugin-preview-toolbar { position: absolute; top: 10px; right: 10px; z-index: 2; }
 .plugin-preview-toolbar h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.plugin-preview-toolbar button { float: none; color: white; background: rgba(0,0,0,.7); border: 1px solid rgba(255,255,255,.4); border-radius: 50%; width: 36px; height: 36px; padding: 0; font-size: 22px; }
+.plugin-preview-toolbar button { float: none; color: white; background: #1c3a53; border: 0; border-radius: 50%; width: 64px; height: 64px; padding: 0 0 6px; font-size: 48px; line-height: 1; box-shadow: 0 4px 18px #0006; }
+.plugin-preview-toolbar button:hover { background: #b52f35; }
 #pluginPreviewImage { display: block; width: auto; height: auto; max-width: 94vw; max-height: 88dvh; object-fit: contain; border-radius: 0; }
 .plugin-preview-credit { display: none; }
 .plugin-preview-credit a { color: inherit; }
@@ -712,6 +726,7 @@ dialog button { float: right; background: #e9eae5; }
 .agency-evidence-stage { position: relative; }
 .agency-problems-overlay { position: absolute; inset: 38px 0 44px; z-index: 10; background: #faf9f480; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); color: #b52f35; cursor: pointer; }
 .agency-problems-overlay[hidden] { display: none; }
+.agency-problems-overlay .agency-problems-close { top: 0; right: 0; }
 .agency-problems-overlay p { position: absolute; margin: 0; font-size: 66px; font-weight: 650; line-height: 1.2; letter-spacing: -1px; white-space: nowrap; }
 .agency-problems-overlay p:nth-child(1) { left: 8%; top: 13%; }
 .agency-problems-overlay p:nth-child(2) { left: 57%; top: 28%; }
@@ -878,7 +893,7 @@ dialog button { float: right; background: #e9eae5; }
 </footer>
 </div>
 <div class="destination-panel" id="destinationPanel" role="dialog" aria-modal="true" aria-label="Destination classifications" hidden>
-  <button class="destination-close" id="destinationClose">Back to numbers</button>
+  <button class="destination-close slide-x" id="destinationClose" aria-label="Back to numbers" title="Back to numbers (Esc)">×</button>
   <div class="destination-legend" aria-label="Draft classification legend">
     <span><i class="swatch" aria-hidden="true"></i>23 visa / eVisa</span>
     <span><i class="swatch arrival" aria-hidden="true"></i>1 visa on arrival</span>
@@ -928,7 +943,7 @@ dialog button { float: right; background: #e9eae5; }
         <figcaption data-edit="marketplace-work">What is still my job?</figcaption>
       </figure>
     </div>
-    <div class="agency-problems-overlay" id="agencyProblemsOverlay" role="status" aria-live="polite" hidden>
+    <div class="agency-problems-overlay" id="agencyProblemsOverlay" role="status" aria-live="polite" hidden><button class="slide-x agency-problems-close" id="agencyProblemsClose" type="button" aria-label="Hide agency problems" title="Hide (←)">×</button>
       <p data-edit="agency-phrase-pricing-range">Opaque pricing · ¥59–¥1,650</p>
       <p data-edit="agency-phrase-scope">Unclear scope</p>
       <p data-edit="agency-phrase-comparison">Hard to compare</p>
@@ -1159,14 +1174,17 @@ dialog button { float: right; background: #e9eae5; }
 <div class="edit-hotzone" aria-hidden="true"></div>
 <button class="edit-toggle" id="editToggle" aria-pressed="false" title="Edit slide text (E)">Edit text</button>
 <nav class="deck-controls" aria-label="Presentation controls">
+<button id="firstButton" aria-label="First slide" title="First slide (Home)">«</button>
 <button id="previousButton" aria-label="Previous slide" title="Previous slide (←)">←</button>
-<span id="pageCount" aria-live="polite">01 / 14</span>
+<div class="page-strip" id="pageStrip" role="group" aria-label="Jump to slide"><div class="page-track" id="pageTrack"></div></div>
+<span id="pageCount" aria-live="polite">01 / 21</span>
 <button id="nextButton" aria-label="Next slide" title="Next slide (→)">→</button>
+<button id="lastButton" aria-label="Last slide" title="Last slide (End)">»</button>
 </nav>
 <div id="status" role="status" aria-live="polite"></div>
 <dialog id="pluginPreviewDialog" aria-labelledby="pluginPreviewTitle"><div class="plugin-preview-toolbar"><h2 id="pluginPreviewTitle"></h2><button id="pluginPreviewClose" aria-label="Close platform preview">×</button></div><img id="pluginPreviewImage" alt=""><p class="plugin-preview-credit"><a id="pluginPreviewSource" target="_blank" rel="noopener"></a></p></dialog>
 <dialog id="evidenceDialog" aria-labelledby="evidenceTitle">
-  <div class="evidence-toolbar"><h2 id="evidenceTitle">Screenshot evidence</h2><div><button id="evidenceClose">Close ✕</button></div></div>
+  <div class="evidence-toolbar"><h2 id="evidenceTitle">Screenshot evidence</h2><div><button id="evidenceClose" hidden>Close ✕</button></div></div>
   <div class="evidence-image-area" id="evidenceImageArea"><img id="evidenceImage" alt=""></div>
   <div class="evidence-navigation"><button id="evidencePrevious" aria-label="Previous screenshot">←</button><span id="evidenceCount" aria-live="polite"></span><button id="evidenceNext" aria-label="Next screenshot">→</button></div>
 </dialog>
@@ -1304,6 +1322,25 @@ class SlidePresentation {
     this.setupControls();
     this.setupNavigation();
     this.setupEditing();
+    this.setupDialogDismiss();
+  }
+  /* Click on the dimmed backdrop closes any popup (market model, cost budget, evidence, notes). */
+  setupDialogDismiss() {
+    document.querySelectorAll('dialog:not(#pluginPreviewDialog)').forEach(dialog => {
+      const bar = document.createElement('div');
+      bar.className = 'dialog-x-bar';
+      const close = document.createElement('button');
+      close.className = 'dialog-x'; close.type = 'button';
+      close.setAttribute('aria-label', 'Close'); close.title = 'Close (Esc)';
+      close.textContent = '×';
+      close.onclick = () => dialog.close();
+      bar.append(close); dialog.prepend(bar);
+      dialog.addEventListener('click', event => {
+        if (event.target !== dialog) return;
+        const r = dialog.getBoundingClientRect();
+        if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close();
+      });
+    });
   }
   scale() {
     const factor = Math.min(innerWidth / 1920, innerHeight / 1080);
@@ -1329,6 +1366,7 @@ class SlidePresentation {
       slide.inert = !active;
     });
     document.getElementById('pageCount').textContent = String(this.currentSlide + 1).padStart(2, '0') + ' / ' + String(this.slides.length).padStart(2, '0');
+    this.renderPageStrip();
     document.getElementById('previousButton').disabled = this.currentSlide === 0;
     this.updateNextButton();
     document.querySelectorAll('[data-slide-notes]').forEach(element => { element.hidden = Number(element.dataset.slideNotes) !== this.currentSlide; });
@@ -1483,6 +1521,7 @@ class SlidePresentation {
       if (!this.agencyProblemsShown) this.setAgencyProblems(true);
       else this.setApplicationView(1);
     });
+    document.getElementById('agencyProblemsClose').onclick = event => { event.stopPropagation(); this.setAgencyProblems(false); };
     document.getElementById('agencyViewButton').onclick = () => this.setApplicationView(0);
     document.getElementById('aiViewButton').onclick = () => this.setApplicationView(1);
     document.getElementById('aiWorkViewButton').onclick = () => this.setApplicationView(1);
@@ -1683,7 +1722,29 @@ class SlidePresentation {
       else await document.documentElement.requestFullscreen();
     } catch { this.notify('Use your browser’s fullscreen command.'); }
   }
+  /* Sliding window of 7 page numbers around the current slide; click any number to jump. */
+  renderPageStrip() {
+    const track = document.getElementById('pageTrack');
+    if (!track.childElementCount) {
+      this.slides.forEach((slide, i) => {
+        const button = document.createElement('button');
+        button.type = 'button'; button.textContent = i + 1;
+        button.title = (slide.getAttribute('aria-label') || slide.querySelector('h1, h2')?.textContent || 'Slide ' + (i + 1)).trim();
+        button.setAttribute('aria-label', 'Go to slide ' + (i + 1) + ': ' + button.title);
+        button.onclick = () => this.showSlide(i);
+        track.append(button);
+      });
+    }
+    const window_ = 7, n = this.slides.length;
+    const start = Math.max(0, Math.min(this.currentSlide - 3, n - window_));
+    track.style.transform = 'translateX(' + (-start * 44) + 'px)';
+    [...track.children].forEach((button, i) => {
+      if (i === this.currentSlide) button.setAttribute('aria-current', 'true'); else button.removeAttribute('aria-current');
+    });
+  }
   setupControls() {
+    document.getElementById('firstButton').onclick = () => this.showSlide(0);
+    document.getElementById('lastButton').onclick = () => this.showSlide(this.slides.length - 1);
     document.getElementById('previousButton').onclick = () => this.advance(-1);
     document.getElementById('nextButton').onclick = () => this.advance(1);
     document.getElementById('editToggle').onclick = () => this.toggleEdit();
