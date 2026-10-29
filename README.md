@@ -171,3 +171,8 @@ The folded **Artifacts** panel contains the live PDF, prefilled answers for revi
 - `scripts/prepare-pdf-worker.mjs`: copies the installed PDF.js worker before dev/build; generated worker is untracked.
 
 `npm run test:demo` checks source identity/geometry, conditional fields, validation, persistence and PDF rendering. This is a deterministic local demo, not a connection to the runtime Workspace API or Agent.
+
+
+## Luya market research
+
+`/luya-market` serves the standalone Chinese research reader in `public/luya-market/index.html`, using the existing static-page rewrite pattern. The same folder contains the 27-page PDF, editable Word, Markdown with figure assets, and reproducible research support package. Sources and unverified scenario assumptions remain distinguished in the report. Update files together from the research project and verify the deployed PDF SHA-256; no authentication or production-data access is involved.
