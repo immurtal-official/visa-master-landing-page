@@ -175,4 +175,4 @@ The folded **Artifacts** panel contains the live PDF, prefilled answers for revi
 
 ## Luya market research
 
-`/luya-market` serves the standalone Chinese research reader in `public/luya-market/index.html`, using the existing static-page rewrite pattern. The same folder contains the 27-page PDF, editable Word, Markdown with figure assets, and reproducible research support package. Sources and unverified scenario assumptions remain distinguished in the report. Update files together from the research project and verify the deployed PDF SHA-256; no authentication or production-data access is involved.
+The research report was withdrawn on 12 November 2026 at the owner's request. `/luya-market` and its former download paths return HTTP410. Report files are no longer included in the public deployment. Revised analysis remains private pending review.
