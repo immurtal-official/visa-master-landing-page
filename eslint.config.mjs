@@ -13,6 +13,8 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "public/forms/pdf.worker.min.mjs",
+    // Vendored slide-deck web component used by the pitch page.
+    "public/pitch-vm2luya/deck-stage.js",
   ]),
 ]);
 
