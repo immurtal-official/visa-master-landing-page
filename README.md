@@ -58,25 +58,29 @@ The public demo uses a bundled snapshot of the employed-adult Chengdu → Spain 
 
 ```text
 app/
-├── api/              Server-only waitlist and invite-redemption routes
+├── api/              Server-only waitlist, invite-redemption and pitch-password routes
 ├── account/          Password-update flow
 ├── auth/             OAuth/email callback and error routes
 ├── globals.css      Design tokens, layout, component styles, and motion
 ├── layout.tsx       Root layout, fonts, favicon, and metadata
 ├── login/            Direct sign-in page
+├── pitch-access/     Password form for the pitch pages
 ├── privacy/          Public privacy notice
 ├── terms/            Public terms of use
 ├── workspace/        Protected post-authentication holding page
 └── page.tsx          Landing-page UI, globe behavior, and demo state flow
 components/auth/      Shared sign-in dialog and account controls
 lib/early-access/     Invite normalization and keyed hashing
+lib/pitch-access.ts   Password check and cookie for the pitch pages
 lib/supabase/         Browser, server, and session-refresh clients
 public/
 ├── favicon.svg
-└── luya-circle.svg    Lüya product mark
+├── luya-circle.svg    Lüya product mark
+├── pitch/             Visa Master pitch decks, v1–v6 (single-file pages)
+└── pitch-vm2luya/     Visa Master → Luya pitch, Chinese and English
 scripts/               Invite-phrase administration helpers
 supabase/migrations/   Versioned profile and private-beta schema
-proxy.ts              Refreshes auth cookies and protects private routes
+proxy.ts              Refreshes auth cookies, protects private routes, asks for the pitch password
 eslint.config.mjs
 package.json
 tsconfig.json
@@ -129,13 +133,13 @@ Run the complete local check:
 npm run check
 ```
 
-This runs ESLint, TypeScript without emitting files, and a production Next.js build. The commands are also available separately as `npm run lint`, `npm run typecheck`, and `npm run build`.
+This runs ESLint, TypeScript without emitting files, the demo and pitch-access tests, and a production Next.js build. The commands are also available separately as `npm run lint`, `npm run typecheck`, and `npm run build`.
 
 ## Deploy to Vercel
 
 Import this repository into Vercel and keep the detected **Next.js** framework preset. Vercel uses `npm run build`; the current version needs no `vercel.json` or custom output directory.
 
-Connect the Supabase integration to **Production** and provide `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, and the same `INVITE_SECURITY_SECRET` used when creating phrase digests. The latter two must remain server-only. On the free tier, keep Vercel Preview disconnected until it has an isolated Supabase project or preview branch; otherwise preview waitlist entries and sign-ups affect production data.
+Connect the Supabase integration to **Production** and provide `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, and the same `INVITE_SECURITY_SECRET` used when creating phrase digests. The latter two must remain server-only. Add `PITCH_ACCESS_PASSWORD` (server-only) as well; without it the pitch pages cannot be opened. On the free tier, keep Vercel Preview disconnected until it has an isolated Supabase project or preview branch; otherwise preview waitlist entries and sign-ups affect production data.
 
 In Supabase Auth, set the Site URL to the canonical production domain and allow redirects from that domain, the stable Vercel domain, and localhost. Email/password requires email confirmation. Google additionally requires a Web OAuth client whose authorized redirect URI is the Supabase callback shown in the provider settings.
 
@@ -172,6 +176,20 @@ The folded **Artifacts** panel contains the live PDF, prefilled answers for revi
 
 `npm run test:demo` checks source identity/geometry, conditional fields, validation, persistence and PDF rendering. This is a deterministic local demo, not a connection to the runtime Workspace API or Agent.
 
+## Pitch pages
+
+The pitch decks are static files: `public/pitch/` holds the Visa Master decks (`/pitch`, `/pitch/v2` … `/pitch/v6`), and `public/pitch-vm2luya/` holds the Visa Master → Luya deck in Chinese (`/pitch-vm2luya`) and English (`/pitch-vm2luya/en`).
+
+All of them sit behind one shared password. `proxy.ts` checks a cookie on every request under `/pitch` and `/pitch-vm2luya`, including the images and videos the pages load. A page view without the cookie is sent to `/pitch-access`; the form posts to `/api/pitch-access`, which sets the cookie for 30 days and returns the viewer to the page they asked for.
+
+Set the password in the server-only variable `PITCH_ACCESS_PASSWORD` (`.env.local` for local work, Vercel environment variables for deployments). If the variable is missing or empty, the pitch pages stay closed for everyone. Changing the password signs out everyone who entered the old one.
+
+What this does and does not protect:
+
+- It stops people who only have the link. It is a single shared password with a short delay after a wrong attempt, not per-person access, and there is no attempt counter.
+- The pitch files are also in this Git repository. While the repository is public, anyone can read them on GitHub without the password.
+
+`npm run test:pitch` covers which paths are gated, the password and cookie checks, and where the form may redirect.
 
 ## Luya market research
 
